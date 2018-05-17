@@ -1,0 +1,55 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+
+android {
+
+    compileSdkVersion gradle.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion gradle.minSdkVersion
+        targetSdkVersion gradle.targetVersion
+        versionCode gradle.versionCode
+        versionName gradle.versionName
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            main.java.srcDirs = ['src']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
+    api project(':base')
+    api project(':litetask')
+    api project(':literouter')
+
+    annotationProcessor project(':literouter-compiler')
+    annotationProcessor "android.arch.persistence.room:compiler:$gradle.room_compiler"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$gradle.butterknife"
+
+}

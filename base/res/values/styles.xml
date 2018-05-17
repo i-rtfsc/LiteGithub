@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (c) 2018 anqi.huang@outlook.com
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+
+<resources>
+    <!-- Base application theme. -->
+    <style name="base_AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="toolbarNavigationButtonStyle">@style/base_ToolbarNavigationButtonStyle</item>
+    </style>
+
+    <style name="base_BaseAppTheme" parent="base_AppTheme">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="base_ToolbarNavigationButtonStyle" parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:width">24dp</item>
+        <item name="android:height">24dp</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="base_DividerLineHorizontal" parent="base_DividerLine">
+        <item name="android:layout_height">@dimen/divider_size</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="base_DividerLineVertical" parent="base_DividerLine">
+        <item name="android:layout_width">@dimen/divider_size</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="base_DividerLine">
+        <item name="android:background">@color/divider</item>
+    </style>
+
+</resources>

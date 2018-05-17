@@ -1,0 +1,64 @@
+apply plugin: 'com.android.library'
+
+
+android {
+    compileSdkVersion gradle.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion gradle.minSdkVersion
+        targetSdkVersion gradle.targetVersion
+        versionCode 1
+        versionName "1.0"
+
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            main.java.srcDirs = ['src']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api project(':litetask')
+    api project(':literouter')
+
+    // api library , can be used in import module
+    api "com.android.support:appcompat-v7:$gradle.supportVersion"
+    api "com.android.support:design:$gradle.supportVersion"
+    api("com.jakewharton:butterknife:$gradle.butterknife")
+    api "com.facebook.stetho:stetho:$gradle.stetho"
+    api "com.squareup.retrofit2:retrofit:$gradle.retrofit2"
+    api "com.squareup.retrofit2:converter-gson:$gradle.retrofit2"
+    api "com.squareup.retrofit2:adapter-rxjava:$gradle.retrofit2"
+    api "com.tencent.bugly:crashreport_upgrade:$gradle.bugly_crashreport_upgrade"
+    // ViewModel and LiveData
+    api "android.arch.lifecycle:extensions:$gradle.lifecycle_extensions"
+    // Room
+    api "android.arch.persistence.room:runtime:$gradle.room_runtime"
+
+    api "io.reactivex:rxjava:$gradle.rxjava"
+    api "io.reactivex:rxandroid:$gradle.rxandroid"
+    api "com.github.GrenderG:Toasty:$gradle.toasty"
+
+    debugApi "com.squareup.leakcanary:leakcanary-android:$gradle.leakcanary"
+    releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$gradle.leakcanary"
+
+    // implementation library , can only be used in current module ,using JsonHelper
+    implementation "com.google.code.gson:gson:$gradle.gson"
+}

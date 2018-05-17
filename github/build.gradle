@@ -1,0 +1,95 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.antfortune.freeline'
+
+android {
+    compileSdkVersion gradle.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.journeyOS.github"
+        minSdkVersion gradle.minSdkVersion
+        targetSdkVersion gradle.targetVersion
+        versionCode gradle.versionCode
+        versionName gradle.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    signingConfigs {
+        release {
+            File strFile = new File("../keystore/platform.keystore")
+            storeFile file(strFile)
+            keyAlias 'platform'
+            keyPassword 'android'
+            storePassword 'android'
+        }
+        debug {
+            File strFile = new File("../keystore/platform.keystore")
+            storeFile file(strFile)
+            keyAlias 'platform'
+            keyPassword 'android'
+            storePassword 'android'
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.debug
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            main.java.srcDirs = ['src']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    def OUT_PATH = rootProject.getRootDir().getAbsolutePath() + '/app_release/LiteWeather.apk'
+    applicationVariants.all { variant ->
+        if (variant.buildType.name == 'release') {
+            variant.outputs.each { output ->
+                output.outputFileName = file(OUT_PATH)
+            }
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation project(':core')
+    implementation project(':plugins')
+    implementation "com.android.support:support-v4:$gradle.appcompat"
+    implementation "com.android.support:appcompat-v7:$gradle.appcompat"
+    implementation "com.unstoppable:submitbutton:$gradle.submitbutton"
+    implementation "com.android.support:cardview-v7:$gradle.cardview"
+
+    annotationProcessor project(':literouter-compiler')
+    annotationProcessor "com.jakewharton:butterknife-compiler:$gradle.butterknife"
+    annotationProcessor "android.arch.persistence.room:compiler:$gradle.room_compiler"
+    annotationProcessor "android.arch.lifecycle:compiler:$gradle.lifecycle_compiler"
+}
+
+defaultTasks 'clean', 'assembleRelease'

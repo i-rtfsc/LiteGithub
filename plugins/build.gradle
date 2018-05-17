@@ -1,0 +1,34 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+
+android {
+    compileSdkVersion gradle.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion gradle.minSdkVersion
+        targetSdkVersion gradle.targetVersion
+        versionCode gradle.versionCode
+        versionName gradle.versionName
+
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            main.java.srcDirs = ['src']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':core')
+
+    annotationProcessor project(':literouter-compiler')
+    annotationProcessor "android.arch.persistence.room:compiler:$gradle.room_compiler"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$gradle.butterknife"
+}
