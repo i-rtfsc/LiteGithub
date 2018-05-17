@@ -18,6 +18,7 @@ package com.journeyOS.github.ui.login;
 
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -63,8 +64,8 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataObserver() {
-        super.initDataObserver();
+    protected void initDataObserver(Bundle savedInstanceState) {
+        super.initDataObserver(savedInstanceState);
         mLoginModel = ModelProvider.getModel(this, LoginModel.class);
 
         mLoginModel.getLoginStatus().observe(this, new Observer<StatusDataResource>() {

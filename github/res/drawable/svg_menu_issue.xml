@@ -1,0 +1,26 @@
+<!--
+  Copyright (c) 2018 anqi.huang@outlook.com
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:autoMirrored="true"
+    android:viewportHeight="1024"
+    android:viewportWidth="1024">
+    <path
+        android:fillColor="@color/icon"
+        android:pathData="M879.17,674.63c-7.06,12.18 -22.2,28.98 -45.64,49.93 -25.47,23.38 -41.11,40.67 -46.91,51.87 -5.8,11.2 -8.58,29.47 -8.58,55.28h-42.61c0.75,-23.38 4.79,-43.11 11.6,-59.18 7.06,-16.07 22.19,-35.8 45.9,-59.18 23.45,-23.38 38.33,-39.94 44.38,-49.68 6.06,-9.74 9.08,-21.91 9.08,-36.77 0,-22.16 -7.56,-39.94 -22.44,-53.58 -14.88,-13.39 -35.31,-20.21 -60.78,-20.21 -54.98,0 -84.98,31.42 -90.03,94h-40.09c0.75,-24.11 4.04,-43.1 9.58,-56.74 5.55,-13.64 14.88,-26.31 27.99,-37.51 13.11,-11.2 27.74,-19.73 44.13,-24.84a158.98,158.98 0,0 1,50.18 -8.04c36.56,0 66.33,9.99 89.52,29.96 23.2,19.97 34.8,47.01 34.8,80.61 0.26,17.05 -3.03,31.9 -10.08,44.08zM794.95,451.52L794.95,217.96c0,-45.96 -36.6,-83.22 -81.74,-83.22L263.64,134.73c-45.14,0 -81.74,37.26 -81.74,83.22v540.93c0,45.96 36.6,83.22 81.74,83.22h295.52v0.01h72.41l-25.25,47.15L229.05,889.26c-52.09,0 -94.32,-42.23 -94.32,-94.32L134.74,181.89c0,-52.09 42.23,-94.32 94.32,-94.32h518.74c52.09,0 94.32,42.23 94.32,94.32v267.02l-1.39,2.6h-45.76zM558.64,559.17L229.55,559.17a0.51,0.51 0,0 1,-0.51 -0.51v-46.14a0.51,0.51 0,0 1,0.51 -0.51h329.09a0.51,0.51 0,0 1,0.51 0.51v46.14a0.51,0.51 0,0 1,-0.51 0.51zM700.11,276.22L229.55,276.22a0.51,0.51 0,0 1,-0.51 -0.51v-46.14a0.51,0.51 0,0 1,0.51 -0.51h470.56a0.51,0.51 0,0 1,0.51 0.51v46.14a0.51,0.51 0,0 1,-0.51 0.51zM700.63,417.18a0.51,0.51 0,0 1,-0.51 0.51L229.55,417.69a0.51,0.51 0,0 1,-0.51 -0.51v-46.14a0.51,0.51 0,0 1,0.51 -0.51h470.56a0.51,0.51 0,0 1,0.51 0.51v46.14zM229.04,747.26v-46.11a0.51,0.51 0,0 1,0.51 -0.51h423.42a0.51,0.51 0,0 1,0.51 0.51v46.11a0.51,0.51 0,0 1,-0.51 0.51h-423.42a0.51,0.51 0,0 1,-0.51 -0.51zM782.33,936.42h-47.41v-48.7h47.41v48.7z" />
+</vector>

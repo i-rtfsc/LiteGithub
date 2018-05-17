@@ -16,9 +16,28 @@
 
 <resources>
     <string name="app_name" translatable="false">Github</string>
+    <string name="app_introduce">An unofficial android client for GitHub.</string>
     <string name="user_name">UserName</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="user_name_warning">Invalid user name!</string>
     <string name="password_warning">Invalid password!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- menu -->
+    <string name="add_account">Add account</string>
+    <string name="manage_account">Manage account</string>
+    <string name="add_new_account">Add new GitHub account</string>
+
+    <string name="profile">Profile</string>
+    <string name="my_repos">My repos</string>
+    <string name="notifications">Notifications</string>
+    <string name="issues">Issues</string>
+    <string name="advanced">Advanced</string>
+    <string name="search">Search</string>
+    <string name="starred">Starred</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+
+
 </resources>

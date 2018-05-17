@@ -1,0 +1,26 @@
+<!--
+  Copyright (c) 2018 anqi.huang@outlook.com
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:autoMirrored="true"
+    android:viewportHeight="1024"
+    android:viewportWidth="1024">
+    <path
+        android:fillColor="@color/icon"
+        android:pathData="M604.67,929.54C604.67,929.98 604.79,930.4 604.79,930.84 604.79,982.2 563.25,1023.84 512,1023.84 460.75,1023.84 419.21,982.2 419.21,930.84 419.21,930.4 419.33,929.98 419.33,929.56 122.58,921.39 46.55,873.03 46.55,814.48 46.55,796.11 54.55,778.85 74.03,763.39 214.32,607.12 256,650.4 256,418.91 256,264.54 262.31,123.07 448.19,97.56 444.49,89.06 442.39,79.71 442.39,69.86 442.39,31.33 473.55,0.09 512,0.09 550.45,0.09 581.61,31.33 581.61,69.86 581.61,79.71 579.51,89.06 575.84,97.56 761.69,123.07 768,264.54 768,418.91 768,651.08 809.89,606.79 951.2,764.74 969.68,779.85 977.45,796.65 977.45,814.48 977.45,873.01 899.42,921.32 604.67,929.54ZM512,977.38C537.62,977.38 558.41,956.56 558.41,930.86 558.41,930.72 558.36,930.61 558.36,930.49 543.21,930.68 528.2,930.91 512,930.91 495.8,930.91 480.79,930.68 465.64,930.49 465.64,930.61 465.59,930.75 465.59,930.86 465.59,956.56 486.38,977.38 512,977.38ZM512,46.57C499.18,46.57 488.8,56.97 488.8,69.82 488.8,82.66 499.18,93.09 512,93.09 524.82,93.09 535.2,82.66 535.2,69.82 535.2,56.97 524.82,46.57 512,46.57ZM921.74,800.77C921.74,800.77 886.3,760.9 828.23,708.03 748.89,635.79 721.45,601.51 721.45,418.91 721.45,240.55 711.73,139.64 512,139.64 312.27,139.64 302.55,240.55 302.55,418.91 302.55,601.53 275.08,635.83 195.72,708.1 138.75,759.99 102.96,799.86 102.96,799.86 93.09,807.7 93.09,812.26 93.09,814.48 93.09,817.34 97.86,884.34 512,884.34 926.14,884.34 930.91,817.34 930.91,814.48 930.91,812.61 930.91,808.26 921.74,800.77Z" />
+</vector>

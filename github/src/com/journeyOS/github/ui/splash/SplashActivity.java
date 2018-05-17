@@ -18,6 +18,7 @@ package com.journeyOS.github.ui.splash;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.journeyOS.base.utils.BaseUtils;
@@ -28,6 +29,7 @@ import com.journeyOS.core.api.userprovider.IAuthUserProvider;
 import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.github.R;
 import com.journeyOS.github.ui.login.LoginActivity;
+import com.journeyOS.github.ui.main.GithubActivity;
 
 public class SplashActivity extends BaseActivity {
     private final String TAG = SplashActivity.class.getSimpleName();
@@ -50,8 +52,8 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void initDataObserver() {
-        super.initDataObserver();
+    protected void initDataObserver(Bundle savedInstanceState) {
+        super.initDataObserver(savedInstanceState);
 
         CoreManager.getImpl(IAuthUserProvider.class).getUserWorkHandler().post(new Runnable() {
             @Override
@@ -61,7 +63,7 @@ public class SplashActivity extends BaseActivity {
                 if (BaseUtils.isNull(authUser)) {
                     startActivityForResult(new Intent(mContext, LoginActivity.class), REQUEST_ACCESS_TOKEN);
                 } else {
-
+                    showMainPage();
                 }
             }
         });
@@ -74,11 +76,17 @@ public class SplashActivity extends BaseActivity {
         switch (requestCode) {
             case REQUEST_ACCESS_TOKEN:
                 if (resultCode == RESULT_OK) {
+                    showMainPage();
                 }
                 break;
             default:
                 break;
         }
 
+    }
+
+    void showMainPage() {
+        delayFinish();
+        startActivity(new Intent(mContext, GithubActivity.class));
     }
 }

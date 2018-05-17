@@ -15,9 +15,27 @@
   -->
 
 <resources>
+    <string name="app_introduce">非官方Github客户端</string>
     <string name="user_name">用户名</string>
     <string name="password">密码</string>
     <string name="login">登录</string>
     <string name="user_name_warning">用户名不可用！</string>
     <string name="password_warning">密码不可用！</string>
+    <string name="action_settings">设置</string>
+
+    <!-- menu -->
+    <string name="add_account">添加账号</string>
+    <string name="manage_account">管理账号</string>
+    <string name="add_new_account">添加GitHub账号</string>
+
+    <string name="profile">主页</string>
+    <string name="my_repos">我的版本库</string>
+    <string name="notifications">通知</string>
+    <string name="issues">问题</string>
+    <string name="advanced">高级</string>
+    <string name="search">搜索</string>
+    <string name="starred">星标</string>
+    <string name="settings">设置</string>
+    <string name="about">关于</string>
+
 </resources>

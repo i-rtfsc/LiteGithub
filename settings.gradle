@@ -42,6 +42,8 @@ def initVersion() {
     gradle.ext.appcompat = '25.1.1'
     gradle.ext.submitbutton = '1.1.2'
     gradle.ext.cardview = '25.1.1'
+    gradle.ext.constraint = '1.0.2'
+    gradle.ext.design = '25.1.1'
 }
 
 initLocalGradleEnvironment()

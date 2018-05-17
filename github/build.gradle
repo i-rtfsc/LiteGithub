@@ -85,6 +85,14 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$gradle.appcompat"
     implementation "com.unstoppable:submitbutton:$gradle.submitbutton"
     implementation "com.android.support:cardview-v7:$gradle.cardview"
+    implementation "com.android.support:recyclerview-v7:$gradle.supportVersion"
+    implementation "com.android.support:support-annotations:$gradle.supportVersion"
+    implementation "com.android.support:design:$gradle.design"
+
+    implementation("com.mikepenz:materialdrawer:6.0.7@aar") {
+        transitive = true
+    }
+    implementation('com.mikepenz:crossfadedrawerlayout:1.0.1@aar')
 
     annotationProcessor project(':literouter-compiler')
     annotationProcessor "com.jakewharton:butterknife-compiler:$gradle.butterknife"

@@ -49,11 +49,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         setContentView(attachLayoutRes());
         ButterKnife.bind(this);
         initViews();
-        initDataObserver();
+        initDataObserver(savedInstanceState);
         ActivityUtil.getInstance().addActivity(this);
     }
 
-    protected void initDataObserver() {
+    protected void initDataObserver(Bundle savedInstanceState) {
 
     }
 
@@ -181,5 +181,18 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @NonNull
     protected String getLoadTip() {
         return getString(R.string.loading);
+    }
+
+    protected void delayFinish(){
+        delayFinish(1000);
+    }
+
+    protected void delayFinish(int mills){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, mills);
     }
 }
