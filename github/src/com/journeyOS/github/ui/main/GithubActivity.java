@@ -18,14 +18,11 @@ package com.journeyOS.github.ui.main;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -37,8 +34,8 @@ import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.api.userprovider.AuthUser;
 import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.core.viewmodel.ModelProvider;
-import com.journeyOS.github.BuildConfig;
 import com.journeyOS.github.R;
+import com.journeyOS.github.ui.fragment.repos.ReposFragment;
 import com.mikepenz.crossfadedrawerlayout.view.CrossfadeDrawerLayout;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -99,7 +96,9 @@ public class GithubActivity extends BaseActivity {
         mGithubModel.getAuthUserStatus().observe(this, new Observer<AuthUser>() {
             @Override
             public void onChanged(@Nullable final AuthUser user) {
+                CoreManager.setAccessToken(user.accessToken);
                 initDrawer(bundle, user);
+                loadFragment(ReposFragment.newInstance(ReposFragment.ReposType.OWNED));
             }
         });
     }
@@ -231,24 +230,39 @@ public class GithubActivity extends BaseActivity {
     }
 
     void handleDrawerItem(String tag, boolean longClick) {
-        LogUtils.d(TAG, "handle drawer item = " + tag + " , is long click = "+longClick);
+        LogUtils.d(TAG, "handle drawer item = " + tag + " , is long click = " + longClick);
         switch (tag) {
             case Constant.MENU_PROFILE:
+                showShortToast(ToastType.INFO, mContext.getString(R.string.developing));
                 break;
             case Constant.MENU_REPOS:
+                loadFragment(ReposFragment.newInstance(ReposFragment.ReposType.OWNED));
                 break;
             case Constant.MENU_NOTIFICATION:
+                showShortToast(ToastType.INFO, mContext.getString(R.string.developing));
                 break;
             case Constant.MENU_ISSUE:
+                showShortToast(ToastType.INFO, mContext.getString(R.string.developing));
                 break;
             case Constant.MENU_SEARCH:
+                showShortToast(ToastType.INFO, mContext.getString(R.string.developing));
                 break;
             case Constant.MENU_STARRED:
+                loadFragment(ReposFragment.newInstance(ReposFragment.ReposType.STARRED));
                 break;
             case Constant.MENU_SETTINGS:
+                showShortToast(ToastType.INFO, mContext.getString(R.string.developing));
                 break;
             case Constant.MENU_ABOUT:
+                showShortToast(ToastType.INFO, mContext.getString(R.string.developing));
                 break;
         }
+    }
+
+    void loadFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_container, fragment)
+                .commit();
     }
 }

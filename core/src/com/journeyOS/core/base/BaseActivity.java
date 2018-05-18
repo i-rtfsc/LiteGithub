@@ -128,13 +128,45 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     @Override
-    public void showShortToast(String message) {
-        Toasty.normal(getApplication(), message, Toast.LENGTH_SHORT).show();
+    public void showShortToast(ToastType toastType, String message) {
+        switch (toastType) {
+            case NORMAL:
+                Toasty.normal(getApplication(), message, Toast.LENGTH_SHORT).show();
+            break;
+            case INFO:
+                Toasty.info(getApplication(), message, Toast.LENGTH_SHORT).show();
+                break;
+            case WARNING:
+                Toasty.warning(getApplication(), message, Toast.LENGTH_SHORT).show();
+                break;
+            case ERROR:
+                Toasty.error(getApplication(), message, Toast.LENGTH_SHORT).show();
+                break;
+            case SUCCESS:
+                Toasty.success(getApplication(), message, Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     @Override
-    public void showLongToast(String message) {
-        Toasty.normal(getApplication(), message, Toast.LENGTH_LONG).show();
+    public void showLongToast(ToastType toastType, String message) {
+        switch (toastType) {
+            case NORMAL:
+                Toasty.normal(getApplication(), message, Toast.LENGTH_LONG).show();
+                break;
+            case INFO:
+                Toasty.info(getApplication(), message, Toast.LENGTH_LONG).show();
+                break;
+            case WARNING:
+                Toasty.warning(getApplication(), message, Toast.LENGTH_LONG).show();
+                break;
+            case ERROR:
+                Toasty.error(getApplication(), message, Toast.LENGTH_LONG).show();
+                break;
+            case SUCCESS:
+                Toasty.success(getApplication(), message, Toast.LENGTH_LONG).show();
+                break;
+        }
     }
 
     @Override

@@ -21,15 +21,19 @@ import android.content.DialogInterface;
 
 public interface IBaseView {
 
+    public enum ToastType {
+        NORMAL, INFO, WARNING, ERROR, SUCCESS
+    }
+
     void showProgressDialog(String content);
 
     void dismissProgressDialog();
 
     ProgressDialog getProgressDialog(String content);
 
-    void showShortToast(String message);
+    void showShortToast(ToastType toastType, String message);
 
-    void showLongToast(String message);
+    void showLongToast(ToastType toastType, String message);
 
     void showTipDialog(String content);
 

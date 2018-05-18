@@ -34,7 +34,6 @@ import com.unstoppable.submitbuttonview.SubmitButton;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import es.dmoral.toasty.Toasty;
 
 public class LoginActivity extends BaseActivity {
 
@@ -87,7 +86,7 @@ public class LoginActivity extends BaseActivity {
             public void onChanged(@Nullable StatusDataResource statusDataResource) {
                 switch (statusDataResource.status) {
                     case ERROR:
-                        showShortToast(statusDataResource.message);
+                        showShortToast(ToastType.ERROR, statusDataResource.message);
                         break;
                     case SUCCESS:
                         onLoginComplete();
@@ -143,7 +142,7 @@ public class LoginActivity extends BaseActivity {
             }
         }, 1000);
 
-        Toasty.error(getApplicationContext(), errorMsg).show();
+        showShortToast(ToastType.ERROR, errorMsg);
     }
 
     void onLoginComplete() {

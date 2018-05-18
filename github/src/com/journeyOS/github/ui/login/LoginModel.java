@@ -25,13 +25,15 @@ import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.api.userprovider.AuthUser;
 import com.journeyOS.core.api.userprovider.IAuthUserProvider;
 import com.journeyOS.core.base.StatusDataResource;
+import com.journeyOS.core.http.AppHttpClient;
 import com.journeyOS.core.http.AuthRequestModel;
 import com.journeyOS.core.http.HttpCoreManager;
 import com.journeyOS.core.http.HttpObserver;
 import com.journeyOS.core.http.HttpProgressSubscriber;
 import com.journeyOS.core.http.HttpResponse;
 import com.journeyOS.core.viewmodel.BaseViewModel;
-import com.journeyOS.github.api.AppRetrofitClient;
+import com.journeyOS.github.api.GithubService;
+import com.journeyOS.github.api.LoginService;
 import com.journeyOS.github.entity.BasicToken;
 import com.journeyOS.github.entity.User;
 
@@ -63,7 +65,7 @@ public class LoginModel extends BaseViewModel {
     protected void login(String userName, String password) {
         AuthRequestModel authRequestModel = AuthRequestModel.generate();
         String token = Credentials.basic(userName, password);
-        Observable<Response<BasicToken>> observable = AppRetrofitClient.getLoginService(token).authorizations(authRequestModel);
+        Observable<Response<BasicToken>> observable = AppHttpClient.getInstance(token).getService(LoginService.class).authorizations(authRequestModel);
         HttpProgressSubscriber<BasicToken, Response<BasicToken>> subscriber = new HttpProgressSubscriber<>(null,
                 new HttpObserver<BasicToken>() {
                     @Override
@@ -111,7 +113,7 @@ public class LoginModel extends BaseViewModel {
         HttpCoreManager.executeRxHttp(new HttpCoreManager.IObservableCreator<User, Response<User>>() {
             @Override
             public Observable<Response<User>> createObservable(boolean forceNetWork) {
-                return AppRetrofitClient.getUserService(basicToken.token).getUser(false, "");
+                return AppHttpClient.getInstance(basicToken.token).getService(GithubService.class).getUser(false, "");
             }
         }, httpObserver, false);
     }

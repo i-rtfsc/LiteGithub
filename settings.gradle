@@ -44,6 +44,8 @@ def initVersion() {
     gradle.ext.cardview = '25.1.1'
     gradle.ext.constraint = '1.0.2'
     gradle.ext.design = '25.1.1'
+    gradle.ext.circleimageview = '2.2.0'
+    gradle.ext.picasso = '2.5.2'
 }
 
 initLocalGradleEnvironment()

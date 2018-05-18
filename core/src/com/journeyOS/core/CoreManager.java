@@ -26,6 +26,7 @@ import com.journeyOS.literouter.ARouter;
 
 public class CoreManager {
     private static Application sContext;
+    private static String accessToken;
 
     public static void init(Application context) {
         sContext = context;
@@ -34,6 +35,14 @@ public class CoreManager {
 
     public static Application getContext() {
         return sContext;
+    }
+
+    public static void setAccessToken(String token) {
+        accessToken = token;
+    }
+
+    public static String getAccessToken() {
+        return accessToken;
     }
 
     public static <T extends ICoreApi> T getImpl(Class<T> api) {

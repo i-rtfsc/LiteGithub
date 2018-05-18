@@ -1,32 +1,17 @@
-/*
- * Copyright (c) 2018 anqi.huang@outlook.com
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.journeyOS.core.http;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.journeyOS.base.network.NetWork;
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.FileUtil;
 import com.journeyOS.core.CoreManager;
+import com.journeyOS.core.config.GithubConfig;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -39,53 +24,55 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public enum AppRetrofit {
-    INSTANCE;
-
-    private final String TAG = AppRetrofit.class.getSimpleName();
-
+public class AppHttpClient {
+    private final static String TAG = AppHttpClient.class.getSimpleName();
     private final static int HTTP_TIME_OUT = 16 * 1000;
-
     private final static int MAX_CACHE_SIZE = 8 * 1024 * 1024;
-
     private final static int CACHE_MAX_AGE = 4 * 7 * 24 * 60 * 60;
 
-    private HashMap<String, Retrofit> retrofitMap = new HashMap<>();
-    private String token;
+    private Map<String, Object> serviceByType = new HashMap<>();
+    private Retrofit mRetrofit;
 
-    private void createRetrofit(@NonNull String baseUrl) {
-        int timeOut = HTTP_TIME_OUT;
+    private AppHttpClient(String token) {
         Cache cache = new Cache(FileUtil.getHttpImageCacheDir(CoreManager.getContext()),
                 MAX_CACHE_SIZE);
 
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(timeOut, TimeUnit.MILLISECONDS)
-                .addInterceptor(new BaseInterceptor())
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(HTTP_TIME_OUT, TimeUnit.MILLISECONDS)
+                .addInterceptor(new BaseInterceptor(token))
                 .addNetworkInterceptor(new NetworkBaseInterceptor())
                 .cache(cache)
                 .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl(GithubConfig.GITHUB_API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .client(okHttpClient)
+                .client(client)
                 .build();
-        retrofitMap.put(baseUrl, retrofit);
     }
 
-    public Retrofit getRetrofit(@NonNull String baseUrl, @Nullable String token) {
-        this.token = token;
-        if (!retrofitMap.containsKey(baseUrl)) {
-            createRetrofit(baseUrl);
+    public static AppHttpClient getInstance(String token) {
+        return new AppHttpClient(token);
+    }
+
+    public synchronized <T> T getService(Class<T> apiInterface) {
+        String serviceName = apiInterface.getName();
+        if (BaseUtils.isNull(serviceByType.get(serviceName))) {
+            T service = mRetrofit.create(apiInterface);
+            serviceByType.put(serviceName, service);
+            return service;
+        } else {
+            return (T) serviceByType.get(serviceName);
         }
-        return retrofitMap.get(baseUrl);
     }
 
-    /**
-     * 拦截器
-     */
     private class BaseInterceptor implements Interceptor {
+        String token = null;
+
+        public BaseInterceptor(String token) {
+            this.token = token;
+        }
+
         @Override
         public Response intercept(@NonNull Chain chain) throws IOException {
             Request request = chain.request();
@@ -154,4 +141,5 @@ public enum AppRetrofit {
     public static String getCacheString() {
         return "public, max-age=" + CACHE_MAX_AGE;
     }
+
 }
