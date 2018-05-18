@@ -18,6 +18,7 @@ package com.journeyOS.github.ui.main;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.journeyOS.base.Constant;
 import com.journeyOS.base.utils.LogUtils;
@@ -51,6 +53,7 @@ import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 
@@ -124,12 +127,16 @@ public class GithubActivity extends BaseActivity {
 
     void initDrawer(Bundle savedInstanceState, AuthUser user) {
 
+        ImageView imageView = new ImageView(mContext);
+        Picasso.with(mContext)
+                .load(Uri.parse(user.avatar))
+                .placeholder(R.mipmap.user)
+                .into(imageView);
+
         final IProfile profile = new ProfileDrawerItem()
                 .withName(user.name)
                 .withEmail(user.email)
-                .withIcon(R.mipmap.user)
-//                .withIcon(Uri.parse(user.avatar))
-                ;
+                .withIcon(imageView.getDrawable());
 
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
