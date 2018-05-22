@@ -54,7 +54,7 @@ public class ReposModel extends BaseViewModel {
         mGithubService = AppHttpClient.getInstance(CoreManager.getAccessToken()).getService(GithubService.class);
     }
 
-    protected void loadRepositories(final ReposFragment.ReposType reposType) {
+    protected void loadRepositories(final ReposFragment.ReposType reposType, final int page) {
         HttpObserver<ArrayList<Repository>> httpObserver = new HttpObserver<ArrayList<Repository>>() {
             @Override
             public void onSuccess(HttpResponse<ArrayList<Repository>> response) {
@@ -78,13 +78,13 @@ public class ReposModel extends BaseViewModel {
                 Observable<Response<ArrayList<Repository>>> responseObservable = null;
                 switch (reposType) {
                     case OWNED:
-                        responseObservable = mGithubService.getUserRepos(forceNetWork, "");
+                        responseObservable = mGithubService.getUserRepos(forceNetWork, "", page);
                         break;
                     case STARRED:
-                        responseObservable = mGithubService.getUserStarred(forceNetWork, "");
+                        responseObservable = mGithubService.getUserStarred(forceNetWork, "", page);
                         break;
                     default:
-                        responseObservable = mGithubService.getUserRepos(forceNetWork, "");
+                        responseObservable = mGithubService.getUserRepos(forceNetWork, "", page);
                         break;
                 }
                 return responseObservable;
@@ -97,6 +97,7 @@ public class ReposModel extends BaseViewModel {
         for (Repository repository : repositories) {
             RepositoryData repositoryData = new RepositoryData();
             repositoryData.name = repository.name;
+            repositoryData.defaultBranch = repository.defaultBranch;
             repositoryData.description = repository.description;
             repositoryData.stargazersCount = repository.stargazersCount;
             repositoryData.forksCount = repository.forksCount;

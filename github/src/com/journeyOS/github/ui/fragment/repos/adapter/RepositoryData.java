@@ -8,6 +8,10 @@ public class RepositoryData implements BaseAdapterData {
 
     public String name;
 
+    public String htmlUrl;
+
+    public String defaultBranch;
+
     public String description;
 
     public int stargazersCount;
@@ -27,10 +31,13 @@ public class RepositoryData implements BaseAdapterData {
     public String toString() {
         return "RepositoryData{" +
                 "name='" + name + '\'' +
+                ", htmlUrl='" + htmlUrl + '\'' +
+                ", defaultBranch='" + defaultBranch + '\'' +
                 ", description='" + description + '\'' +
                 ", stargazersCount=" + stargazersCount +
                 ", forksCount=" + forksCount +
                 ", owner=" + owner +
+                ", language='" + language + '\'' +
                 '}';
     }
 }

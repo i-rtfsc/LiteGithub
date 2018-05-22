@@ -9,6 +9,7 @@ import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 public interface GithubService {
@@ -22,12 +23,14 @@ public interface GithubService {
     @GET("user{user}/repos")
     Observable<retrofit2.Response<ArrayList<Repository>>> getUserRepos(
             @Header("forceNetWork") boolean forceNetWork,
-            @Path("user") String user
+            @Path("user") String user,
+            @Query("page") int page
     );
 
     @GET("user{user}/starred")
     Observable<Response<ArrayList<Repository>>> getUserStarred(
             @Header("forceNetWork") boolean forceNetWork,
-            @Path("user") String user
+            @Path("user") String user,
+            @Query("page") int page
     );
 }
