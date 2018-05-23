@@ -38,5 +38,12 @@
     <string name="settings">设置</string>
     <string name="about">关于</string>
 
+    <string name="repository">版本库</string>
+    <string name="info">信息</string>
+    <string name="files">文件</string>
+    <string name="commits">提交</string>
+    <string name="activity">活动</string>
+
+    <string name="tap_to_retry">点击重试</string>
     <string name="developing">开发中...</string>
 </resources>

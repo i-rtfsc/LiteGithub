@@ -165,23 +165,6 @@ public class ReposFragment extends BaseFragment implements SwipeRefreshLayout.On
         mReposAdapter.setData(repositories);
     }
 
-    private class ScrollListener extends RecyclerView.OnScrollListener {
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            if (!canLoadMore || isLoading) return;
-            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-            //only LinearLayoutManager can find last visible
-            if (layoutManager instanceof LinearLayoutManager) {
-                LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
-                int lastPosition = linearManager.findLastVisibleItemPosition();
-                if (lastPosition == mReposAdapter.getItemCount() - 1) {
-                    onLoadMore(curPage + 1);
-                }
-            }
-        }
-    }
-
     void onLoadMore(int page) {
         mReposModel.loadRepositories(mReposType, page);
     }
@@ -202,5 +185,22 @@ public class ReposFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     int getPagerSize() {
         return DEFAULT_PAGE_SIZE;
+    }
+
+    class ScrollListener extends RecyclerView.OnScrollListener {
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            if (!canLoadMore || isLoading) return;
+            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+            //only LinearLayoutManager can find last visible
+            if (layoutManager instanceof LinearLayoutManager) {
+                LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+                int lastPosition = linearManager.findLastVisibleItemPosition();
+                if (lastPosition == mReposAdapter.getItemCount() - 1) {
+                    onLoadMore(curPage + 1);
+                }
+            }
+        }
     }
 }

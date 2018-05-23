@@ -16,13 +16,21 @@
 
 package com.journeyOS.base.utils;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.journeyOS.base.R;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
+import es.dmoral.toasty.Toasty;
 
 public class BaseUtils {
 
@@ -63,6 +71,26 @@ public class BaseUtils {
             b = false;
         }
         return b;
+    }
+
+    public static String getSizeString(int size) {
+        if (size < 1024) {
+            return String.format(Locale.getDefault(), "%d B", size);
+        } else if (size < 1024 * 1024) {
+            float sizeK = size / 1024f;
+            return String.format(Locale.getDefault(), "%.2f KB", sizeK);
+        } else if (size < 1024 * 1024 * 1024) {
+            float sizeM = size / (1024f * 1024f);
+            return String.format(Locale.getDefault(), "%.2f MB", sizeM);
+        }
+        return null;
+    }
+
+    public static void copyToClipboard(@NonNull Context context, @NonNull String uri) {
+        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText(context.getString(R.string.app_name), uri);
+        clipboard.setPrimaryClip(clip);
+        Toasty.success(context, context.getString(R.string.success_copied)).show();
     }
 
     public static boolean isEmpty(CharSequence str) {

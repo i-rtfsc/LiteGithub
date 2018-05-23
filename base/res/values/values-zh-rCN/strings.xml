@@ -15,5 +15,5 @@
   -->
 
 <resources>
-    <string name="success_copied">Copied</string>
+    <string name="success_copied">已复制</string>
 </resources>

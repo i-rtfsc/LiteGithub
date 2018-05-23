@@ -6,16 +6,16 @@ import android.widget.TextView;
 
 import com.journeyOS.base.adapter.BaseRecyclerAdapter;
 import com.journeyOS.base.adapter.BaseViewHolder;
-import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.github.R;
+import com.journeyOS.github.ui.viewer.RepositoryActivity;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import es.dmoral.toasty.Toasty;
 
 public class RepositoryHolder extends BaseViewHolder<RepositoryData> {
+    RepositoryData mRepositoryData;
 
     @BindView(R.id.iv_user_avatar)
     ImageView ivUserAvatar;
@@ -38,6 +38,7 @@ public class RepositoryHolder extends BaseViewHolder<RepositoryData> {
 
     @Override
     public void updateItem(RepositoryData data, int position) {
+        mRepositoryData = data;
         tvRepoName.setText(data.name);
         tvRepoDescription.setText(data.description);
         tvStarNum.setText(String.valueOf(data.stargazersCount));
@@ -57,6 +58,9 @@ public class RepositoryHolder extends BaseViewHolder<RepositoryData> {
 
     @OnClick(R.id.cardView)
     public void onCardViewClick() {
-        Toasty.normal(CoreManager.getContext(), tvRepoName.getText().toString()).show();
+        String login = mRepositoryData.owner.login;
+        String name = mRepositoryData.name;
+        String defaultBranch = mRepositoryData.defaultBranch;
+        RepositoryActivity.show(CoreManager.getContext(), login, name, defaultBranch);
     }
 }
