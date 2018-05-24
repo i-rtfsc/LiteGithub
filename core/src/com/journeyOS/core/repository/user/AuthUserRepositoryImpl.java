@@ -65,4 +65,9 @@ public class AuthUserRepositoryImpl implements IAuthUserProvider {
         mAuthUserDatabase.authUserDao().delete(user);
     }
 
+    @Override
+    public void deleteAll() {
+        mAuthUserDatabase.authUserDao().deleteAll();
+    }
+
 }

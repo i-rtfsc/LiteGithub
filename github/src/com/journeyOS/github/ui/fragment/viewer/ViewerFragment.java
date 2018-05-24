@@ -25,6 +25,9 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.journeyOS.base.Constant;
+import com.journeyOS.base.persistence.SpUtils;
+import com.journeyOS.base.utils.GitHubHelper;
 import com.journeyOS.base.utils.MarkdownHelper;
 import com.journeyOS.core.base.BaseFragment;
 import com.journeyOS.core.base.StatusDataResource;
@@ -33,12 +36,20 @@ import com.journeyOS.github.R;
 import com.journeyOS.github.ui.widget.webview.CodeWebView;
 
 import butterknife.BindView;
+import io.github.kbiakov.codeview.CodeView;
+import io.github.kbiakov.codeview.adapters.Options;
+import io.github.kbiakov.codeview.highlight.ColorTheme;
+import io.github.kbiakov.codeview.highlight.ColorThemeData;
 
 public class ViewerFragment extends BaseFragment implements CodeWebView.ContentChangedListener {
     @BindView(R.id.web_view)
     CodeWebView webView;
+    @BindView(R.id.code_view)
+    CodeView codeView;
     @BindView(R.id.progress_bar)
     ProgressBar loader;
+
+    ColorThemeData colorThemeData;
 
     static String mUrl;
     static String mHtmlUrl;
@@ -57,6 +68,15 @@ public class ViewerFragment extends BaseFragment implements CodeWebView.ContentC
     }
 
     @Override
+    public void initBeforeView() {
+        super.initBeforeView();
+        boolean light = SpUtils.getInstant().getBoolean(Constant.THEME, true);
+        colorThemeData = (light ? ColorTheme.DEFAULT.theme() : ColorTheme.MONOKAI.theme())
+                .withBgContent(android.R.color.black)
+                .withNoteColor(android.R.color.white);
+    }
+
+    @Override
     public int attachLayoutRes() {
         return R.layout.viewer_fragment;
     }
@@ -65,6 +85,7 @@ public class ViewerFragment extends BaseFragment implements CodeWebView.ContentC
     public void initViews() {
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminate(true);
+
     }
 
     @Override
@@ -84,7 +105,7 @@ public class ViewerFragment extends BaseFragment implements CodeWebView.ContentC
                         if (MarkdownHelper.isMarkdown(mUrl)) {
                             loadMdText((String) statusDataResource.data, mHtmlUrl);
                         } else {
-                            loadCode((String) statusDataResource.data, MarkdownHelper.getExtension(mUrl));
+                            loadCode((String) statusDataResource.data, mDownloadUrl.substring(mDownloadUrl.lastIndexOf(".") + 1));
                         }
                         break;
                     case ERROR:
@@ -106,18 +127,31 @@ public class ViewerFragment extends BaseFragment implements CodeWebView.ContentC
     }
 
     void loadMdText(@NonNull String text, @NonNull String baseUrl) {
+        codeView.setVisibility(View.GONE);
         webView.setMdSource(text, baseUrl);
         webView.setContentChangedListener(this);
+        webView.setVisibility(View.VISIBLE);
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminate(false);
     }
 
-    void loadCode(@NonNull String text, @Nullable String extension) {
-        webView.setCodeSource(text, wrap, extension);
-        webView.setContentChangedListener(this);
-        getActivity().invalidateOptionsMenu();
-        loader.setVisibility(View.VISIBLE);
-        loader.setIndeterminate(false);
+    void loadCode(@NonNull String text, @Nullable String language) {
+        if (GitHubHelper.isSupportCode(language)) {
+            webView.setVisibility(View.GONE);
+            codeView.setOptions(Options.Default.get(mActivity)
+                    .withCode(text)
+                    .withLanguage(language)
+                    .withTheme(colorThemeData));
+            codeView.setVisibility(View.VISIBLE);
+            getActivity().invalidateOptionsMenu();
+        } else {
+            webView.setCodeSource(text, wrap, MarkdownHelper.getExtension(mUrl));
+            webView.setContentChangedListener(this);
+            webView.setVisibility(View.GONE);
+            getActivity().invalidateOptionsMenu();
+            loader.setVisibility(View.VISIBLE);
+            loader.setIndeterminate(false);
+        }
     }
 
     @Override

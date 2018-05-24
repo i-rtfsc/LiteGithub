@@ -71,4 +71,25 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <style name="CornersAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@drawable/dialog_bg</item>
+        <!--<item name="android:colorBackground">@color/colorPrimary</item>-->
+        <!--<item name="android:textColor">@color/text_primary</item>-->
+        <item name="colorAccent">@color/deeppink</item>
+        <item name="textColorAlertDialogListItem">@color/text_primary_dark</item>
+        <item name="android:textColorPrimary">@color/text_primary_dark</item>
+        <item name="android:windowEnterAnimation">@anim/base_dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/base_dialog_exit</item>
+        <!--item RadioButton or CheckBox color-->
+        <item name="colorControlNormal">@color/text_primary_dark</item>
+        <item name="colorControlActivated">@color/deeppink</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless </item>
+    </style>
+
 </resources>

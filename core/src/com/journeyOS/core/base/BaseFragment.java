@@ -147,11 +147,11 @@ public abstract class BaseFragment extends Fragment implements BaseViewInit, IBa
 
     @Override
     public void showTipDialog(String content) {
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(getActivity(), R.style.CornersAlertDialog)
                 .setTitle(getString(R.string.dialog_tip))
                 .setMessage(content)
                 .setCancelable(true)
-                .setPositiveButton(getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(@NonNull DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -163,12 +163,12 @@ public abstract class BaseFragment extends Fragment implements BaseViewInit, IBa
     @Override
     public void showConfirmDialog(String msn, String title, String confirmText
             , DialogInterface.OnClickListener confirmListener) {
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(getActivity(), R.style.CornersAlertDialog)
                 .setTitle(title)
                 .setMessage(msn)
                 .setCancelable(true)
                 .setPositiveButton(confirmText, confirmListener)
-                .setNegativeButton(getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(@NonNull DialogInterface dialog, int which) {
                         dialog.cancel();

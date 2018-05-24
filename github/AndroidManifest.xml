@@ -57,6 +57,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/base_AppTheme" />
 
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:label="@string/settings"
+            android:screenOrientation="portrait"
+            android:theme="@style/base_AppTheme" />
+
     </application>
 
 </manifest>

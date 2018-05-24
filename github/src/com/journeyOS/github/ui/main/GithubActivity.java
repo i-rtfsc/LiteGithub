@@ -35,6 +35,7 @@ import com.journeyOS.github.MaterialDrawer;
 import com.journeyOS.github.MaterialDrawer.OnDrawerItemClickListener;
 import com.journeyOS.github.R;
 import com.journeyOS.github.ui.fragment.repos.ReposFragment;
+import com.journeyOS.github.ui.settings.SettingsActivity;
 import com.mikepenz.materialdrawer.Drawer;
 
 import butterknife.BindView;
@@ -144,8 +145,7 @@ public class GithubActivity extends BaseActivity implements OnDrawerItemClickLis
                 loadFragment(ReposFragment.newInstance(ReposFragment.ReposType.STARRED));
                 break;
             case Constant.MENU_SETTINGS:
-                mToolbar.setTitle(R.string.settings);
-                showShortToast(ToastType.INFO, mContext.getString(R.string.developing));
+                SettingsActivity.newInstance(mContext);
                 break;
             case Constant.MENU_ABOUT:
                 mToolbar.setTitle(R.string.about);

@@ -55,6 +55,9 @@ dependencies {
     api "io.reactivex:rxjava:$gradle.rxjava"
     api "io.reactivex:rxandroid:$gradle.rxandroid"
     api "com.github.GrenderG:Toasty:$gradle.toasty"
+    api "com.github.kbiakov:CodeView-android:$gradle.codeview"
+
+    implementation "me.zhanghai.android.materialprogressbar:library:$gradle.materialprogressbar"
 
     debugApi "com.squareup.leakcanary:leakcanary-android:$gradle.leakcanary"
     releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$gradle.leakcanary"

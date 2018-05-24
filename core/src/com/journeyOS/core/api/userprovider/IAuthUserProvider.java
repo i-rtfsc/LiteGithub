@@ -33,4 +33,6 @@ public interface IAuthUserProvider extends ICoreApi {
     void insertOrUpdateAuthUser(AuthUser user);
 
     void deleteAuthUser(AuthUser user);
+
+    void deleteAll();
 }

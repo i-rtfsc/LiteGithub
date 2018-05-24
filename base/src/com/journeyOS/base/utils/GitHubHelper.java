@@ -36,6 +36,13 @@ public class GitHubHelper {
 
     private static final String[] IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".svg"};
 
+    private static final String[] CODE_EXTENSIONS = {"c", "cc", "cpp", "cxx", "cyc", "m",
+            "cs", "coffee", "rc", "rs", "rust", "go", "hs", "java", "javascript", "js",
+            "erlang", "erl", "bash", "bsh", "csh", "sh", "cv", "py", "python", "clj",
+            "css", "vhdl", "vhd", "perl", "pl", "pm", "basic", "cbm", "xq", "xquery",
+            "rb", "ruby", "apollo", "agc", "aea", "cl", "el", "lisp", "lsp", "scm", "ss",
+            "rkt", "llvm", "ll", "lua", "matlab", "latex", "tex", "json", "xml"};
+
 
     public static boolean isGitHubUrl(@NonNull String url) {
         return GITHUB_URL_PATTERN.matcher(url).matches();
@@ -57,6 +64,17 @@ public class GitHubHelper {
             if ((extension != null && value.replace(".", "").equals(extension))
                     || name.endsWith(value))
                 return true;
+        }
+        return false;
+    }
+
+    public static boolean isSupportCode(@Nullable String name) {
+        if (BaseUtils.isBlank(name)) return false;
+        name = name.toLowerCase();
+        for (String value : CODE_EXTENSIONS) {
+            if (value.equals(name)) {
+                return true;
+            }
         }
         return false;
     }

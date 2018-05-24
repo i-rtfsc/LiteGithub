@@ -14,4 +14,9 @@
   limitations under the License.
   -->
 
-<resources></resources>
+<resources>
+    <array name="theme_array">
+        <item >@string/light</item>
+        <item >@string/dark</item>
+    </array>
+</resources>

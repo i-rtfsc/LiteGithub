@@ -45,6 +45,14 @@
     <string name="commits">Commits</string>
     <string name="activity">Activity</string>
 
+    <string name="code_theme">Code theme</string>
+    <string name="use_cache">Use cache first</string>
+    <string name="logout">Logout</string>
+    <string name="logout_message">Do you really need to log out?</string>
+
+    <string name="light">Light</string>
+    <string name="dark">dark</string>
+
     <string name="tap_to_retry">Tap to retry</string>
     <string name="developing">developing...</string>
 </resources>

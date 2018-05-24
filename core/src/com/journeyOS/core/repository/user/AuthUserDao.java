@@ -44,4 +44,6 @@ public interface AuthUserDao {
     @Delete
     void delete(AuthUser user);
 
+    @Query("DELETE FROM authUser")
+    void deleteAll();
 }

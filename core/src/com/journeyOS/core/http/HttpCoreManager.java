@@ -19,7 +19,9 @@ package com.journeyOS.core.http;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.journeyOS.base.Constant;
 import com.journeyOS.base.network.NetWork;
+import com.journeyOS.base.persistence.SpUtils;
 import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.core.CoreManager;
 
@@ -63,7 +65,8 @@ public class HttpCoreManager {
 
             }
         };
-        executeRxHttp(observableCreator.createObservable(!readCacheFirst),
+        boolean useCache = SpUtils.getInstant().getBoolean(Constant.THEME, true);
+        executeRxHttp(observableCreator.createObservable(!readCacheFirst || !useCache),
                 getHttpSubscriber(tempObserver));
         LogUtils.i(TAG, "get cache start:" + System.currentTimeMillis());
     }

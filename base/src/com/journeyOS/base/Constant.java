@@ -18,7 +18,8 @@ package com.journeyOS.base;
 
 public class Constant {
     //SharedPreferences KEY
-
+    public static final String THEME = "theme";
+    public static final String USE_CACHE = "use_cache";
     //menu key
     public static final String MENU_PROFILE = "menu_profile";
     public static final String MENU_REPOS = "menu_repos";

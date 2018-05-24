@@ -30,11 +30,17 @@ import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.github.R;
 import com.journeyOS.github.ui.login.LoginActivity;
 import com.journeyOS.github.ui.main.GithubActivity;
+import com.journeyOS.github.ui.settings.SettingsActivity;
 
 public class SplashActivity extends BaseActivity {
     private final String TAG = SplashActivity.class.getSimpleName();
     private final int REQUEST_ACCESS_TOKEN = 1;
     private Context mContext;
+
+    public static void newInstance(@NonNull Context context) {
+        Intent intent = new Intent(context, SplashActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     public void initBeforeView() {

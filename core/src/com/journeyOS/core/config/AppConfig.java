@@ -29,6 +29,7 @@ import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 
 import es.dmoral.toasty.Toasty;
+import io.github.kbiakov.codeview.classifier.CodeProcessor;
 
 
 public class AppConfig {
@@ -42,6 +43,7 @@ public class AppConfig {
         initFile();
         initSharedPreference(context);
         initToastyConfig(context);
+        CodeProcessor.init(context);
     }
 
     private static void initCrashReport(Context context) {

@@ -17,6 +17,7 @@
 package com.journeyOS.base.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,21 @@ import android.view.Window;
 import android.view.WindowManager;
 
 public class UIUtils {
+    public static int dip2px(Context context, float dpValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    public static int px2dip(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+    public static int px2sp(Context context, float pxValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (pxValue / fontScale + 0.5f);
+    }
+
     public static void setStatusBarColor(Activity activity, int statusColor) {
         Window window = activity.getWindow();
         //取消状态栏透明
