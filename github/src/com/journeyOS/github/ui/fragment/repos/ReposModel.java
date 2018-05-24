@@ -60,7 +60,7 @@ public class ReposModel extends BaseViewModel {
             public void onSuccess(HttpResponse<ArrayList<Repository>> response) {
                 LogUtils.d(TAG, "load repository " + reposType + " success");
                 ArrayList<RepositoryData> repositoryDataArrayList = convertFromRepository((ArrayList<Repository>) response.body());
-                mReposStatus.postValue(StatusDataResource.success(repositoryDataArrayList));
+                mReposStatus.postValue(StatusDataResource.success(repositoryDataArrayList, page));
             }
 
             @Override

@@ -67,6 +67,13 @@ public class RepoFilesFragment extends BaseFragment implements
     static String mDefaultBranch = null;
     String curPath = "";
 
+    final Observer<StatusDataResource> reposFilesStatusObserver = new Observer<StatusDataResource>() {
+        @Override
+        public void onChanged(@Nullable StatusDataResource statusDataResource) {
+            handleReposFilesStatusObserver(statusDataResource);
+        }
+    };
+
     public static BaseFragment newInstance(@NonNull String login, @NonNull String name, @NonNull String defaultBranch) {
         RepoFilesFragment fragment = new RepoFilesFragment();
         mLogin = login;
@@ -100,21 +107,20 @@ public class RepoFilesFragment extends BaseFragment implements
         showLoading();
         mReposFileModel.loadFiles(mLogin, mName, mDefaultBranch, curPath, false);
 
-        mReposFileModel.getReposFilesStatus().observe(this, new Observer<StatusDataResource>() {
-            @Override
-            public void onChanged(@Nullable StatusDataResource statusDataResource) {
-                switch (statusDataResource.status) {
-                    case SUCCESS:
-                        hideLoading();
-                        initReposfiles((List<ReposFileData>) statusDataResource.data);
-                        break;
-                    case ERROR:
-                        hideLoading();
-                        showTipDialog(statusDataResource.message);
-                        break;
-                }
-            }
-        });
+        mReposFileModel.getReposFilesStatus().observe(this, reposFilesStatusObserver);
+    }
+
+    void handleReposFilesStatusObserver(StatusDataResource statusDataResource) {
+        switch (statusDataResource.status) {
+            case SUCCESS:
+                hideLoading();
+                initReposfiles((List<ReposFileData>) statusDataResource.data);
+                break;
+            case ERROR:
+                hideLoading();
+                showTipDialog(statusDataResource.message);
+                break;
+        }
     }
 
     void initReposfiles(List<ReposFileData> reposFileData) {

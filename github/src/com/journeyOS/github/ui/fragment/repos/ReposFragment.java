@@ -26,22 +26,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.journeyOS.base.adapter.BaseRecyclerAdapter;
+import com.journeyOS.base.utils.BaseUtils;
+import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.base.utils.ViewUtils;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.base.BaseFragment;
 import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
+import com.journeyOS.github.BuildConfig;
 import com.journeyOS.github.R;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryHolder;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
 public class ReposFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
-
+    private static final boolean DEBUG = BuildConfig.DEBUG;
+    private static final String TAG = ReposFragment.class.getSimpleName();
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
     @BindView(R.id.repos_recyclerView)
@@ -52,15 +57,19 @@ public class ReposFragment extends BaseFragment implements SwipeRefreshLayout.On
     private Context mContext;
     private ReposModel mReposModel;
 
-    private List<RepositoryData> mData = new ArrayList<>();
-
-    private RecyclerView.AdapterDataObserver observer;
     private int curPage = 1;
     private final int DEFAULT_PAGE_SIZE = 30;
     private boolean isLoading = false;
     private boolean canLoadMore = false;
 
-    private boolean inited = false;
+    private Map<Integer, Object> initedMap = new HashMap<>();
+
+    final Observer<StatusDataResource> reposStatusObserver = new Observer<StatusDataResource>() {
+        @Override
+        public void onChanged(@Nullable StatusDataResource statusDataResource) {
+            handleReposStatusObserver(statusDataResource);
+        }
+    };
 
     public enum ReposType {
         OWNED, STARRED
@@ -78,6 +87,7 @@ public class ReposFragment extends BaseFragment implements SwipeRefreshLayout.On
     public void initBeforeView() {
         super.initBeforeView();
         mContext = CoreManager.getContext();
+        initedMap.put(1, false);
     }
 
     @Override
@@ -87,7 +97,7 @@ public class ReposFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     @Override
     public void initViews() {
-
+        initAllView();
     }
 
     @Override
@@ -97,46 +107,48 @@ public class ReposFragment extends BaseFragment implements SwipeRefreshLayout.On
 
         showLoading();
         mReposModel.loadRepositories(mReposType, getCurPage());
-        mReposModel.getReposStatus().observe(this, new Observer<StatusDataResource>() {
-            @Override
-            public void onChanged(@Nullable StatusDataResource statusDataResource) {
-                switch (statusDataResource.status) {
-                    case SUCCESS:
-                        hideLoading();
-                        if (!inited) {
-                            initRepositories((List<RepositoryData>) statusDataResource.data);
-                        } else {
-                            updateRepositories((List<RepositoryData>) statusDataResource.data);
-                        }
-                        break;
-                    case ERROR:
-                        hideLoading();
-                        showTipDialog(statusDataResource.message);
-                        break;
-                }
-            }
-        });
-
+        mReposModel.getReposStatus().observe(this, reposStatusObserver);
     }
 
     @Override
     public void onRefresh() {
-        inited = false;
+        initedMap.clear();
+        initedMap.put(1, false);
         mReposAdapter.clear();
         showLoading();
         onLoadMore(1);
     }
 
-    void initRepositories(List<RepositoryData> repositories) {
-        mData.addAll(repositories);
+    void handleReposStatusObserver(StatusDataResource statusDataResource) {
+        switch (statusDataResource.status) {
+            case SUCCESS:
+                hideLoading();
+                int page = (Integer) statusDataResource.subData;
+                Object initedByPage = initedMap.get(page);
+                LogUtils.d(TAG, "(onChanged)current page = " + page + ", has been inited = " + initedByPage);
+                if (!BaseUtils.isNull(initedByPage) && (!(Boolean) initedByPage)) {
+                    initedMap.put(page, true);
+                    if (page == 1) {
+                        initRepositories((List<RepositoryData>) statusDataResource.data);
+                    } else {
+                        updateRepositories((List<RepositoryData>) statusDataResource.data);
+                    }
+                }
+                break;
+            case ERROR:
+                hideLoading();
+                showTipDialog(statusDataResource.message);
+                break;
+        }
+    }
 
+    void initAllView() {
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setColorSchemeColors(ViewUtils.getRefreshLayoutColors(mContext));
 
         mReposAdapter = new BaseRecyclerAdapter(mContext);
-        mReposAdapter.setData(repositories);
         mReposAdapter.registerHolder(RepositoryHolder.class, R.layout.layout_item_repository);
-        observer = new RecyclerView.AdapterDataObserver() {
+        mReposAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
                 super.onChanged();
@@ -150,23 +162,32 @@ public class ReposFragment extends BaseFragment implements SwipeRefreshLayout.On
                             itemCount / getPagerSize() : (itemCount / getPagerSize()) + 1;
                 }
             }
-        };
-        mReposAdapter.registerAdapterDataObserver(observer);
+        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         mReposRecyclerView.setLayoutManager(layoutManager);
         mReposRecyclerView.setAdapter(mReposAdapter);
         mReposRecyclerView.setOnScrollListener(new ScrollListener());
-        inited = true;
     }
 
-    void updateRepositories(List<RepositoryData> repositories) {
-        mData.removeAll(repositories);
+    void initRepositories(List<RepositoryData> repositories) {
+        LogUtils.d(TAG, "init adapter data");
         mReposAdapter.setData(repositories);
     }
 
+    void updateRepositories(List<RepositoryData> repositories) {
+        LogUtils.d(TAG, "defore upate adapter data = " + mReposAdapter.getItemCount());
+        mReposAdapter.addData(repositories);
+        LogUtils.d(TAG, "after upate adapter data = " + mReposAdapter.getItemCount());
+    }
+
     void onLoadMore(int page) {
-        mReposModel.loadRepositories(mReposType, page);
+        Object initedByPage = initedMap.get(page);
+        if (BaseUtils.isNull(initedByPage)) {
+            LogUtils.d(TAG, "current page = " + page + ", has been inited = " + initedByPage);
+            initedMap.put(page, false);
+            mReposModel.loadRepositories(mReposType, page);
+        }
     }
 
     void showLoading() {
@@ -197,6 +218,8 @@ public class ReposFragment extends BaseFragment implements SwipeRefreshLayout.On
             if (layoutManager instanceof LinearLayoutManager) {
                 LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
                 int lastPosition = linearManager.findLastVisibleItemPosition();
+                if (DEBUG)
+                    LogUtils.d(TAG, "RecyclerView scrolling, adapter position of the last visible view = " + lastPosition);
                 if (lastPosition == mReposAdapter.getItemCount() - 1) {
                     onLoadMore(curPage + 1);
                 }

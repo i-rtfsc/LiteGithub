@@ -59,6 +59,13 @@ public class ViewerFragment extends BaseFragment implements CodeWebView.ContentC
 
     boolean wrap = false;
 
+    final Observer<StatusDataResource> codeStatusObserver = new Observer<StatusDataResource>() {
+        @Override
+        public void onChanged(@Nullable StatusDataResource statusDataResource) {
+            handleCodeStatusObserver(statusDataResource);
+        }
+    };
+
     public static BaseFragment newInstance(@NonNull String url, @NonNull String htmlUrl, @NonNull String downloadUrl) {
         ViewerFragment fragment = new ViewerFragment();
         mUrl = url;
@@ -96,25 +103,24 @@ public class ViewerFragment extends BaseFragment implements CodeWebView.ContentC
         showLoading();
         mViewerModel.load(mUrl, mHtmlUrl, mDownloadUrl, false);
 
-        mViewerModel.getCodeStatus().observe(this, new Observer<StatusDataResource>() {
-            @Override
-            public void onChanged(@Nullable StatusDataResource statusDataResource) {
-                switch (statusDataResource.status) {
-                    case SUCCESS:
-                        hideLoading();
-                        if (MarkdownHelper.isMarkdown(mUrl)) {
-                            loadMdText((String) statusDataResource.data, mHtmlUrl);
-                        } else {
-                            loadCode((String) statusDataResource.data, mDownloadUrl.substring(mDownloadUrl.lastIndexOf(".") + 1));
-                        }
-                        break;
-                    case ERROR:
-                        hideLoading();
-                        showShortToast(ToastType.ERROR, statusDataResource.message);
-                        break;
+        mViewerModel.getCodeStatus().observe(this, codeStatusObserver);
+    }
+
+    void handleCodeStatusObserver(StatusDataResource statusDataResource) {
+        switch (statusDataResource.status) {
+            case SUCCESS:
+                hideLoading();
+                if (MarkdownHelper.isMarkdown(mUrl)) {
+                    loadMdText((String) statusDataResource.data, mHtmlUrl);
+                } else {
+                    loadCode((String) statusDataResource.data, mDownloadUrl.substring(mDownloadUrl.lastIndexOf(".") + 1));
                 }
-            }
-        });
+                break;
+            case ERROR:
+                hideLoading();
+                showShortToast(ToastType.ERROR, statusDataResource.message);
+                break;
+        }
     }
 
     void showLoading() {

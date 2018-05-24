@@ -54,6 +54,14 @@ public class GithubActivity extends BaseActivity implements OnDrawerItemClickLis
     private MaterialDrawer mMaterialDrawer;
     private Drawer result = null;
 
+    Bundle mBundle;
+    final Observer<AuthUser> authUserStatusObserver = new Observer<AuthUser>() {
+        @Override
+        public void onChanged(@Nullable AuthUser user) {
+            handleAuthUserStatusObserver(user);
+        }
+    };
+
     @Override
     public void initBeforeView() {
         super.initBeforeView();
@@ -77,17 +85,10 @@ public class GithubActivity extends BaseActivity implements OnDrawerItemClickLis
     @Override
     protected void initDataObserver(Bundle savedInstanceState) {
         super.initDataObserver(savedInstanceState);
-        final Bundle bundle = savedInstanceState;
+        mBundle = savedInstanceState;
         mGithubModel = ModelProvider.getModel(this, GithubModel.class);
         mGithubModel.searchAuthUser();
-        mGithubModel.getAuthUserStatus().observe(this, new Observer<AuthUser>() {
-            @Override
-            public void onChanged(@Nullable final AuthUser user) {
-                CoreManager.setAccessToken(user.accessToken);
-                result = mMaterialDrawer.initDrawer(bundle, user, mToolbar);
-                loadFragment(ReposFragment.newInstance(ReposFragment.ReposType.OWNED));
-            }
-        });
+        mGithubModel.getAuthUserStatus().observe(this, authUserStatusObserver);
     }
 
     @Override
@@ -107,6 +108,12 @@ public class GithubActivity extends BaseActivity implements OnDrawerItemClickLis
         } else {
             super.onBackPressed();
         }
+    }
+
+    void handleAuthUserStatusObserver(AuthUser authUser) {
+        CoreManager.setAccessToken(authUser.accessToken);
+        result = mMaterialDrawer.initDrawer(mBundle, authUser, mToolbar);
+        loadFragment(ReposFragment.newInstance(ReposFragment.ReposType.OWNED));
     }
 
     void loadFragment(Fragment fragment) {

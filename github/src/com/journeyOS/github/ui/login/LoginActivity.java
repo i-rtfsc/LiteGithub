@@ -53,6 +53,19 @@ public class LoginActivity extends BaseActivity {
 
     LoginModel mLoginModel;
 
+    final Observer<StatusDataResource> loginStatusObserver = new Observer<StatusDataResource>() {
+        @Override
+        public void onChanged(@Nullable StatusDataResource statusDataResource) {
+            handleLoginStatusObserver(statusDataResource);
+        }
+    };
+    final Observer<StatusDataResource> userStatusObserver = new Observer<StatusDataResource>() {
+        @Override
+        public void onChanged(@Nullable StatusDataResource statusDataResource) {
+            handleUserStatusObserver(statusDataResource);
+        }
+    };
+
     @Override
     public int attachLayoutRes() {
         return R.layout.login_activity;
@@ -67,35 +80,31 @@ public class LoginActivity extends BaseActivity {
         super.initDataObserver(savedInstanceState);
         mLoginModel = ModelProvider.getModel(this, LoginModel.class);
 
-        mLoginModel.getLoginStatus().observe(this, new Observer<StatusDataResource>() {
-            @Override
-            public void onChanged(@Nullable StatusDataResource statusDataResource) {
-                switch (statusDataResource.status) {
-                    case ERROR:
-                        onGetTokenError(statusDataResource.message);
-                        break;
-                    case SUCCESS:
-                        onGetTokenSuccess((BasicToken) statusDataResource.data);
-                        break;
-                }
-            }
-        });
-
-        mLoginModel.getUserStatus().observe(this, new Observer<StatusDataResource>() {
-            @Override
-            public void onChanged(@Nullable StatusDataResource statusDataResource) {
-                switch (statusDataResource.status) {
-                    case ERROR:
-                        showShortToast(ToastType.ERROR, statusDataResource.message);
-                        break;
-                    case SUCCESS:
-                        onLoginComplete();
-                        break;
-                }
-            }
-        });
+        mLoginModel.getLoginStatus().observe(this, loginStatusObserver);
+        mLoginModel.getUserStatus().observe(this, userStatusObserver);
     }
 
+    void handleLoginStatusObserver(StatusDataResource statusDataResource) {
+        switch (statusDataResource.status) {
+            case SUCCESS:
+                onGetTokenSuccess((BasicToken) statusDataResource.data);
+                break;
+            case ERROR:
+                onGetTokenError(statusDataResource.message);
+                break;
+        }
+    }
+
+    void handleUserStatusObserver(StatusDataResource statusDataResource) {
+        switch (statusDataResource.status) {
+            case SUCCESS:
+                onLoginComplete();
+                break;
+            case ERROR:
+                showShortToast(ToastType.ERROR, statusDataResource.message);
+                break;
+        }
+    }
 
     @OnClick(R.id.login_bn)
     public void onLoginClick() {

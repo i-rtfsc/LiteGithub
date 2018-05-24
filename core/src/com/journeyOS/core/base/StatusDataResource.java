@@ -29,28 +29,39 @@ public class StatusDataResource<T> {
     @Nullable
     public T data;
     @Nullable
+    public T subData;
+    @Nullable
     public final String message;
 
-    private StatusDataResource(@NonNull Status status, @Nullable T data, @Nullable String message) {
+    private StatusDataResource(@NonNull Status status, @Nullable T data, @Nullable T subData, @Nullable String message) {
         this.status = status;
         this.data = data;
+        this.subData = subData;
         this.message = message;
     }
 
     public static <T> StatusDataResource<T> loading() {
-        return new StatusDataResource<>(Status.LOADING, null, null);
+        return new StatusDataResource<>(Status.LOADING, null, null, null);
     }
 
     public static <T> StatusDataResource<T> success(@NonNull T data) {
-        return new StatusDataResource<>(Status.SUCCESS, data, null);
+        return new StatusDataResource<>(Status.SUCCESS, data, null, null);
+    }
+
+    public static <T> StatusDataResource<T> success(@NonNull T data, @NonNull T subData) {
+        return new StatusDataResource<>(Status.SUCCESS, data, subData, null);
     }
 
     public static <T> StatusDataResource<T> error(String msg) {
-        return new StatusDataResource<>(Status.ERROR, null, msg);
+        return new StatusDataResource<>(Status.ERROR, null, null, msg);
     }
 
     public static <T> StatusDataResource<T> cacheHit(@NonNull T data) {
-        return new StatusDataResource<>(Status.CACHE_HIT, data, null);
+        return new StatusDataResource<>(Status.CACHE_HIT, data, null, null);
+    }
+
+    public static <T> StatusDataResource<T> cacheHit(@NonNull T data, @NonNull T subData) {
+        return new StatusDataResource<>(Status.CACHE_HIT, data, subData, null);
     }
 
     public boolean isSucceed() {
