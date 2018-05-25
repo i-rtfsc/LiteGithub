@@ -24,25 +24,20 @@ import android.support.v7.widget.Toolbar;
 import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.core.base.BaseFragment;
 import com.journeyOS.github.R;
+import com.journeyOS.github.ui.fragment.files.adapter.ReposFileData;
 import com.journeyOS.github.ui.fragment.viewer.ViewerFragment;
 
 import butterknife.BindView;
 
 public class ViewerActivity extends BaseActivity {
-    public static final String EXTRA_NAME = "name";
-    public static final String EXTRA_URL = "url";
-    public static final String EXTRA_THML_URL = "htmlUrl";
-    public static final String EXTRA_DOWNLOAD_URL = "downloadUrl";
+    static final String EXTRA_REPOS_FILE_DATA = "reposFileData";
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    public static void show(@NonNull Context context, @NonNull String name, @NonNull String url, @NonNull String htmlUrl, @NonNull String downloadUrl) {
+    public static void show(@NonNull Context context, @NonNull ReposFileData reposFileData) {
         Intent intent = new Intent(context, ViewerActivity.class);
-        intent.putExtra(EXTRA_NAME, name);
-        intent.putExtra(EXTRA_URL, url);
-        intent.putExtra(EXTRA_THML_URL, htmlUrl);
-        intent.putExtra(EXTRA_DOWNLOAD_URL, downloadUrl);
+        intent.putExtra(EXTRA_REPOS_FILE_DATA, reposFileData);
         context.startActivity(intent);
     }
 
@@ -53,16 +48,13 @@ public class ViewerActivity extends BaseActivity {
 
     @Override
     public void initViews() {
-        String name = getIntent().getStringExtra(EXTRA_NAME);
-        String url = getIntent().getStringExtra(EXTRA_URL);
-        String htmlUrl = getIntent().getStringExtra(EXTRA_THML_URL);
-        String downloadUrl = getIntent().getStringExtra(EXTRA_DOWNLOAD_URL);
+        ReposFileData reposFileData = getIntent().getParcelableExtra(EXTRA_REPOS_FILE_DATA);
 
-        mToolbar.setTitle(name);
+        mToolbar.setTitle(reposFileData.name);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        BaseFragment fragment = ViewerFragment.newInstance(url, htmlUrl, downloadUrl);
+        BaseFragment fragment = ViewerFragment.newInstance(reposFileData);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.container, fragment)

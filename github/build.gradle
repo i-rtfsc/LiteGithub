@@ -65,7 +65,7 @@ android {
         }
     }
 
-    def OUT_PATH = rootProject.getRootDir().getAbsolutePath() + '/app_release/LiteWeather.apk'
+    def OUT_PATH = rootProject.getRootDir().getAbsolutePath() + '/app_release/LiteGithub.apk'
     applicationVariants.all { variant ->
         if (variant.buildType.name == 'release') {
             variant.outputs.each { output ->

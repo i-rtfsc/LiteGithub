@@ -18,8 +18,12 @@
 
 package com.journeyOS.github.ui.viewer;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -28,19 +32,26 @@ import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.journeyOS.base.utils.BaseUtils;
+import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.core.base.BaseFragment;
 import com.journeyOS.github.R;
 import com.journeyOS.github.ui.adapter.MainPageAdapter;
 import com.journeyOS.github.ui.fragment.files.RepoFilesFragment;
+import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
+import com.squareup.picasso.Picasso;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 
 public class RepositoryActivity extends BaseActivity {
-    static final String EXTRA_LOGIN = "login";
-    static final String EXTRA_NAME = "name";
-    static final String EXTRA_DEFAULT_BRANCH = "defaultBranch";
+    static final String EXTRA_REPOSITORY_DATA = "repositoryData";
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -50,12 +61,26 @@ public class RepositoryActivity extends BaseActivity {
     ViewPager mViewPager;
     MainPageAdapter mAdapter;
 
-    public static void show(@NonNull Context context, @NonNull String login, @NonNull String name, @NonNull String defaultBranch) {
+    @BindView(R.id.user_avatar_bg)
+    ImageView mImageView;
+    @BindView(R.id.name)
+    TextView mName;
+    @BindView(R.id.desc)
+    TextView mDesc;
+    @BindView(R.id.info) TextView mInfo;
+
+    Application mContext;
+
+    public static void show(@NonNull Context context, @NonNull RepositoryData repositoryData) {
         Intent intent = new Intent(context, RepositoryActivity.class);
-        intent.putExtra(EXTRA_LOGIN, login);
-        intent.putExtra(EXTRA_NAME, name);
-        intent.putExtra(EXTRA_DEFAULT_BRANCH, defaultBranch);
+        intent.putExtra(EXTRA_REPOSITORY_DATA, repositoryData);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void initBeforeView() {
+        super.initBeforeView();
+        mContext = CoreManager.getContext();
     }
 
     @Override
@@ -65,9 +90,15 @@ public class RepositoryActivity extends BaseActivity {
 
     @Override
     public void initViews() {
+        RepositoryData repositoryData = getIntent().getParcelableExtra(EXTRA_REPOSITORY_DATA);
+
+        mToolbar.setTitle("");
+        mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setupViewPager();
+
+        initAllViews(repositoryData);
+        setupViewPager(repositoryData);
     }
 
     @Override
@@ -75,16 +106,25 @@ public class RepositoryActivity extends BaseActivity {
         super.initDataObserver(savedInstanceState);
     }
 
-    void setupViewPager() {
-        String login = getIntent().getStringExtra(EXTRA_LOGIN);
-        String name = getIntent().getStringExtra(EXTRA_NAME);
-        String defaultBranch = getIntent().getStringExtra(EXTRA_DEFAULT_BRANCH);
+    void initAllViews(RepositoryData repositoryData) {
+        mName.setText(repositoryData.name);
+        mDesc.setText(repositoryData.description);
+        String language = BaseUtils.isBlank(repositoryData.language) ?
+                getString(R.string.commits) : repositoryData.language;
+        mInfo.setText(String.format(Locale.getDefault(), "Language %s, size %s",
+                language, BaseUtils.getSizeString(repositoryData.size * 1024)));
+        Picasso.with(mContext)
+                .load(Uri.parse(repositoryData.owner.avatarUrl))
+                .placeholder(R.mipmap.user)
+                .into(mImageView);
+    }
 
+    void setupViewPager(RepositoryData repositoryData) {
         mAdapter = new MainPageAdapter(this, getSupportFragmentManager());
 
         //add more fragment there.
 
-        Pair<BaseFragment, Integer> fileFragmentPair = new Pair<>(RepoFilesFragment.newInstance(login, name, defaultBranch), R.string.files);
+        Pair<BaseFragment, Integer> fileFragmentPair = new Pair<>(RepoFilesFragment.newInstance(repositoryData), R.string.files);
         mAdapter.addFrag(fileFragmentPair);
 
         mViewPager.setAdapter(mAdapter);

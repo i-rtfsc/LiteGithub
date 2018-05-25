@@ -16,10 +16,13 @@
 
 package com.journeyOS.github.ui.fragment.files.adapter;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.journeyOS.base.adapter.BaseAdapterData;
 import com.journeyOS.github.R;
 
-public class ReposFileData implements BaseAdapterData {
+public class ReposFileData implements BaseAdapterData, Parcelable {
 
     public String name;
 
@@ -56,4 +59,47 @@ public class ReposFileData implements BaseAdapterData {
                 '}';
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeInt(this.size);
+        dest.writeString(this.path);
+        dest.writeByte(this.isFile ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isDir ? (byte) 1 : (byte) 0);
+        dest.writeString(this.url);
+        dest.writeString(this.htmlUrl);
+        dest.writeString(this.downloadUrl);
+    }
+
+    public ReposFileData() {
+    }
+
+    protected ReposFileData(Parcel in) {
+        this.name = in.readString();
+        this.size = in.readInt();
+        this.path = in.readString();
+        this.isFile = in.readByte() != 0;
+        this.isDir = in.readByte() != 0;
+        this.url = in.readString();
+        this.htmlUrl = in.readString();
+        this.downloadUrl = in.readString();
+    }
+
+    public static final Creator<ReposFileData> CREATOR = new Creator<ReposFileData>() {
+        @Override
+        public ReposFileData createFromParcel(Parcel source) {
+            return new ReposFileData(source);
+        }
+
+        @Override
+        public ReposFileData[] newArray(int size) {
+            return new ReposFileData[size];
+        }
+    };
 }

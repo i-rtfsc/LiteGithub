@@ -99,6 +99,7 @@ public class ReposModel extends BaseViewModel {
             repositoryData.name = repository.name;
             repositoryData.defaultBranch = repository.defaultBranch;
             repositoryData.description = repository.description;
+            repositoryData.size = repository.size;
             repositoryData.stargazersCount = repository.stargazersCount;
             repositoryData.forksCount = repository.forksCount;
             repositoryData.owner = repository.owner;

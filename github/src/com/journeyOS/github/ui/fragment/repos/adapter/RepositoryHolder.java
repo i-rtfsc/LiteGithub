@@ -58,9 +58,6 @@ public class RepositoryHolder extends BaseViewHolder<RepositoryData> {
 
     @OnClick(R.id.cardView)
     public void onCardViewClick() {
-        String login = mRepositoryData.owner.login;
-        String name = mRepositoryData.name;
-        String defaultBranch = mRepositoryData.defaultBranch;
-        RepositoryActivity.show(CoreManager.getContext(), login, name, defaultBranch);
+        RepositoryActivity.show(CoreManager.getContext(), mRepositoryData);
     }
 }

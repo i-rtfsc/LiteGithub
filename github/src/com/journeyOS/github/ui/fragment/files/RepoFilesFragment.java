@@ -38,6 +38,7 @@ import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
 import com.journeyOS.github.ui.fragment.files.adapter.ReposFileData;
 import com.journeyOS.github.ui.fragment.files.adapter.ReposFileHolder;
+import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
 import com.journeyOS.github.ui.viewer.RepositoryActivity;
 import com.journeyOS.github.ui.viewer.ViewerActivity;
 import com.journeyOS.literouter.RouterListener;
@@ -62,9 +63,8 @@ public class RepoFilesFragment extends BaseFragment implements
     Context mContext;
     ReposFileModel mReposFileModel;
 
-    static String mLogin = null;
-    static String mName = null;
-    static String mDefaultBranch = null;
+    static final String EXTRA_REPOSITORY_DATA = "repositoryData";
+    RepositoryData mRepositoryData;
     String curPath = "";
 
     final Observer<StatusDataResource> reposFilesStatusObserver = new Observer<StatusDataResource>() {
@@ -74,11 +74,11 @@ public class RepoFilesFragment extends BaseFragment implements
         }
     };
 
-    public static BaseFragment newInstance(@NonNull String login, @NonNull String name, @NonNull String defaultBranch) {
+    public static BaseFragment newInstance(@NonNull RepositoryData repositoryData) {
         RepoFilesFragment fragment = new RepoFilesFragment();
-        mLogin = login;
-        mName = name;
-        mDefaultBranch = defaultBranch;
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(EXTRA_REPOSITORY_DATA, repositoryData);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -97,6 +97,8 @@ public class RepoFilesFragment extends BaseFragment implements
     public void initViews() {
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setColorSchemeColors(ViewUtils.getRefreshLayoutColors(getContext()));
+
+        mRepositoryData = getArguments().getParcelable(EXTRA_REPOSITORY_DATA);
     }
 
     @Override
@@ -105,7 +107,7 @@ public class RepoFilesFragment extends BaseFragment implements
         mReposFileModel = ModelProvider.getModel(this, ReposFileModel.class);
 
         showLoading();
-        mReposFileModel.loadFiles(mLogin, mName, mDefaultBranch, curPath, false);
+        mReposFileModel.loadFiles(mRepositoryData.owner.login, mRepositoryData.name, mRepositoryData.defaultBranch, curPath, false);
 
         mReposFileModel.getReposFilesStatus().observe(this, reposFilesStatusObserver);
     }
@@ -134,7 +136,7 @@ public class RepoFilesFragment extends BaseFragment implements
 
     @Override
     public void onRefresh() {
-        mReposFileModel.loadFiles(mLogin, mName, mDefaultBranch, curPath, false);
+        mReposFileModel.loadFiles(mRepositoryData.owner.login, mRepositoryData.name, mRepositoryData.defaultBranch, curPath, false);
     }
 
     @Override
@@ -147,9 +149,9 @@ public class RepoFilesFragment extends BaseFragment implements
                 if (data.isDir) {
                     showLoading();
                     curPath = data.path;
-                    mReposFileModel.loadFiles(mLogin, mName, mDefaultBranch, curPath, false);
+                    mReposFileModel.loadFiles(mRepositoryData.owner.login, mRepositoryData.name, mRepositoryData.defaultBranch, curPath, false);
                 } else {
-                    ViewerActivity.show(getActivity(), data.name, data.url, data.htmlUrl, data.downloadUrl);
+                    ViewerActivity.show(getActivity(), data);
                 }
                 break;
         }
@@ -170,7 +172,7 @@ public class RepoFilesFragment extends BaseFragment implements
             if (!BaseUtils.isBlank(curPath)) {
                 curPath = curPath.contains("/") ?
                         curPath.substring(0, curPath.lastIndexOf("/")) : "";
-                mReposFileModel.loadFiles(mLogin, mName, mDefaultBranch, curPath, false);
+                mReposFileModel.loadFiles(mRepositoryData.owner.login, mRepositoryData.name, mRepositoryData.defaultBranch, curPath, false);
                 return true;
             }
         }

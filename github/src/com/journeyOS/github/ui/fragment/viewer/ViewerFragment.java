@@ -33,6 +33,7 @@ import com.journeyOS.core.base.BaseFragment;
 import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
+import com.journeyOS.github.ui.fragment.files.adapter.ReposFileData;
 import com.journeyOS.github.ui.widget.webview.CodeWebView;
 
 import butterknife.BindView;
@@ -51,9 +52,8 @@ public class ViewerFragment extends BaseFragment implements CodeWebView.ContentC
 
     ColorThemeData colorThemeData;
 
-    static String mUrl;
-    static String mHtmlUrl;
-    static String mDownloadUrl;
+    static final String EXTRA_REPOS_FILE_DATA = "reposFileData";
+    ReposFileData mReposFileData;
 
     ViewerModel mViewerModel;
 
@@ -66,11 +66,11 @@ public class ViewerFragment extends BaseFragment implements CodeWebView.ContentC
         }
     };
 
-    public static BaseFragment newInstance(@NonNull String url, @NonNull String htmlUrl, @NonNull String downloadUrl) {
+    public static BaseFragment newInstance(@NonNull ReposFileData reposFileData) {
         ViewerFragment fragment = new ViewerFragment();
-        mUrl = url;
-        mHtmlUrl = htmlUrl;
-        mDownloadUrl = downloadUrl;
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(EXTRA_REPOS_FILE_DATA, reposFileData);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -93,6 +93,7 @@ public class ViewerFragment extends BaseFragment implements CodeWebView.ContentC
         loader.setVisibility(View.VISIBLE);
         loader.setIndeterminate(true);
 
+        mReposFileData = getArguments().getParcelable(EXTRA_REPOS_FILE_DATA);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class ViewerFragment extends BaseFragment implements CodeWebView.ContentC
         mViewerModel = ModelProvider.getModel(this, ViewerModel.class);
 
         showLoading();
-        mViewerModel.load(mUrl, mHtmlUrl, mDownloadUrl, false);
+        mViewerModel.load(mReposFileData.url, mReposFileData.htmlUrl, mReposFileData.downloadUrl, false);
 
         mViewerModel.getCodeStatus().observe(this, codeStatusObserver);
     }
@@ -110,10 +111,11 @@ public class ViewerFragment extends BaseFragment implements CodeWebView.ContentC
         switch (statusDataResource.status) {
             case SUCCESS:
                 hideLoading();
-                if (MarkdownHelper.isMarkdown(mUrl)) {
-                    loadMdText((String) statusDataResource.data, mHtmlUrl);
+                if (MarkdownHelper.isMarkdown(mReposFileData.url)) {
+                    loadMdText((String) statusDataResource.data, mReposFileData.htmlUrl);
                 } else {
-                    loadCode((String) statusDataResource.data, mDownloadUrl.substring(mDownloadUrl.lastIndexOf(".") + 1));
+                    String downloadUrl = mReposFileData.downloadUrl;
+                    loadCode((String) statusDataResource.data, downloadUrl.substring(downloadUrl.lastIndexOf(".") + 1));
                 }
                 break;
             case ERROR:
@@ -151,7 +153,7 @@ public class ViewerFragment extends BaseFragment implements CodeWebView.ContentC
             codeView.setVisibility(View.VISIBLE);
             getActivity().invalidateOptionsMenu();
         } else {
-            webView.setCodeSource(text, wrap, MarkdownHelper.getExtension(mUrl));
+            webView.setCodeSource(text, wrap, MarkdownHelper.getExtension(mReposFileData.url));
             webView.setContentChangedListener(this);
             webView.setVisibility(View.GONE);
             getActivity().invalidateOptionsMenu();
