@@ -8,7 +8,7 @@ import com.journeyOS.base.adapter.BaseRecyclerAdapter;
 import com.journeyOS.base.adapter.BaseViewHolder;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.github.R;
-import com.journeyOS.github.ui.viewer.RepositoryActivity;
+import com.journeyOS.github.ui.activity.viewer.RepositoryActivity;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;

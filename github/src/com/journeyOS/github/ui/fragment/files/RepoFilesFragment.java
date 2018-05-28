@@ -21,6 +21,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,11 +37,11 @@ import com.journeyOS.core.base.BaseFragment;
 import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
+import com.journeyOS.github.ui.activity.viewer.RepositoryActivity;
+import com.journeyOS.github.ui.activity.viewer.ViewerActivity;
 import com.journeyOS.github.ui.fragment.files.adapter.ReposFileData;
 import com.journeyOS.github.ui.fragment.files.adapter.ReposFileHolder;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
-import com.journeyOS.github.ui.viewer.RepositoryActivity;
-import com.journeyOS.github.ui.viewer.ViewerActivity;
 import com.journeyOS.literouter.RouterListener;
 import com.journeyOS.literouter.RouterMsssage;
 
@@ -52,7 +53,7 @@ public class RepoFilesFragment extends BaseFragment implements
         SwipeRefreshLayout.OnRefreshListener, RouterListener,
         RepositoryActivity.IFragmentKeyListener {
 
-    private static final String TAG = RepoFilesFragment.class.getSimpleName();
+    static final String TAG = RepoFilesFragment.class.getSimpleName();
 
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
@@ -74,7 +75,7 @@ public class RepoFilesFragment extends BaseFragment implements
         }
     };
 
-    public static BaseFragment newInstance(@NonNull RepositoryData repositoryData) {
+    public static Fragment newInstance(@NonNull RepositoryData repositoryData) {
         RepoFilesFragment fragment = new RepoFilesFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(EXTRA_REPOSITORY_DATA, repositoryData);

@@ -53,6 +53,15 @@
     <string name="light">Light</string>
     <string name="dark">dark</string>
 
+    <!-- Profile -->
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="repositories">Repositories</string>
+    <string name="gists">Gists</string>
+    <string name="joined_at">Joined at</string>
+    <string name="stargazers">Stargazers</string>
+    <string name="watchers">Watchers</string>
+
     <string name="tap_to_retry">Tap to retry</string>
     <string name="developing">developing...</string>
 </resources>

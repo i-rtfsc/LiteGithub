@@ -21,33 +21,44 @@
     android:layout_height="wrap_content"
     android:background="?android:selectableItemBackground"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:paddingBottom="@dimen/spacing_normal"
-    android:paddingEnd="@dimen/spacing_large"
-    android:paddingStart="@dimen/spacing_large"
-    android:paddingTop="@dimen/spacing_normal">
+    android:orientation="vertical">
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/file_type"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="@dimen/spacing_micro"
-        app:srcCompat="@drawable/svg_folder" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/spacing_normal"
+        android:paddingEnd="@dimen/spacing_large"
+        android:paddingStart="@dimen/spacing_large"
+        android:paddingTop="@dimen/spacing_normal">
 
-    <TextView
-        android:id="@+id/file_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_normal"
-        android:layout_weight="1"
-        android:textColor="@color/text_primary_dark"
-        android:textSize="@dimen/text_size_default" />
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/file_type"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="@dimen/spacing_micro"
+            app:srcCompat="@drawable/svg_folder" />
 
-    <TextView
-        android:id="@+id/file_size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/text_secondary_dark"
-        android:textSize="@dimen/text_size_small" />
+        <TextView
+            android:id="@+id/file_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_weight="1"
+            android:textColor="@color/text_primary_dark"
+            android:textSize="@dimen/text_size_default" />
+
+        <TextView
+            android:id="@+id/file_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_secondary_dark"
+            android:textSize="@dimen/text_size_small" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_size"
+        android:background="@color/divider_dark" />
 
 </LinearLayout>

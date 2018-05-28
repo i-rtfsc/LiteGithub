@@ -38,7 +38,7 @@ import retrofit2.Response;
 import rx.Observable;
 
 public class ViewerModel extends BaseViewModel {
-    private static final String TAG = ViewerModel.class.getSimpleName();
+    static final String TAG = ViewerModel.class.getSimpleName();
 
     String downloadSource;
 

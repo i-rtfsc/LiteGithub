@@ -38,10 +38,10 @@ import retrofit2.Response;
 import rx.Observable;
 
 public class ReposModel extends BaseViewModel {
-    private static final boolean DEBUG = BuildConfig.DEBUG;
-    private static final String TAG = ReposModel.class.getSimpleName();
+    static final boolean DEBUG = BuildConfig.DEBUG;
+    static final String TAG = ReposModel.class.getSimpleName();
 
-    private MutableLiveData<StatusDataResource> mReposStatus = new MutableLiveData<>();
+    MutableLiveData<StatusDataResource> mReposStatus = new MutableLiveData<>();
 
     protected MutableLiveData<StatusDataResource> getReposStatus() {
         return mReposStatus;

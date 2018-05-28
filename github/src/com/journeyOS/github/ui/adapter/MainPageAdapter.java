@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainPageAdapter extends FragmentStatePagerAdapter {
-    private final List<Pair<BaseFragment, Integer>> mFragmentList = new ArrayList<>();
+    private final List<Pair<Fragment, Integer>> mFragmentList = new ArrayList<>();
 
     private Context context;
 
@@ -56,7 +56,7 @@ public class MainPageAdapter extends FragmentStatePagerAdapter {
         return mFragmentList.size();
     }
 
-    public void addFrag(Pair<BaseFragment, Integer> fragmentPair) {
+    public void addFrag(Pair<Fragment, Integer> fragmentPair) {
         mFragmentList.add(fragmentPair);
     }
 

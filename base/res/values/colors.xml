@@ -32,6 +32,8 @@
     <color name="text_secondary_dark">#80646464</color>
     <color name="divider">#30ffffff</color>
     <color name="divider_secondary">#10ffffff</color>
+    <color name="divider_dark">#30646464</color>
+    <color name="divider_secondary_dark">#10646464</color>
     <color name="drawer_background">#2F4F4F</color>
     <color name="drawer_selected">#802F4F4F</color>
 

@@ -20,7 +20,7 @@ import rx.Observable;
 
 public interface GithubService {
 
-    @GET("user{user}")
+    @GET("users/{user}")
     Observable<Response<User>> getUser(
             @Header("forceNetWork") boolean forceNetWork,
             @Path("user") String user
@@ -49,15 +49,54 @@ public interface GithubService {
             @Query("ref") String branch
     );
 
-    @NonNull @GET @Headers("Accept: application/vnd.github.html")
+    @NonNull
+    @GET
+    @Headers("Accept: application/vnd.github.html")
     Observable<Response<ResponseBody>> getFileAsHtmlStream(
             @Header("forceNetWork") boolean forceNetWork,
             @Url String url
     );
 
-    @NonNull @GET @Headers("Accept: application/vnd.github.VERSION.raw")
+    @NonNull
+    @GET
+    @Headers("Accept: application/vnd.github.VERSION.raw")
     Observable<Response<ResponseBody>> getFileAsStream(
             @Header("forceNetWork") boolean forceNetWork,
             @Url String url
     );
+
+    @NonNull
+    @GET("repos/{owner}/{repo}/stargazers")
+    Observable<Response<ArrayList<User>>> getStargazers(
+            @Header("forceNetWork") boolean forceNetWork,
+            @Path(value = "owner") String owner,
+            @Path(value = "repo") String repo,
+            @Query("page") int page
+    );
+
+    @NonNull
+    @GET("repos/{owner}/{repo}/subscribers")
+    Observable<Response<ArrayList<User>>> getWatchers(
+            @Header("forceNetWork") boolean forceNetWork,
+            @Path("owner") String owner,
+            @Path("repo") String repo,
+            @Query("page") int page
+    );
+
+    @NonNull
+    @GET("users/{user}/followers")
+    Observable<Response<ArrayList<User>>> getFollowers(
+            @Header("forceNetWork") boolean forceNetWork,
+            @Path("user") String user,
+            @Query("page") int page
+    );
+
+    @NonNull
+    @GET("users/{user}/following")
+    Observable<Response<ArrayList<User>>> getFollowing(
+            @Header("forceNetWork") boolean forceNetWork,
+            @Path("user") String user,
+            @Query("page") int page
+    );
+
 }

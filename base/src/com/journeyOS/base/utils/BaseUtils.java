@@ -24,8 +24,10 @@ import android.support.annotation.Nullable;
 
 import com.journeyOS.base.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -71,6 +73,13 @@ public class BaseUtils {
             b = false;
         }
         return b;
+    }
+
+    public static String getDateStr(@NonNull Date date){
+        String regex ;
+        regex = "yyyy-MM-dd";
+        SimpleDateFormat format = new SimpleDateFormat(regex);
+        return format.format(date);
     }
 
     public static String getSizeString(int size) {

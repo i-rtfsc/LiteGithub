@@ -17,8 +17,8 @@ def initVersion() {
     gradle.ext.targetVersion = 27
     gradle.ext.minSdkVersion = 17
     gradle.ext.supportVersion = '27.0.2'
-    gradle.ext.versionCode = 1
-    gradle.ext.versionName = '0.1.0'
+    gradle.ext.versionCode = 2
+    gradle.ext.versionName = '0.2.0'
 
     //core dependencies
     gradle.ext.room_compiler = '1.0.0'

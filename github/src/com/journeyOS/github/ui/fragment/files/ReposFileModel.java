@@ -41,8 +41,8 @@ import retrofit2.Response;
 import rx.Observable;
 
 public class ReposFileModel extends BaseViewModel {
-    private static final boolean DEBUG = BuildConfig.DEBUG;
-    private static final String TAG = ReposFileModel.class.getSimpleName();
+    static final boolean DEBUG = BuildConfig.DEBUG;
+    static final String TAG = ReposFileModel.class.getSimpleName();
 
     MutableLiveData<StatusDataResource> mReposFilesStatus = new MutableLiveData<>();
 

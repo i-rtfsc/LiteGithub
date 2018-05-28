@@ -23,10 +23,8 @@ import android.widget.TextView;
 import com.journeyOS.base.adapter.BaseRecyclerAdapter;
 import com.journeyOS.base.adapter.BaseViewHolder;
 import com.journeyOS.base.utils.BaseUtils;
-import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.Messages;
 import com.journeyOS.github.R;
-import com.journeyOS.github.ui.viewer.RepositoryActivity;
 import com.journeyOS.literouter.Router;
 
 import butterknife.BindView;
