@@ -1,0 +1,32 @@
+<!--
+  Copyright (c) 2018 anqi.huang@outlook.com
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:autoMirrored="true"
+    android:viewportHeight="1024"
+    android:viewportWidth="1024">
+    <path
+        android:fillColor="@color/icon"
+        android:pathData="M985.6,246.4c-9.6,-9.6 -21.6,-14.4 -33.6,-14.4H480L374.4,126.4c-4,-4 -9.6,-8 -15.2,-10.4 -6.4,-2.4 -12,-4 -18.4,-4H88c-12,0 -24.8,4.8 -33.6,14.4S40,148 40,160v280h960V280c0,-12 -4.8,-24.8 -14.4,-33.6z" />
+    <path
+        android:fillColor="@color/icon"
+        android:pathData="M952,920H88c-26.4,0 -48,-21.6 -48,-48V360h960v512c0,26.4 -21.6,48 -48,48z" />
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M664,736c-19.2,0 -36.8,8.8 -48,22.4L406.4,653.6c0.8,-4 1.6,-8.8 1.6,-13.6s-0.8,-8.8 -1.6,-13.6L616,521.6c12,13.6 28.8,22.4 48,22.4 35.2,0 64,-28.8 64,-64s-28.8,-64 -64,-64 -64,28.8 -64,64c0,4.8 0.8,8.8 1.6,13.6L392,598.4c-12,-13.6 -28.8,-22.4 -48,-22.4 -35.2,0 -64,28.8 -64,64s28.8,64 64,64c19.2,0 36.8,-8.8 48,-22.4l209.6,104.8c-0.8,4 -1.6,8.8 -1.6,13.6 0,35.2 28.8,64 64,64s64,-28.8 64,-64 -28.8,-64 -64,-64z" />
+</vector>

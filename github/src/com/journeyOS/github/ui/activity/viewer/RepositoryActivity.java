@@ -58,15 +58,6 @@ public class RepositoryActivity extends BaseActivity {
     ViewPager mViewPager;
     MainPageAdapter mAdapter;
 
-    @BindView(R.id.user_avatar_bg)
-    ImageView mImageView;
-    @BindView(R.id.name)
-    TextView mName;
-    @BindView(R.id.desc)
-    TextView mDesc;
-    @BindView(R.id.info)
-    TextView mInfo;
-
     Application mContext;
 
     public static void show(@NonNull Context context, @NonNull RepositoryData repositoryData) {
@@ -90,31 +81,17 @@ public class RepositoryActivity extends BaseActivity {
     public void initViews() {
         RepositoryData repositoryData = getIntent().getParcelableExtra(EXTRA_REPOSITORY_DATA);
 
-        mToolbar.setTitle("");
+        mToolbar.setTitle("aaaa");
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        initAllViews(repositoryData);
         setupViewPager(repositoryData);
     }
 
     @Override
     protected void initDataObserver(Bundle savedInstanceState) {
         super.initDataObserver(savedInstanceState);
-    }
-
-    void initAllViews(RepositoryData repositoryData) {
-        mName.setText(repositoryData.name);
-        mDesc.setText(repositoryData.description);
-        String language = BaseUtils.isBlank(repositoryData.language) ?
-                getString(R.string.commits) : repositoryData.language;
-        mInfo.setText(String.format(Locale.getDefault(), "Language %s, size %s",
-                language, BaseUtils.getSizeString(repositoryData.size * 1024)));
-        Picasso.with(mContext)
-                .load(Uri.parse(repositoryData.owner.avatarUrl))
-                .placeholder(R.mipmap.user)
-                .into(mImageView);
     }
 
     void setupViewPager(RepositoryData repositoryData) {

@@ -21,7 +21,6 @@ import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,8 +29,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.base.BaseActivity;
@@ -42,7 +39,6 @@ import com.journeyOS.github.entity.User;
 import com.journeyOS.github.ui.adapter.MainPageAdapter;
 import com.journeyOS.github.ui.fragment.profile.ProfileInfoFragment;
 import com.journeyOS.github.ui.fragment.repos.ReposFragment;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 
@@ -55,17 +51,6 @@ public class ProfileActivity extends BaseActivity {
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
     MainPageAdapter mAdapter;
-
-    @BindView(R.id.user_avatar_bg)
-    ImageView mUserImageViewBg;
-    @BindView(R.id.user_avatar)
-    ImageView mUserImageView;
-    @BindView(R.id.company)
-    TextView mCompany;
-    @BindView(R.id.name)
-    TextView mName;
-    @BindView(R.id.email)
-    TextView mEmail;
 
     Application mContext;
     ProfileModel mProfileModel;
@@ -99,8 +84,7 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     public void initViews() {
-        mToolbar.setTitle("");
-        mToolbar.setTitleTextColor(Color.WHITE);
+        mToolbar.setTitle(R.string.profile);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mLogin = getIntent().getStringExtra(EXTRA_LOGIN);
@@ -119,26 +103,11 @@ public class ProfileActivity extends BaseActivity {
     void handleUserStatusObserver(StatusDataResource statusDataResource) {
         switch (statusDataResource.status) {
             case SUCCESS:
-                initAllViews((User) statusDataResource.data);
                 setupViewPager((User) statusDataResource.data);
                 break;
             case ERROR:
                 break;
         }
-    }
-
-    void initAllViews(User user) {
-        mCompany.setText(user.login);
-        mName.setText(user.name);
-        mEmail.setText(user.email);
-        Picasso.with(mContext)
-                .load(Uri.parse(user.avatarUrl))
-                .placeholder(R.mipmap.user)
-                .into(mUserImageViewBg);
-        Picasso.with(mContext)
-                .load(Uri.parse(user.avatarUrl))
-                .placeholder(R.mipmap.user)
-                .into(mUserImageView);
     }
 
     void setupViewPager(User user) {

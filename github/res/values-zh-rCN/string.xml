@@ -60,6 +60,8 @@
     <string name="stargazers">星标</string>
     <string name="watchers" >关注者</string>
 
+    <string name="sub_modules">无法打开子模块</string>
+
     <string name="tap_to_retry">点击重试</string>
     <string name="developing">开发中...</string>
 </resources>

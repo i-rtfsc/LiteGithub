@@ -152,7 +152,11 @@ public class RepoFilesFragment extends BaseFragment implements
                     curPath = data.path;
                     mReposFileModel.loadFiles(mRepositoryData.owner.login, mRepositoryData.name, mRepositoryData.defaultBranch, curPath, false);
                 } else {
-                    ViewerActivity.show(getActivity(), data);
+                    if (data.size == 0) {
+                        showShortToast(ToastType.WARNING, mContext.getString(R.string.sub_modules));
+                    } else {
+                        ViewerActivity.show(getActivity(), data);
+                    }
                 }
                 break;
         }

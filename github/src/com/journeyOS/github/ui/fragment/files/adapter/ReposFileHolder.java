@@ -50,8 +50,12 @@ public class ReposFileHolder extends BaseViewHolder<ReposFileData> {
         mReposFileData = data;
         fileName.setText(data.name);
         if (data.isFile) {
-            fileType.setImageResource(R.drawable.svg_file);
-            fileSize.setText(BaseUtils.getSizeString(data.size));
+            if (data.size == 0) {
+                fileType.setImageResource(R.drawable.svg_folder_share);
+            } else {
+                fileType.setImageResource(R.drawable.svg_file);
+                fileSize.setText(BaseUtils.getSizeString(data.size));
+            }
         } else {
             fileType.setImageResource(R.drawable.svg_folder);
             fileSize.setText("");

@@ -40,88 +40,6 @@
             app:expandedTitleMarginTop="60dp"
             app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/user_avatar_bg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.5" />
-
-            <android.support.v7.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorPrimary90"
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|top"
-                android:layout_marginTop="86dp"
-                android:paddingBottom="@dimen/spacing_normal"
-                android:paddingEnd="@dimen/spacing_normal"
-                android:paddingStart="@dimen/spacing_normal">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/user_avatar"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:src="@mipmap/user"
-                    android:transitionName="userAvatar" />
-
-                <TextView
-                    android:id="@+id/company"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_normal"
-                    android:layout_toEndOf="@+id/user_avatar"
-                    android:textColor="@color/text_primary"
-                    android:textSize="@dimen/text_size_big_title" />
-
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_below="@+id/company"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_normal"
-                    android:layout_toEndOf="@+id/user_avatar"
-                    android:textColor="@color/text_primary"
-                    android:textSize="@dimen/text_size_default" />
-
-                <TextView
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/name"
-                    android:layout_marginStart="@dimen/spacing_normal"
-                    android:layout_toEndOf="@+id/user_avatar"
-                    android:drawableStart="@drawable/svg_email_white"
-                    android:gravity="center_vertical"
-                    android:drawablePadding="@dimen/spacing_micro"
-                    android:textColor="@color/violet"
-                    android:textSize="@dimen/text_size_default"
-                    android:transitionName="issueTitle" />
-
-
-                <!--<TextView-->
-                <!--android:id="@+id/svg_email"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="?android:selectableItemBackground"-->
-                <!--android:drawableStart="@drawable/ic_mail"-->
-                <!--android:paddingBottom="@dimen/spacing_small"-->
-                <!--android:paddingEnd="@dimen/spacing_small"-->
-                <!--android:paddingStart="@dimen/spacing_small"-->
-                <!--android:paddingTop="@dimen/spacing_small"-->
-                <!--android:drawablePadding="@dimen/spacing_large"-->
-                <!--android:textSize="@dimen/text_small"-->
-                <!--android:textColor="?android:colorAccent"/>-->
-
-            </RelativeLayout>
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
@@ -129,7 +47,9 @@
                 android:minHeight="45dp"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ToolbarPopupTheme"
+                app:title="@string/profile"
                 app:theme="@style/ToolbarTheme"
+                android:visibility="gone"
                 app:titleTextAppearance="@style/ToolbarTitle" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
