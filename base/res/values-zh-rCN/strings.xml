@@ -15,10 +15,10 @@
   -->
 
 <resources>
-    <string name="success_copied">Copied</string>
-    <string name="just_now">just now</string>
-    <string name="seconds_ago">seconds ago</string>
-    <string name="minutes_ago">minutes ago</string>
-    <string name="hours_ago">hours ago</string>
-    <string name="days_ago">days ago</string>
+    <string name="success_copied">已复制</string>
+    <string name="just_now">刚刚</string>
+    <string name="seconds_ago">秒前</string>
+    <string name="minutes_ago">分钟前</string>
+    <string name="hours_ago">小时前</string>
+    <string name="days_ago">天前</string>
 </resources>

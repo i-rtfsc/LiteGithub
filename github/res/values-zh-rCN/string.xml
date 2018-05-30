@@ -60,6 +60,13 @@
     <string name="stargazers">星标</string>
     <string name="watchers" >关注者</string>
 
+    <string name="readme">描述</string>
+    <string name="forks">版本库分支</string>
+    <string name="created_at">创建于</string>
+    <string name="forked_at">添加到版本库于</string>
+    <string name="latest_update">最后一次更新</string>
+    <string name="latest_commit">最后一次提交</string>
+
     <string name="sub_modules">无法打开子模块</string>
 
     <string name="tap_to_retry">点击重试</string>

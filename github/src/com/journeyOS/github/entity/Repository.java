@@ -81,7 +81,27 @@ public class Repository {
 
     public boolean fork;
 
+//    public Repository parent;
+
     public RepositoryPermissions permissions;
+
+    @SerializedName("has_issues")
+    public boolean hasIssues;
+
+    @SerializedName("has_projects")
+    public boolean hasProjects;
+
+    @SerializedName("has_downloads")
+    public boolean hasDownloads;
+
+    @SerializedName("has_wiki")
+    public boolean hasWiki;
+
+    @SerializedName("has_pages")
+    public boolean hasPages;
+
+    @SerializedName("subscribers_count")
+    public int subscribersCount;
 
     @Override
     public String toString() {
@@ -109,6 +129,12 @@ public class Repository {
                 ", openIssuesCount=" + openIssuesCount +
                 ", fork=" + fork +
                 ", permissions=" + permissions +
+                ", hasIssues=" + hasIssues +
+                ", hasProjects=" + hasProjects +
+                ", hasDownloads=" + hasDownloads +
+                ", hasWiki=" + hasWiki +
+                ", hasPages=" + hasPages +
+                ", subscribersCount=" + subscribersCount +
                 '}';
     }
 }

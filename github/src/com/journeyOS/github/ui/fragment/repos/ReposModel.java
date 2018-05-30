@@ -104,6 +104,14 @@ public class ReposModel extends BaseViewModel {
             repositoryData.forksCount = repository.forksCount;
             repositoryData.owner = repository.owner;
             repositoryData.language = repository.language;
+            repositoryData.openIssuesCount = repository.openIssuesCount;
+            repositoryData.hasIssues = repository.hasIssues;
+            repositoryData.subscribersCount = repository.subscribersCount;
+            repositoryData.fork = repository.fork;
+            repositoryData.createdAt = repository.createdAt;
+            repositoryData.pushedAt = repository.pushedAt;
+            repositoryData.updatedAt = repository.updatedAt;
+            repositoryData.fullName = repository.fullName;
             repositoryDataArrayList.add(repositoryData);
             if (DEBUG)
                 LogUtils.d(TAG, "convert from repository, source data = " + repositoryData.toString());

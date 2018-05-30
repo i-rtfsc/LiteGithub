@@ -40,6 +40,7 @@ import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.github.R;
 import com.journeyOS.github.ui.adapter.MainPageAdapter;
 import com.journeyOS.github.ui.fragment.files.RepoFilesFragment;
+import com.journeyOS.github.ui.fragment.info.RepoInfoFragment;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
 import com.squareup.picasso.Picasso;
 
@@ -81,7 +82,6 @@ public class RepositoryActivity extends BaseActivity {
     public void initViews() {
         RepositoryData repositoryData = getIntent().getParcelableExtra(EXTRA_REPOSITORY_DATA);
 
-        mToolbar.setTitle("aaaa");
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -98,6 +98,8 @@ public class RepositoryActivity extends BaseActivity {
         mAdapter = new MainPageAdapter(this, getSupportFragmentManager());
 
         //add more fragment there.
+        Pair<Fragment, Integer> infoFragmentPair = new Pair<>(RepoInfoFragment.newInstance(repositoryData), R.string.info);
+        mAdapter.addFrag(infoFragmentPair);
 
         Pair<Fragment, Integer> fileFragmentPair = new Pair<>(RepoFilesFragment.newInstance(repositoryData), R.string.files);
         mAdapter.addFrag(fileFragmentPair);
