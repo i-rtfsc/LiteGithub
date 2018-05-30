@@ -113,7 +113,7 @@ public class LoginModel extends BaseViewModel {
         HttpCoreManager.executeRxHttp(new HttpCoreManager.IObservableCreator<User, Response<User>>() {
             @Override
             public Observable<Response<User>> createObservable(boolean forceNetWork) {
-                return AppHttpClient.getInstance(basicToken.token).getService(GithubService.class).getUser(false, "");
+                return AppHttpClient.getInstance(basicToken.token).getService(GithubService.class).getAuthUser(forceNetWork);
             }
         }, httpObserver, false);
     }

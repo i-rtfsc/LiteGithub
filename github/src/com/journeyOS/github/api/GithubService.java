@@ -20,6 +20,11 @@ import rx.Observable;
 
 public interface GithubService {
 
+    @NonNull @GET("user")
+    Observable<Response<User>> getAuthUser(
+            @Header("forceNetWork") boolean forceNetWork
+    );
+
     @GET("users/{user}")
     Observable<Response<User>> getUser(
             @Header("forceNetWork") boolean forceNetWork,
