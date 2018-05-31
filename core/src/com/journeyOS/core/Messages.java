@@ -23,6 +23,7 @@ public class Messages extends RouterMsssage {
     public static final int BASE = 1;
 
     public static final int MSG_FILE_ITEM_CILCKED = BASE << 0;
+    public static final int MSG_SEARCHING = BASE << 1;
 
     public int what;
 

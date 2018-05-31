@@ -23,6 +23,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="toolbarNavigationButtonStyle">@style/base_ToolbarNavigationButtonStyle</item>
+        <item name="android:itemBackground">@color/white</item>
     </style>
 
     <style name="base_BaseAppTheme" parent="base_AppTheme">

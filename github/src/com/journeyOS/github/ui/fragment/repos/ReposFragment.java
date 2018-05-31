@@ -26,18 +26,22 @@ import com.journeyOS.base.adapter.BaseViewHolder;
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.core.CoreManager;
+import com.journeyOS.core.Messages;
 import com.journeyOS.core.base.BaseListFragment;
 import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
+import com.journeyOS.github.ui.activity.search.SearchFilter;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryHolder;
+import com.journeyOS.literouter.RouterListener;
+import com.journeyOS.literouter.RouterMsssage;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ReposFragment extends BaseListFragment {
+public class ReposFragment extends BaseListFragment implements RouterListener {
     static final String TAG = ReposFragment.class.getSimpleName();
 
     Context mContext;
@@ -57,7 +61,7 @@ public class ReposFragment extends BaseListFragment {
     }
 
     static final String EXTRA_REPOS_TYPE = "reposType";
-    ReposType mReposType;
+    ReposType mReposType = null;
 
     public static Fragment newInstance(ReposType reposType) {
         ReposFragment fragment = new ReposFragment();
@@ -67,11 +71,23 @@ public class ReposFragment extends BaseListFragment {
         return fragment;
     }
 
+    static final String EXTRA_SEARCH_FILTER = "searchFilter";
+    SearchFilter mSearchFilter = null;
+
+    public static Fragment newInstanceForSearch(SearchFilter searchFilter) {
+        ReposFragment fragment = new ReposFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(EXTRA_SEARCH_FILTER, searchFilter);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public void initBeforeView() {
         super.initBeforeView();
         mContext = CoreManager.getContext();
         mReposType = (ReposType) getArguments().get(EXTRA_REPOS_TYPE);
+        mSearchFilter = getArguments().getParcelable(EXTRA_SEARCH_FILTER);
         initedMap.put(1, false);
     }
 
@@ -86,8 +102,15 @@ public class ReposFragment extends BaseListFragment {
         mReposModel = ModelProvider.getModel(this, ReposModel.class);
 
         showLoading();
-        mReposModel.loadRepositories(mReposType, getCurPage());
-        mReposModel.getReposStatus().observe(this, reposStatusObserver);
+        if (!BaseUtils.isNull(mReposType)) {
+            mReposModel.loadRepositories(mReposType, getCurPage());
+            mReposModel.getReposStatus().observe(this, reposStatusObserver);
+        }
+
+        if (!BaseUtils.isNull(mSearchFilter)) {
+            mReposModel.searchRepositories(mSearchFilter, getCurPage());
+            mReposModel.getSearchReposStatus().observe(this, reposStatusObserver);
+        }
     }
 
     @Override
@@ -107,7 +130,14 @@ public class ReposFragment extends BaseListFragment {
             LogUtils.d(TAG, "current page = " + page + ", has been inited = " + initedByPage);
             showLoading();
             initedMap.put(page, false);
-            mReposModel.loadRepositories(mReposType, page);
+
+            if (!BaseUtils.isNull(mReposType)) {
+                mReposModel.loadRepositories(mReposType, page);
+            }
+
+            if (!BaseUtils.isNull(mSearchFilter)) {
+                mReposModel.searchRepositories(mSearchFilter, getCurPage());
+            }
         }
     }
 
@@ -143,7 +173,6 @@ public class ReposFragment extends BaseListFragment {
         }
     }
 
-
     void initRepositories(List<RepositoryData> repositories) {
         LogUtils.d(TAG, "init adapter data");
         mAdapter.setData(repositories);
@@ -153,5 +182,21 @@ public class ReposFragment extends BaseListFragment {
         LogUtils.d(TAG, "defore upate adapter data = " + mAdapter.getItemCount());
         mAdapter.addData(repositories);
         LogUtils.d(TAG, "after upate adapter data = " + mAdapter.getItemCount());
+    }
+
+    @Override
+    public void onShowMessage(RouterMsssage message) {
+        Messages msg = (Messages) message;
+        LogUtils.d(LogUtils.TAG, "postSearchEvent = "+msg.what + " , SearchFilter = "+msg.obj);
+        switch (msg.what) {
+            case Messages.MSG_SEARCHING:
+                initedMap.clear();
+                initedMap.put(1, false);
+                mAdapter.clear();
+                showLoading();
+                mSearchFilter = (SearchFilter) msg.obj;
+                mReposModel.searchRepositories(mSearchFilter, 1);
+                break;
+        }
     }
 }

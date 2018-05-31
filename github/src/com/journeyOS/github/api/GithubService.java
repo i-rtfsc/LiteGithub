@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.journeyOS.github.entity.FileModel;
 import com.journeyOS.github.entity.Repository;
+import com.journeyOS.github.entity.SearchResult;
 import com.journeyOS.github.entity.User;
 
 import java.util.ArrayList;
@@ -101,6 +102,24 @@ public interface GithubService {
     Observable<Response<ArrayList<User>>> getFollowing(
             @Header("forceNetWork") boolean forceNetWork,
             @Path("user") String user,
+            @Query("page") int page
+    );
+
+    @NonNull
+    @GET("search/users")
+    Observable<Response<SearchResult<User>>> searchUsers(
+            @Query("q") String query,
+            @Query("sort") String sort,
+            @Query("order") String order,
+            @Query("page") int page
+    );
+
+    @NonNull
+    @GET("search/repositories")
+    Observable<Response<SearchResult<Repository>>> searchRepos(
+            @Query("q") String query,
+            @Query("sort") String sort,
+            @Query("order") String order,
             @Query("page") int page
     );
 

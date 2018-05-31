@@ -35,6 +35,7 @@ import com.journeyOS.github.MaterialDrawer;
 import com.journeyOS.github.MaterialDrawer.OnDrawerItemClickListener;
 import com.journeyOS.github.R;
 import com.journeyOS.github.ui.activity.profile.ProfileActivity;
+import com.journeyOS.github.ui.activity.search.SearchActivity;
 import com.journeyOS.github.ui.activity.settings.SettingsActivity;
 import com.journeyOS.github.ui.fragment.repos.ReposFragment;
 import com.mikepenz.materialdrawer.Drawer;
@@ -144,9 +145,8 @@ public class GithubActivity extends BaseActivity implements OnDrawerItemClickLis
                 mToolbar.setTitle(R.string.issues);
                 showShortToast(ToastType.INFO, mContext.getString(R.string.developing));
                 break;
-            case Constant.MENU_SEARCH:
-                mToolbar.setTitle(R.string.search);
-                showShortToast(ToastType.INFO, mContext.getString(R.string.developing));
+           case Constant.MENU_SEARCH:
+                SearchActivity.show(mContext);
                 break;
             case Constant.MENU_STARRED:
                 mToolbar.setTitle(R.string.starred);

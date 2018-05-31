@@ -30,6 +30,8 @@ import com.journeyOS.core.viewmodel.BaseViewModel;
 import com.journeyOS.github.BuildConfig;
 import com.journeyOS.github.api.GithubService;
 import com.journeyOS.github.entity.Repository;
+import com.journeyOS.github.entity.SearchResult;
+import com.journeyOS.github.ui.activity.search.SearchFilter;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
 
 import java.util.ArrayList;
@@ -45,6 +47,12 @@ public class ReposModel extends BaseViewModel {
 
     protected MutableLiveData<StatusDataResource> getReposStatus() {
         return mReposStatus;
+    }
+
+    MutableLiveData<StatusDataResource> mSearchReposStatus = new MutableLiveData<>();
+
+    protected MutableLiveData<StatusDataResource> getSearchReposStatus() {
+        return mSearchReposStatus;
     }
 
     GithubService mGithubService;
@@ -90,6 +98,32 @@ public class ReposModel extends BaseViewModel {
                 return responseObservable;
             }
         }, httpObserver, true);
+    }
+
+    protected void searchRepositories(final SearchFilter searchFilter, final int page) {
+        HttpObserver<SearchResult<Repository>> httpObserver = new HttpObserver<SearchResult<Repository>>() {
+            @Override
+            public void onSuccess(HttpResponse<SearchResult<Repository>> response) {
+                LogUtils.d(TAG, "load repository success");
+                ArrayList<RepositoryData> repositoryDataArrayList = convertFromRepository((ArrayList<Repository>) response.body().items);
+                mSearchReposStatus.postValue(StatusDataResource.success(repositoryDataArrayList, page));
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                LogUtils.d(TAG, "load repository error = " + error.getMessage());
+                mSearchReposStatus.postValue(StatusDataResource.error(error.getMessage()));
+            }
+        };
+
+        HttpCoreManager.executeRxHttp(new HttpCoreManager.IObservableCreator<SearchResult<Repository>,
+                Response<SearchResult<Repository>>>() {
+            @Nullable
+            @Override
+            public Observable<Response<SearchResult<Repository>>> createObservable(boolean forceNetWork) {
+                return mGithubService.searchRepos(searchFilter.getQuery(), searchFilter.getSort(), searchFilter.getOrder(), page);
+            }
+        }, httpObserver);
     }
 
     ArrayList<RepositoryData> convertFromRepository(ArrayList<Repository> repositories) {

@@ -29,7 +29,9 @@ import com.journeyOS.core.http.HttpResponse;
 import com.journeyOS.core.viewmodel.BaseViewModel;
 import com.journeyOS.github.BuildConfig;
 import com.journeyOS.github.api.GithubService;
+import com.journeyOS.github.entity.SearchResult;
 import com.journeyOS.github.entity.User;
+import com.journeyOS.github.ui.activity.search.SearchFilter;
 import com.journeyOS.github.ui.fragment.user.adapter.UserData;
 
 import java.util.ArrayList;
@@ -47,6 +49,12 @@ public class UserModel extends BaseViewModel {
         return mUsersStatus;
     }
 
+    MutableLiveData<StatusDataResource> mSearchUsersStatus = new MutableLiveData<>();
+
+    protected MutableLiveData<StatusDataResource> getSearchUsersStatus() {
+        return mSearchUsersStatus;
+    }
+
     GithubService mGithubService;
 
     @Override
@@ -60,14 +68,14 @@ public class UserModel extends BaseViewModel {
                 new HttpObserver<ArrayList<User>>() {
                     @Override
                     public void onSuccess(HttpResponse<ArrayList<User>> response) {
-                        LogUtils.d(TAG, "load repos files success");
+                        LogUtils.d(TAG, "load user success");
                         ArrayList<UserData> userDataArrayList = convertFromUser((ArrayList<User>) response.body());
                         mUsersStatus.postValue(StatusDataResource.success(userDataArrayList, page));
                     }
 
                     @Override
                     public void onError(Throwable error) {
-                        LogUtils.d(TAG, "load repos files error = " + error.getMessage());
+                        LogUtils.d(TAG, "load user error = " + error.getMessage());
                         mUsersStatus.postValue(StatusDataResource.error(error.getMessage()));
                     }
                 };
@@ -91,6 +99,33 @@ public class UserModel extends BaseViewModel {
                 }
             }
         }, httpObserver, readCacheFirst);
+    }
+
+    void searchUsers(final SearchFilter searchFilter, final int page) {
+        HttpObserver<SearchResult<User>> httpObserver =
+                new HttpObserver<SearchResult<User>>() {
+                    @Override
+                    public void onSuccess(HttpResponse<SearchResult<User>> response) {
+                        LogUtils.d(TAG, "search use success");
+                        ArrayList<UserData> userDataArrayList = convertFromUser((ArrayList<User>) response.body().items);
+                        mSearchUsersStatus.postValue(StatusDataResource.success(userDataArrayList, page));
+                    }
+
+                    @Override
+                    public void onError(Throwable error) {
+                        LogUtils.d(TAG, "search search error = " + error.getMessage());
+                        mSearchUsersStatus.postValue(StatusDataResource.error(error.getMessage()));
+                    }
+                };
+
+        HttpCoreManager.executeRxHttp(new HttpCoreManager.IObservableCreator<SearchResult<User>,
+                Response<SearchResult<User>>>() {
+            @Nullable
+            @Override
+            public Observable<Response<SearchResult<User>>> createObservable(boolean forceNetWork) {
+                return mGithubService.searchUsers(searchFilter.getQuery(), searchFilter.getSort(), searchFilter.getOrder(), page);
+            }
+        }, httpObserver);
     }
 
     ArrayList<UserData> convertFromUser(ArrayList<User> users) {

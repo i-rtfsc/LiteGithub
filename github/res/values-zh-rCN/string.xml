@@ -34,6 +34,7 @@
     <string name="issues">问题</string>
     <string name="advanced">高级</string>
     <string name="search">搜索</string>
+    <string name="sort">排序</string>
     <string name="starred">星标</string>
     <string name="settings">设置</string>
     <string name="about">关于</string>
@@ -66,6 +67,23 @@
     <string name="forked_at">添加到版本库于</string>
     <string name="latest_update">最后一次更新</string>
     <string name="latest_commit">最后一次提交</string>
+
+    <string name="best_match">最匹配的</string>
+    <string name="most_stars">最多星标的</string>
+    <string name="fewest_stars">最少星标的</string>
+    <string name="most_forks">最多分支的</string>
+    <string name="fewest_forks">最少分支的</string>
+    <string name="recently_updated">最近更新的</string>
+    <string name="least_recently_updated">以前更新的</string>
+
+    <string name="most_followers">最多跟随者的</string>
+    <string name="fewest_followers">最少跟随者的</string>
+    <string name="most_recently_joined">最近加入的</string>
+    <string name="least_recently_joined">以前加入的</string>
+    <string name="most_repositories">最多版本库的</string>
+    <string name="fewest_repositories">最少版本库的</string>
+    <string name="user">用户</string>
+    <string name="invalid_query">无效的查询内容</string>
 
     <string name="sub_modules">无法打开子模块</string>
 
