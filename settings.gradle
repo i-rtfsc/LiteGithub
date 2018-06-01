@@ -18,7 +18,7 @@ def initVersion() {
     gradle.ext.minSdkVersion = 17
     gradle.ext.supportVersion = '27.0.2'
     gradle.ext.versionCode = 2
-    gradle.ext.versionName = '0.2.1'
+    gradle.ext.versionName = '0.1.5'
 
     //core dependencies
     gradle.ext.room_compiler = '1.0.0'
@@ -40,6 +40,7 @@ def initVersion() {
     gradle.ext.toasty = "1.3.0"
     gradle.ext.codeview = "1.3.1"
     gradle.ext.materialprogressbar = '1.4.2'
+    gradle.ext.slidingrootnav = '1.1.0'
 
     gradle.ext.appcompat = '25.1.1'
     gradle.ext.submitbutton = '1.1.2'
@@ -53,4 +54,4 @@ def initVersion() {
 initLocalGradleEnvironment()
 initVersion()
 
-include ':literouter', ':literouter-annotation', ':literouter-compiler', ':litetask', ':base', ':plugins', ':core', ':github'
+include ':literouter', ':literouter-annotation', ':literouter-compiler', ':litetask', ':base', ':core', ':github'

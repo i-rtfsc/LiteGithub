@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (c) 2018 anqi.huang@outlook.com
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:autoMirrored="true"
+    android:viewportHeight="1024"
+    android:viewportWidth="1024">
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M396.8,755.2c-192,0 -352,-160 -352,-352s160,-352 352,-352 352,160 352,352 -153.6,352 -352,352zM396.8,108.8c-160,0 -294.4,134.4 -294.4,294.4s134.4,294.4 294.4,294.4c160,0 294.4,-134.4 294.4,-294.4s-128,-294.4 -294.4,-294.4z" />
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M192,294.4h-6.4c-6.4,-6.4 -6.4,-12.8 -6.4,-19.2 44.8,-76.8 128,-128 224,-128 6.4,0 12.8,6.4 12.8,12.8s-6.4,12.8 -12.8,12.8c-83.2,0 -153.6,44.8 -198.4,108.8 -6.4,12.8 -12.8,12.8 -12.8,12.8zM153.6,409.6c-6.4,0 -12.8,-6.4 -12.8,-12.8 0,-19.2 0,-32 6.4,-51.2 0,-6.4 6.4,-12.8 19.2,-12.8 6.4,0 12.8,6.4 12.8,19.2 -6.4,19.2 -6.4,25.6 -6.4,44.8 0,6.4 -6.4,12.8 -19.2,12.8zM889.6,972.8c-25.6,0 -44.8,-6.4 -64,-25.6l-230.4,-230.4c-19.2,-19.2 -25.6,-38.4 -19.2,-64 6.4,-19.2 19.2,-32 32,-44.8 19.2,-19.2 38.4,-32 64,-32 12.8,0 25.6,6.4 44.8,19.2l230.4,230.4c19.2,19.2 25.6,38.4 25.6,64s-6.4,44.8 -25.6,64c-12.8,12.8 -32,19.2 -57.6,19.2zM633.6,672s6.4,0 0,0l236.8,236.8c12.8,12.8 32,12.8 38.4,0 6.4,-6.4 6.4,-12.8 6.4,-19.2 0,-6.4 0,-12.8 -6.4,-19.2l-230.4,-230.4h-6.4s-6.4,0 -25.6,19.2l-12.8,12.8z" />
+</vector>

@@ -25,6 +25,7 @@
     <color name="dark_background">#f5f5f5</color>
     <color name="disable_or_hint_white">#4Cffffff</color>
     <color name="icon">#00BFFF</color>
+    <color name="icon_unselected">#8C00BFFF</color>
     <color name="icon_white">#FFFFFF</color>
     <color name="text_primary">#a6ffffff</color>
     <color name="text_secondary">#80ffffff</color>

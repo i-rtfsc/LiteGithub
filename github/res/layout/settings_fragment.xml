@@ -21,17 +21,6 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="?attr/colorPrimary"
-        android:minHeight="45dp"
-        settings:layout_scrollFlags="scroll|enterAlways"
-        settings:popupTheme="@style/ToolbarPopupTheme"
-        settings:theme="@style/ToolbarTheme"
-        settings:titleTextAppearance="@style/ToolbarTitle" />
-
     <LinearLayout style="@style/wrap_layout">
 
         <com.journeyOS.base.widget.SettingView

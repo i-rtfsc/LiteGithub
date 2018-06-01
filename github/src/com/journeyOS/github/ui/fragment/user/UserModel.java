@@ -59,7 +59,7 @@ public class UserModel extends BaseViewModel {
 
     @Override
     protected void onCreate() {
-        mGithubService = AppHttpClient.getInstance(CoreManager.getAccessToken()).getService(GithubService.class);
+        mGithubService = AppHttpClient.getInstance(CoreManager.getAuthUser().accessToken).getService(GithubService.class);
     }
 
     void loadUsers(final UserFragment.UsersType usersType, final String user, final String repo, final int page, final boolean isReload) {

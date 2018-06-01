@@ -49,7 +49,6 @@
                 app:popupTheme="@style/ToolbarPopupTheme"
                 app:title="@string/profile"
                 app:theme="@style/ToolbarTheme"
-                android:visibility="gone"
                 app:titleTextAppearance="@style/ToolbarTitle" />
 
         </android.support.design.widget.CollapsingToolbarLayout>

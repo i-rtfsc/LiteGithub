@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.core.base.BaseFragment;
 import com.journeyOS.github.R;
 
@@ -60,6 +61,10 @@ public class MainPageAdapter extends FragmentStatePagerAdapter {
         mFragmentList.add(fragmentPair);
     }
 
+    public void clearAll() {
+        if (!BaseUtils.isNull(mFragmentList)) mFragmentList.clear();
+    }
+
     public View getTabView(int position, ViewGroup parent) {
         View view;
         view = LayoutInflater.from(context).inflate(R.layout.tab_view, parent, false);
@@ -70,7 +75,7 @@ public class MainPageAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        if (curFragment.equals(object)) {
+        if (!BaseUtils.isNull(curFragment) && curFragment.equals(object)) {
             curFragment = null;
         }
         super.destroyItem(container, position, object);

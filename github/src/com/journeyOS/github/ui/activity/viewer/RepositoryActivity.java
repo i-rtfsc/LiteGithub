@@ -25,6 +25,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
@@ -50,7 +51,8 @@ import butterknife.BindView;
 
 public class RepositoryActivity extends BaseActivity {
     static final String EXTRA_REPOSITORY_DATA = "repositoryData";
-
+    @BindView(R.id.toolbar_layout)
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.tab_layout)
@@ -81,7 +83,7 @@ public class RepositoryActivity extends BaseActivity {
     @Override
     public void initViews() {
         RepositoryData repositoryData = getIntent().getParcelableExtra(EXTRA_REPOSITORY_DATA);
-
+        mCollapsingToolbarLayout.setTitleEnabled(false);
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

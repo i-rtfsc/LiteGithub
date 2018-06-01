@@ -324,9 +324,21 @@ public class SettingView extends RelativeLayout {
         }
     }
 
+    public void setColorFilter(int colorFilter) {
+        if (mIcon != null) {
+            mIcon.setColorFilter(colorFilter);
+        }
+    }
+
     public void setTitle(String title) {
         if (mTitle != null) {
             mTitle.setText(title);
+        }
+    }
+
+    public void setTextColor(int color) {
+        if (mTitle != null) {
+            mTitle.setTextColor(color);
         }
     }
 

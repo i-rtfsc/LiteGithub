@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package com.journeyOS.github.ui.activity.settings;
+package com.journeyOS.github.ui.fragment.settings;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 
 import com.journeyOS.base.Constant;
 import com.journeyOS.base.persistence.SpUtils;
@@ -29,16 +27,15 @@ import com.journeyOS.base.widget.SettingSwitch;
 import com.journeyOS.base.widget.SettingView;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.api.userprovider.IAuthUserProvider;
-import com.journeyOS.core.base.BaseActivity;
+import com.journeyOS.core.base.BaseFragment;
 import com.journeyOS.github.R;
 import com.journeyOS.github.ui.activity.splash.SplashActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SettingsActivity extends BaseActivity {
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+public class SettingsFragment extends BaseFragment {
+
     @BindView(R.id.code_theme)
     SettingView codeTheme;
     @BindView(R.id.use_cache)
@@ -46,29 +43,26 @@ public class SettingsActivity extends BaseActivity {
     @BindView(R.id.logout)
     SettingView logout;
 
-    Context mContext;
+    static Activity mContext;
+
+    public static Fragment newInstance(Activity activity) {
+        SettingsFragment fragment = new SettingsFragment();
+        mContext = activity;
+        return fragment;
+    }
 
     @Override
     public void initBeforeView() {
         super.initBeforeView();
-        mContext = CoreManager.getContext();
-    }
-
-    public static void newInstance(@NonNull Context context) {
-        Intent intent = new Intent(context, SettingsActivity.class);
-        context.startActivity(intent);
     }
 
     @Override
     public int attachLayoutRes() {
-        return R.layout.settings_activity;
+        return R.layout.settings_fragment;
     }
 
     @Override
     public void initViews() {
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         boolean isCache = SpUtils.getInstant().getBoolean(Constant.THEME, true);
         useCache.setCheck(isCache);
     }
@@ -93,7 +87,7 @@ public class SettingsActivity extends BaseActivity {
     void showThemeChooser() {
         final String[] items = mContext.getResources().getStringArray(R.array.theme_array);
         int item = SpUtils.getInstant().getBoolean(Constant.THEME, true) ? 0 : 1;
-        final AlertDialog dialog = new AlertDialog.Builder(this, R.style.CornersAlertDialog)
+        final AlertDialog dialog = new AlertDialog.Builder(mContext, R.style.CornersAlertDialog)
                 .setTitle(mContext.getString(R.string.code_theme))
                 .setSingleChoiceItems(items, item, new DialogInterface.OnClickListener() {
                     @Override
@@ -114,7 +108,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     void verifyLogout() {
-        final AlertDialog dialog = new AlertDialog.Builder(this, R.style.CornersAlertDialog)
+        final AlertDialog dialog = new AlertDialog.Builder(mContext, R.style.CornersAlertDialog)
                 .setTitle(R.string.logout)
                 .setMessage(R.string.logout_message)
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

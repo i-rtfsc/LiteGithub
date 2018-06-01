@@ -56,6 +56,8 @@ dependencies {
     api "io.reactivex:rxandroid:$gradle.rxandroid"
     api "com.github.GrenderG:Toasty:$gradle.toasty"
     api "com.github.kbiakov:CodeView-android:$gradle.codeview"
+    api "com.yarolegovich:sliding-root-nav:$gradle.slidingrootnav"
+    api "com.squareup.picasso:picasso:$gradle.picasso"
 
     implementation "me.zhanghai.android.materialprogressbar:library:$gradle.materialprogressbar"
 

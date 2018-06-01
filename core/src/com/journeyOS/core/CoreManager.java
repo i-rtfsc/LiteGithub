@@ -19,14 +19,16 @@ package com.journeyOS.core;
 
 import android.app.Application;
 
+import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.core.api.ICoreApi;
+import com.journeyOS.core.api.userprovider.AuthUser;
 import com.journeyOS.core.config.AppConfig;
 import com.journeyOS.literouter.ARouter;
 
 
 public class CoreManager {
     private static Application sContext;
-    private static String accessToken;
+    private static AuthUser mAuthUser;
 
     public static void init(Application context) {
         sContext = context;
@@ -37,12 +39,14 @@ public class CoreManager {
         return sContext;
     }
 
-    public static void setAccessToken(String token) {
-        accessToken = token;
+    public static void setAuthUser(AuthUser authUser) {
+        LogUtils.d(LogUtils.TAG, " setAuthUser = "+authUser);
+        LogUtils.d(LogUtils.TAG, " setAuthUser accessToken = "+authUser.accessToken);
+        mAuthUser = authUser;
     }
 
-    public static String getAccessToken() {
-        return accessToken;
+    public static AuthUser getAuthUser() {
+        return mAuthUser;
     }
 
     public static <T extends ICoreApi> T getImpl(Class<T> api) {

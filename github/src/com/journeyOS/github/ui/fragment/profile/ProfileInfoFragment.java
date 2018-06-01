@@ -115,13 +115,13 @@ public class ProfileInfoFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.followers_lay:
-                ContainerActivity.showUser(mContext, UserFragment.UsersType.FOLLOWERS, mUser.login, mUser.name);
+                ContainerActivity.showUser(mContext, ContainerActivity.FragmentType.USER, UserFragment.UsersType.FOLLOWERS, mUser.login, mUser.name);
                 break;
             case R.id.following_lay:
-                ContainerActivity.showUser(mContext, UserFragment.UsersType.FOLLOWING, mUser.login, mUser.name);
+                ContainerActivity.showUser(mContext, ContainerActivity.FragmentType.USER, UserFragment.UsersType.FOLLOWING, mUser.login, mUser.name);
                 break;
             case R.id.repos_lay:
-                ContainerActivity.show(mContext, ReposFragment.ReposType.OWNED);
+                ContainerActivity.show(mContext, ContainerActivity.FragmentType.REPOS, ReposFragment.ReposType.OWNED);
                 break;
             case R.id.gists_lay:
                 break;

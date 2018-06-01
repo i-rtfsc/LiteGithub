@@ -38,7 +38,7 @@ public class ProfileModel extends BaseViewModel {
 
     MutableLiveData<StatusDataResource> mUserStatus = new MutableLiveData<>();
 
-    protected MutableLiveData<StatusDataResource> getUserStatus() {
+    public MutableLiveData<StatusDataResource> getUserStatus() {
         return mUserStatus;
     }
 
@@ -46,10 +46,10 @@ public class ProfileModel extends BaseViewModel {
 
     @Override
     protected void onCreate() {
-        mGithubService = AppHttpClient.getInstance(CoreManager.getAccessToken()).getService(GithubService.class);
+        mGithubService = AppHttpClient.getInstance(CoreManager.getAuthUser().accessToken).getService(GithubService.class);
     }
 
-    protected void getUserInfo(final String login) {
+    public void getUserInfo(final String login) {
         HttpObserver<User> httpObserver = new HttpObserver<User>() {
             @Override
             public void onSuccess(@NonNull HttpResponse<User> response) {

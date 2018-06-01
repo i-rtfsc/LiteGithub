@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
@@ -43,7 +44,8 @@ import com.journeyOS.github.ui.fragment.repos.ReposFragment;
 import butterknife.BindView;
 
 public class ProfileActivity extends BaseActivity {
-
+    @BindView(R.id.toolbar_layout)
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.tab_layout)
@@ -84,6 +86,7 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     public void initViews() {
+        mCollapsingToolbarLayout.setTitleEnabled(false);
         mToolbar.setTitle(R.string.profile);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -106,11 +109,13 @@ public class ProfileActivity extends BaseActivity {
                 setupViewPager((User) statusDataResource.data);
                 break;
             case ERROR:
+                showTipDialog(statusDataResource.message);
                 break;
         }
     }
 
     void setupViewPager(User user) {
+
         mAdapter = new MainPageAdapter(this, getSupportFragmentManager());
 
         Pair<Fragment, Integer> profileInfoFragmentPair = new Pair<>(ProfileInfoFragment.newInstance(user), R.string.info);
