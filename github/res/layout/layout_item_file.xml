@@ -34,8 +34,8 @@
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/file_type"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/spacing_x_large"
+            android:layout_height="@dimen/spacing_x_large"
             android:layout_marginStart="@dimen/spacing_micro"
             app:srcCompat="@drawable/svg_folder" />
 
@@ -58,7 +58,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_size"
+        android:layout_height="@dimen/divider_size_secondary"
         android:background="@color/divider_dark" />
 
 </LinearLayout>

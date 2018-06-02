@@ -37,6 +37,7 @@ import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
 import com.journeyOS.github.entity.User;
+import com.journeyOS.github.type.RepoType;
 import com.journeyOS.github.ui.adapter.MainPageAdapter;
 import com.journeyOS.github.ui.fragment.profile.ProfileInfoFragment;
 import com.journeyOS.github.ui.fragment.repos.ReposFragment;
@@ -121,7 +122,7 @@ public class ProfileActivity extends BaseActivity {
         Pair<Fragment, Integer> profileInfoFragmentPair = new Pair<>(ProfileInfoFragment.newInstance(user), R.string.info);
         mAdapter.addFrag(profileInfoFragmentPair);
 
-        Pair<Fragment, Integer> fileFragmentPair = new Pair<>(ReposFragment.newInstance(ReposFragment.ReposType.STARRED), R.string.starred);
+        Pair<Fragment, Integer> fileFragmentPair = new Pair<>(ReposFragment.newInstance(RepoType.STARRED), R.string.starred);
         mAdapter.addFrag(fileFragmentPair);
 
         mViewPager.setAdapter(mAdapter);

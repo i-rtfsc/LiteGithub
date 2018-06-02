@@ -31,6 +31,7 @@ import com.journeyOS.github.BuildConfig;
 import com.journeyOS.github.api.GithubService;
 import com.journeyOS.github.entity.SearchResult;
 import com.journeyOS.github.entity.User;
+import com.journeyOS.github.type.UserType;
 import com.journeyOS.github.ui.activity.search.SearchFilter;
 import com.journeyOS.github.ui.fragment.user.adapter.UserData;
 
@@ -62,7 +63,7 @@ public class UserModel extends BaseViewModel {
         mGithubService = AppHttpClient.getInstance(CoreManager.getAuthUser().accessToken).getService(GithubService.class);
     }
 
-    void loadUsers(final UserFragment.UsersType usersType, final String user, final String repo, final int page, final boolean isReload) {
+    void loadUsers(final UserType userType, final String user, final String repo, final int page, final boolean isReload) {
         final boolean readCacheFirst = page == 1 && !isReload;
         HttpObserver<ArrayList<User>> httpObserver =
                 new HttpObserver<ArrayList<User>>() {
@@ -85,7 +86,7 @@ public class UserModel extends BaseViewModel {
             @Nullable
             @Override
             public Observable<Response<ArrayList<User>>> createObservable(boolean forceNetWork) {
-                switch (usersType) {
+                switch (userType) {
                     case WATCHERS:
                         return mGithubService.getWatchers(forceNetWork, user, repo, page);
                     case FOLLOWERS:
@@ -95,7 +96,7 @@ public class UserModel extends BaseViewModel {
                     case STARGAZERS:
                         return mGithubService.getStargazers(forceNetWork, user, repo, page);
                     default:
-                        throw new IllegalArgumentException(usersType.name());
+                        throw new IllegalArgumentException(userType.name());
                 }
             }
         }, httpObserver, readCacheFirst);

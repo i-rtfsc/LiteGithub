@@ -32,23 +32,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            android:paddingTop="0dp"
             app:collapsedTitleGravity="start"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
-            app:expandedTitleMarginStart="96dp"
-            app:expandedTitleMarginTop="60dp"
+            app:expandedTitleMarginStart="@dimen/spacing_xxx_huge"
+            app:expandedTitleMarginTop="@dimen/spacing_huge"
             app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:minHeight="45dp"
+                android:layout_height="@dimen/toolbar_height"
+                android:minHeight="@dimen/toolbar_height"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ToolbarPopupTheme"
-                app:title="@string/profile"
                 app:theme="@style/ToolbarTheme"
+                app:title="@string/profile"
                 app:titleTextAppearance="@style/ToolbarTitle" />
 
         </android.support.design.widget.CollapsingToolbarLayout>

@@ -43,6 +43,7 @@ import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
 import com.journeyOS.github.SlidingDrawer;
 import com.journeyOS.github.entity.User;
+import com.journeyOS.github.type.RepoType;
 import com.journeyOS.github.ui.activity.profile.ProfileModel;
 import com.journeyOS.github.ui.activity.search.SearchActivity;
 import com.journeyOS.github.ui.adapter.MainPageAdapter;
@@ -194,8 +195,8 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
                 break;
             case Constant.MENU_REPOS:
                 mToolbar.setTitle(R.string.my_repos);
-                loadFragment(ReposFragment.newInstance(ReposFragment.ReposType.OWNED));
-//                ContainerActivity.show(mContext, ReposFragment.ReposType.OWNED);
+                loadFragment(ReposFragment.newInstance(RepoType.OWNED));
+//                ContainerActivity.show(mContext, RepoType.OWNED);
                 break;
             case Constant.MENU_NOTIFICATION:
                 break;
@@ -206,8 +207,8 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
                 break;
             case Constant.MENU_STARRED:
                 mToolbar.setTitle(R.string.starred);
-                loadFragment(ReposFragment.newInstance(ReposFragment.ReposType.STARRED));
-//                ContainerActivity.show(mContext, ReposFragment.ReposType.STARRED);
+                loadFragment(ReposFragment.newInstance(RepoType.STARRED));
+//                ContainerActivity.show(mContext, RepoType.STARRED);
                 break;
             case Constant.MENU_SETTINGS:
                 mToolbar.setTitle(R.string.settings);
@@ -241,7 +242,7 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
         Pair<Fragment, Integer> profileInfoFragmentPair = new Pair<>(ProfileInfoFragment.newInstance(user), R.string.info);
         mAdapter.addFrag(profileInfoFragmentPair);
 
-        Pair<Fragment, Integer> fileFragmentPair = new Pair<>(ReposFragment.newInstance(ReposFragment.ReposType.STARRED), R.string.starred);
+        Pair<Fragment, Integer> fileFragmentPair = new Pair<>(ReposFragment.newInstance(RepoType.STARRED), R.string.starred);
         mAdapter.addFrag(fileFragmentPair);
 
         mViewPager.setAdapter(mAdapter);

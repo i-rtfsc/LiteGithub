@@ -22,8 +22,8 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/icon_size_x_large"
+        android:layout_height="@dimen/icon_size_x_large"
         android:layout_gravity="center"
         app:srcCompat="@drawable/svg_base_github" />
 

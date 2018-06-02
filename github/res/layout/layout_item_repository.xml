@@ -19,14 +19,14 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="4dp"
+    android:layout_marginBottom="@dimen/spacing_micro"
+    android:layout_marginLeft="@dimen/spacing_micro"
+    android:layout_marginRight="@dimen/spacing_small"
+    android:layout_marginTop="@dimen/spacing_micro"
     android:background="@color/gray_cc"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="6dp">
+    app:cardCornerRadius="@dimen/card_corner_radius">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,13 +36,13 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_user_avatar"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="@dimen/icon_size_big"
+            android:layout_height="@dimen/icon_size_big"
             android:layout_gravity="center"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="@dimen/spacing_normal"
             android:gravity="center"
             app:civ_border_color="@color/ivory"
-            app:civ_border_width="1dp" />
+            app:civ_border_width="@dimen/divider_size" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,16 +70,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="@dimen/spacing_micro"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_size_small" />
 
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/language_color"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="@dimen/icon_size_small"
+                    android:layout_height="@dimen/icon_size_small"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="@dimen/spacing_micro"
                     app:srcCompat="@drawable/svg_dot" />
 
             </LinearLayout>
@@ -89,8 +89,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="4"
-                android:paddingBottom="4dp"
-                android:paddingTop="4dp"
+                android:paddingBottom="@dimen/spacing_micro"
+                android:paddingTop="@dimen/spacing_micro"
                 android:text="OpenHub description"
                 android:textColor="@color/text_secondary_dark"
                 android:textSize="@dimen/text_size_small" />
@@ -108,8 +108,8 @@
                     android:orientation="horizontal">
 
                     <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="@dimen/icon_size_small"
+                        android:layout_height="@dimen/icon_size_small"
                         android:tint="@color/text_secondary_dark"
                         app:srcCompat="@drawable/svg_star" />
 
@@ -117,8 +117,7 @@
                         android:id="@+id/tv_star_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="1123"
+                        android:layout_marginStart="@dimen/spacing_micro"
                         android:textColor="@color/text_secondary_dark"
                         android:textSize="@dimen/text_size_small" />
                 </LinearLayout>
@@ -131,8 +130,8 @@
                     android:orientation="horizontal">
 
                     <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="@dimen/icon_size_small"
+                        android:layout_height="@dimen/icon_size_small"
                         android:tint="@color/text_secondary_dark"
                         app:srcCompat="@drawable/svg_fork" />
 
@@ -140,8 +139,7 @@
                         android:id="@+id/tv_fork_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:text="1123"
+                        android:layout_marginLeft="@dimen/spacing_micro"
                         android:textColor="@color/text_secondary_dark"
                         android:textSize="@dimen/text_size_small" />
                 </LinearLayout>
@@ -155,8 +153,8 @@
                     android:orientation="horizontal">
 
                     <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="@dimen/icon_size_small"
+                        android:layout_height="@dimen/icon_size_small"
                         android:tint="@color/text_secondary_dark"
                         app:srcCompat="@drawable/svg_user" />
 
@@ -164,7 +162,7 @@
                         android:id="@+id/tv_owner_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginLeft="@dimen/spacing_micro"
                         android:text="owner"
                         android:textColor="@color/text_secondary_dark"
                         android:textSize="@dimen/text_size_small" />
@@ -174,21 +172,21 @@
                     android:id="@+id/fork_mark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
+                    android:layout_marginLeft="@dimen/spacing_micro"
+                    android:layout_marginRight="@dimen/spacing_micro"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="@dimen/icon_size_small"
+                        android:layout_height="@dimen/icon_size_small"
                         android:tint="@color/text_secondary_dark"
                         app:srcCompat="@drawable/svg_fork" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="@dimen/spacing_micro"
                         android:text="fock"
                         android:textColor="@color/text_secondary_dark"
                         android:textSize="@dimen/text_size_small" />
@@ -204,8 +202,8 @@
                     android:visibility="gone">
 
                     <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="@dimen/icon_size_small"
+                        android:layout_height="@dimen/icon_size_small"
                         android:tint="?android:textColorSecondary"
                         app:srcCompat="@drawable/svg_star" />
 
@@ -213,8 +211,8 @@
                         android:id="@+id/tv_since_star_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="@dimen/spacing_micro"
+                        android:layout_marginStart="@dimen/spacing_micro"
                         android:textColor="@color/text_secondary_dark"
                         android:textSize="@dimen/text_size_small" />
                 </LinearLayout>

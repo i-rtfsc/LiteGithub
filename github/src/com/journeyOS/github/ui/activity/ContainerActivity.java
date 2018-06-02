@@ -25,6 +25,9 @@ import android.support.v7.widget.Toolbar;
 import com.journeyOS.base.utils.UIUtils;
 import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.github.R;
+import com.journeyOS.github.type.FragmentType;
+import com.journeyOS.github.type.RepoType;
+import com.journeyOS.github.type.UserType;
 import com.journeyOS.github.ui.fragment.repos.ReposFragment;
 import com.journeyOS.github.ui.fragment.settings.SettingsFragment;
 import com.journeyOS.github.ui.fragment.user.UserFragment;
@@ -36,9 +39,6 @@ public class ContainerActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    public enum FragmentType {
-        REPOS, USER, SETTINGS
-    }
     static final String EXTRA_FRAGMENT_TYPE = "fragmentType";
 
     static final String EXTRA_REPOS_TYPE = "reposType";
@@ -47,18 +47,18 @@ public class ContainerActivity extends BaseActivity {
     static final String EXTRA_USER = "user";
     static final String EXTRA_REPO = "repo";
 
-    public static void show(@NonNull Context context, @NonNull FragmentType fragmentType, @NonNull ReposFragment.ReposType reposType) {
+    public static void show(@NonNull Context context, @NonNull FragmentType fragmentType, @NonNull RepoType repoType) {
         Intent intent = new Intent(context, ContainerActivity.class);
         intent.putExtra(EXTRA_FRAGMENT_TYPE, fragmentType);
-        intent.putExtra(EXTRA_REPOS_TYPE, reposType);
+        intent.putExtra(EXTRA_REPOS_TYPE, repoType);
         context.startActivity(intent);
     }
 
-    public static void showUser(@NonNull Context context, @NonNull FragmentType fragmentType, @NonNull UserFragment.UsersType usersType, @NonNull String user,
+    public static void showUser(@NonNull Context context, @NonNull FragmentType fragmentType, @NonNull UserType userType, @NonNull String user,
                                 @NonNull String repo) {
         Intent intent = new Intent(context, ContainerActivity.class);
         intent.putExtra(EXTRA_FRAGMENT_TYPE, fragmentType);
-        intent.putExtra(EXTRA_USER_TYPE, usersType);
+        intent.putExtra(EXTRA_USER_TYPE, userType);
         intent.putExtra(EXTRA_USER, user);
         intent.putExtra(EXTRA_REPO, repo);
         context.startActivity(intent);
@@ -82,29 +82,29 @@ public class ContainerActivity extends BaseActivity {
         FragmentType fragmentType = (FragmentType) getIntent().getSerializableExtra(EXTRA_FRAGMENT_TYPE);
         switch (fragmentType) {
             case USER:
-                UserFragment.UsersType usersType = (UserFragment.UsersType) getIntent().getSerializableExtra(EXTRA_USER_TYPE);
+                UserType userType = (UserType) getIntent().getSerializableExtra(EXTRA_USER_TYPE);
                 String user = getIntent().getStringExtra(EXTRA_USER);
                 String repo = getIntent().getStringExtra(EXTRA_REPO);
 
-                if (usersType == UserFragment.UsersType.FOLLOWERS) {
+                if (userType == UserType.FOLLOWERS) {
                     title = R.string.followers;
-                } else if (usersType == UserFragment.UsersType.FOLLOWING) {
+                } else if (userType == UserType.FOLLOWING) {
                     title = R.string.following;
-                } else if (usersType == UserFragment.UsersType.WATCHERS) {
+                } else if (userType == UserType.WATCHERS) {
                     title = R.string.watchers;
-                } else if (usersType == UserFragment.UsersType.STARGAZERS) {
+                } else if (userType == UserType.STARGAZERS) {
                     title = R.string.stargazers;
                 }
-                loadFragment(UserFragment.newInstance(usersType, user, repo), title);
+                loadFragment(UserFragment.newInstance(userType, user, repo), title);
                 break;
             case REPOS:
-                ReposFragment.ReposType reposType = (ReposFragment.ReposType) getIntent().getSerializableExtra(EXTRA_REPOS_TYPE);
-                if (reposType == ReposFragment.ReposType.OWNED) {
+                RepoType repoType = (RepoType) getIntent().getSerializableExtra(EXTRA_REPOS_TYPE);
+                if (repoType == RepoType.OWNED) {
                     title = R.string.my_repos;
-                } else if (reposType == ReposFragment.ReposType.STARRED) {
+                } else if (repoType == RepoType.STARRED) {
                     title = R.string.starred;
                 }
-                loadFragment(ReposFragment.newInstance(reposType), title);
+                loadFragment(ReposFragment.newInstance(repoType), title);
                 break;
             case SETTINGS:
                 title = R.string.settings;

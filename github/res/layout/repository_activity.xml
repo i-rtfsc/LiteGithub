@@ -39,14 +39,14 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
             app:expandedTitleMarginStart="@dimen/spacing_x_large"
-            app:expandedTitleMarginTop="40dp"
+            app:expandedTitleMarginTop="@dimen/spacing_xxx_large"
             app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:minHeight="45dp"
+                android:layout_height="@dimen/toolbar_height"
+                android:minHeight="@dimen/toolbar_height"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ToolbarPopupTheme"
                 app:theme="@style/ToolbarTheme"
