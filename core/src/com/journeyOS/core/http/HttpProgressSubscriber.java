@@ -23,7 +23,7 @@ import com.journeyOS.base.utils.BaseUtils;
 
 import retrofit2.Response;
 
-public class HttpProgressSubscriber<T, R extends Response<T>> extends HttpSubscriber<T, R> {
+public class HttpProgressSubscriber<T, R extends Response<T>> extends HttpSubscriber<T> {
     private AlertDialog mDialog;
 
     public HttpProgressSubscriber(@NonNull AlertDialog dialog, @NonNull HttpObserver<T> observer) {

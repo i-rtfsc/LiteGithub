@@ -19,7 +19,8 @@ package com.journeyOS.core.http;
 import retrofit2.Response;
 import rx.Subscriber;
 
-public class HttpSubscriber<T, R extends Response<T>> extends Subscriber<R> {
+public class HttpSubscriber<T> extends Subscriber<Response<T>> {
+
     private HttpObserver<T> mObserver;
 
     public HttpSubscriber() {
@@ -36,21 +37,19 @@ public class HttpSubscriber<T, R extends Response<T>> extends Subscriber<R> {
 
     @Override
     public void onError(Throwable e) {
-        if (mObserver != null) {
+        if (mObserver != null)
             mObserver.onError(e);
-        }
     }
 
     @Override
-    public void onNext(R r) {
-        if (mObserver != null) {
+    public void onNext(Response<T> r) {
+        if (mObserver != null)
             mObserver.onSuccess(new HttpResponse<>(r));
-        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
     }
-
 }
+

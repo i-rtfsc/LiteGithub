@@ -104,4 +104,21 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_tip">Tip</string>
     <string name="loading">loading...</string>
+
+    <string name="unstar">Unstar</string>
+    <string name="unstarred">Unstarred</string>
+    <string name="watched">Watched</string>
+    <string name="unwatch">Unwatch</string>
+    <string name="unwatched">Unwatched</string>
+    <string name="star">Star</string>
+    <string name="branch_tip">Branches or tags</string>
+    <string name="watch">Watch</string>
+    <string name="fork">Fork</string>
+    <string name="follow">Follow</string>
+    <string name="share">Share</string>
+    <string name="share_to">Share to</string>
+    <string name="open_in_browser">Open in browser</string>
+    <string name="copy_url">Copy URL</string>
+    <string name="copy_clone_url">Copy clone URL</string>
+    <string name="no_share_clients">There are no share clients installed.</string>
 </resources>

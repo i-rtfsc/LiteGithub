@@ -66,7 +66,7 @@
     <string name="gists">主题帖</string>
     <string name="joined_at">加入时间</string>
     <string name="stargazers">星标</string>
-    <string name="watchers" >关注者</string>
+    <string name="watchers">关注者</string>
 
     <string name="readme">描述</string>
     <string name="forks">版本库分支</string>
@@ -102,4 +102,21 @@
     <string name="dialog_cancel">取消</string>
     <string name="dialog_tip">提示</string>
     <string name="loading">加载中...</string>
+
+    <string name="unstar">取消星标</string>
+    <string name="unstarred">已取消星标</string>
+    <string name="watched">已关注</string>
+    <string name="unwatch">取消关注</string>
+    <string name="unwatched">已取消关注</string>
+    <string name="star">星标</string>
+    <string name="branch_tip">分支或标签</string>
+    <string name="watch">关注</string>
+    <string name="fork">创建版本库分支</string>
+    <string name="follow">跟随</string>
+    <string name="share">分享</string>
+    <string name="share_to">未安装邮件客户端</string>
+    <string name="open_in_browser">在浏览器中打开</string>
+    <string name="copy_url">复制链接</string>
+    <string name="copy_clone_url">复制克隆链接</string>
+    <string name="no_share_clients">未安装分享软件</string>
 </resources>

@@ -72,7 +72,7 @@ public class HttpCoreManager {
     }
 
     public static <T, R extends Response<T>> void executeRxHttp(
-            @NonNull Observable<R> observable, @Nullable HttpSubscriber<T, R> subscriber) {
+            @NonNull Observable<R> observable, @Nullable HttpSubscriber<T> subscriber) {
         if (subscriber != null) {
             observable.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -80,7 +80,7 @@ public class HttpCoreManager {
         } else {
             observable.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new HttpSubscriber<T, R>());
+                    .subscribe(new HttpSubscriber<T>());
         }
     }
 
