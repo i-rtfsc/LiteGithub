@@ -146,6 +146,7 @@ public class ReposModel extends BaseViewModel {
             repositoryData.pushedAt = repository.pushedAt;
             repositoryData.updatedAt = repository.updatedAt;
             repositoryData.fullName = repository.fullName;
+            repositoryData.htmlUrl = repository.htmlUrl;
             repositoryDataArrayList.add(repositoryData);
             if (DEBUG)
                 LogUtils.d(TAG, "convert from repository, source data = " + repositoryData.toString());

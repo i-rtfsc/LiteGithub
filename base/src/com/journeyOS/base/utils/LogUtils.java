@@ -140,7 +140,7 @@ public class LogUtils {
         if (src.contains(TAG)) {
             dest = TAG + "-" + src.substring(TAG.length(), src.length());
         } else {
-            dest = src;
+            dest = TAG + "-" + src;
         }
         return dest;
     }

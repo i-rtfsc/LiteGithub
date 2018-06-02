@@ -11,9 +11,11 @@ import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Response;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
@@ -123,4 +125,39 @@ public interface GithubService {
             @Query("page") int page
     );
 
+    @NonNull @GET("user/starred/{owner}/{repo}")
+    Observable<Response<ResponseBody>> checkRepoStarred(
+            @Path("owner") String owner,
+            @Path("repo") String repo
+    );
+
+    @NonNull @PUT("user/starred/{owner}/{repo}")
+    Observable<Response<ResponseBody>> starRepo(
+            @Path("owner") String owner,
+            @Path("repo") String repo
+    );
+
+    @NonNull @DELETE("user/starred/{owner}/{repo}")
+    Observable<Response<ResponseBody>> unstarRepo(
+            @Path("owner") String owner,
+            @Path("repo") String repo
+    );
+
+    @NonNull @GET("user/subscriptions/{owner}/{repo}")
+    Observable<Response<ResponseBody>> checkRepoWatched(
+            @Path("owner") String owner,
+            @Path("repo") String repo
+    );
+
+    @NonNull @PUT("user/subscriptions/{owner}/{repo}")
+    Observable<Response<ResponseBody>> watchRepo(
+            @Path("owner") String owner,
+            @Path("repo") String repo
+    );
+
+    @NonNull @DELETE("user/subscriptions/{owner}/{repo}")
+    Observable<Response<ResponseBody>> unwatchRepo(
+            @Path("owner") String owner,
+            @Path("repo") String repo
+    );
 }

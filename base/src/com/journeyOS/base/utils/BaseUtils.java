@@ -16,9 +16,12 @@
 
 package com.journeyOS.base.utils;
 
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -121,6 +124,24 @@ public class BaseUtils {
         ClipData clip = ClipData.newPlainText(context.getString(R.string.app_name), uri);
         clipboard.setPrimaryClip(clip);
         Toasty.success(context, context.getString(R.string.success_copied)).show();
+    }
+
+    public static void openInBrowser(@NonNull Context context, @NonNull String url){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        context.startActivity(intent);
+    }
+
+    public static void shareText(@NonNull Context context, @NonNull String text) {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, text);
+        shareIntent.setType("text/plain");
+        try{
+            context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_to)));
+        }catch (ActivityNotFoundException e){
+            Toasty.warning(context, context.getString(R.string.no_share_clients)).show();
+        }
     }
 
     public static boolean isEmpty(CharSequence str) {
