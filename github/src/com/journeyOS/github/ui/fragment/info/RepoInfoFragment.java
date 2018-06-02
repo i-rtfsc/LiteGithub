@@ -40,6 +40,8 @@ import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.config.GithubConfig;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
+import com.journeyOS.github.type.FragmentType;
+import com.journeyOS.github.type.UserType;
 import com.journeyOS.github.ui.activity.ContainerActivity;
 import com.journeyOS.github.ui.activity.profile.ProfileActivity;
 import com.journeyOS.github.ui.activity.viewer.RepositoryActivity;
@@ -181,7 +183,7 @@ public class RepoInfoFragment extends BaseFragment {
                 break;
             case R.id.stargazers_lay:
                 if (mRepositoryData.stargazersCount == 0) return;
-                ContainerActivity.showUser(mContext, ContainerActivity.FragmentType.USER, UserFragment.UsersType.STARGAZERS, mRepositoryData.owner.login, mRepositoryData.name);
+                ContainerActivity.showUser(mContext, FragmentType.USER, UserType.STARGAZERS, mRepositoryData.owner.login, mRepositoryData.name);
                 break;
             case R.id.froks_lay:
                 if (mRepositoryData.forksCount == 0) return;
@@ -189,7 +191,7 @@ public class RepoInfoFragment extends BaseFragment {
                 break;
             case R.id.watchers_lay:
                 if (mRepositoryData.subscribersCount == 0) return;
-                ContainerActivity.showUser(mContext, ContainerActivity.FragmentType.USER, UserFragment.UsersType.WATCHERS, mRepositoryData.owner.login, mRepositoryData.name);
+                ContainerActivity.showUser(mContext, FragmentType.USER, UserType.WATCHERS, mRepositoryData.owner.login, mRepositoryData.name);
                 break;
             case R.id.fork_info_text:
                 RepositoryActivity.show(getActivity(), mRepositoryData);

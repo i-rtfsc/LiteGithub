@@ -31,6 +31,7 @@ import com.journeyOS.github.BuildConfig;
 import com.journeyOS.github.api.GithubService;
 import com.journeyOS.github.entity.Repository;
 import com.journeyOS.github.entity.SearchResult;
+import com.journeyOS.github.type.RepoType;
 import com.journeyOS.github.ui.activity.search.SearchFilter;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
 
@@ -62,11 +63,11 @@ public class ReposModel extends BaseViewModel {
         mGithubService = AppHttpClient.getInstance(CoreManager.getAuthUser().accessToken).getService(GithubService.class);
     }
 
-    protected void loadRepositories(final ReposFragment.ReposType reposType, final int page) {
+    protected void loadRepositories(final RepoType repoType, final int page) {
         HttpObserver<ArrayList<Repository>> httpObserver = new HttpObserver<ArrayList<Repository>>() {
             @Override
             public void onSuccess(HttpResponse<ArrayList<Repository>> response) {
-                LogUtils.d(TAG, "load repository " + reposType + " success");
+                LogUtils.d(TAG, "load repository " + repoType + " success");
                 ArrayList<RepositoryData> repositoryDataArrayList = convertFromRepository((ArrayList<Repository>) response.body());
                 mReposStatus.postValue(StatusDataResource.success(repositoryDataArrayList, page));
             }
@@ -84,7 +85,7 @@ public class ReposModel extends BaseViewModel {
             @Override
             public Observable<Response<ArrayList<Repository>>> createObservable(boolean forceNetWork) {
                 Observable<Response<ArrayList<Repository>>> responseObservable = null;
-                switch (reposType) {
+                switch (repoType) {
                     case OWNED:
                         responseObservable = mGithubService.getUserRepos(forceNetWork, "", page);
                         break;

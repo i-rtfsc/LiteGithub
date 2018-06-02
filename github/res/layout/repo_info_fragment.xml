@@ -29,14 +29,14 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginBottom="@dimen/spacing_micro"
+            android:layout_marginLeft="@dimen/spacing_micro"
+            android:layout_marginRight="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_micro"
             android:background="@color/gray_cc"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="6dp"
+            app:cardCornerRadius="@dimen/card_corner_radius"
             app:contentPadding="@dimen/spacing_normal">
 
             <LinearLayout
@@ -54,7 +54,7 @@
                     android:id="@+id/fork_info_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="@dimen/spacing_micro"
                     android:textColor="?colorAccent"
                     android:textSize="@dimen/text_size_small"
                     android:visibility="gone" />
@@ -63,7 +63,7 @@
                     android:id="@+id/repo_desc_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="@dimen/spacing_micro"
                     android:textColor="?android:textColorSecondary"
                     android:textSize="@dimen/text_size_small"
                     android:visibility="gone" />
@@ -72,7 +72,7 @@
                     android:id="@+id/repo_created_info_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="@dimen/spacing_micro"
                     android:textSize="@dimen/text_size_small" />
 
                 <LinearLayout
@@ -84,7 +84,7 @@
                         android:id="@+id/issues_lay"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="4dp"
+                        android:layout_margin="@dimen/spacing_micro"
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:gravity="center"
@@ -94,7 +94,6 @@
                             android:id="@+id/issues_num_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
                             android:textSize="@dimen/text_size_appbar_title" />
 
                         <TextView
@@ -108,7 +107,7 @@
                         android:id="@+id/stargazers_lay"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="4dp"
+                        android:layout_margin="@dimen/spacing_micro"
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:gravity="center"
@@ -118,7 +117,6 @@
                             android:id="@+id/stargazers_num_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
                             android:textSize="@dimen/text_size_appbar_title" />
 
                         <TextView
@@ -132,7 +130,7 @@
                         android:id="@+id/froks_lay"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="4dp"
+                        android:layout_margin="@dimen/spacing_micro"
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:gravity="center"
@@ -142,7 +140,6 @@
                             android:id="@+id/forks_num_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
                             android:textSize="@dimen/text_size_appbar_title" />
 
                         <TextView
@@ -156,7 +153,7 @@
                         android:id="@+id/watchers_lay"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="4dp"
+                        android:layout_margin="@dimen/spacing_micro"
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:gravity="center"
@@ -166,7 +163,6 @@
                             android:id="@+id/watchers_num_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
                             android:textSize="@dimen/text_size_appbar_title" />
 
                         <TextView

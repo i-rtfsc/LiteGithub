@@ -30,6 +30,7 @@ import com.journeyOS.core.base.BaseListFragment;
 import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
+import com.journeyOS.github.type.UserType;
 import com.journeyOS.github.ui.activity.search.SearchFilter;
 import com.journeyOS.github.ui.fragment.user.adapter.UserData;
 import com.journeyOS.github.ui.fragment.user.adapter.UserHolder;
@@ -43,14 +44,10 @@ import java.util.Map;
 public class UserFragment extends BaseListFragment implements RouterListener {
     static final String TAG = UserFragment.class.getSimpleName();
 
-    public enum UsersType {
-        STARGAZERS, WATCHERS, FOLLOWERS, FOLLOWING
-    }
-
     static final String EXTRA_USER_TYPE = "usersType";
     static final String EXTRA_USER = "user";
     static final String EXTRA_REPO = "repo";
-    UserFragment.UsersType mUsersType;
+    UserType mUserType;
     String mUser;
     String mRepo;
 
@@ -65,7 +62,7 @@ public class UserFragment extends BaseListFragment implements RouterListener {
         }
     };
 
-    public static BaseListFragment newInstance(@NonNull UserFragment.UsersType usersType, @NonNull String user,
+    public static BaseListFragment newInstance(@NonNull UserType usersType, @NonNull String user,
                                                @NonNull String repo) {
         UserFragment fragment = new UserFragment();
         Bundle bundle = new Bundle();
@@ -96,7 +93,7 @@ public class UserFragment extends BaseListFragment implements RouterListener {
 
     @Override
     public void initViews() {
-        mUsersType = (UserFragment.UsersType) getArguments().get(EXTRA_USER_TYPE);
+        mUserType = (UserType) getArguments().get(EXTRA_USER_TYPE);
         mUser = getArguments().getString(EXTRA_USER);
         mRepo = getArguments().getString(EXTRA_REPO);
 
@@ -108,8 +105,8 @@ public class UserFragment extends BaseListFragment implements RouterListener {
         super.initDataObserver(savedInstanceState);
         mUserModel = ModelProvider.getModel(this, UserModel.class);
 
-        if (!BaseUtils.isNull(mUsersType)) {
-            mUserModel.loadUsers(mUsersType, mUser, mRepo, 1, true);
+        if (!BaseUtils.isNull(mUserType)) {
+            mUserModel.loadUsers(mUserType, mUser, mRepo, 1, true);
             mUserModel.getUsersStatus().observe(this, reposStatusObserver);
         }
 
@@ -138,8 +135,8 @@ public class UserFragment extends BaseListFragment implements RouterListener {
             showLoading();
             initedMap.put(page, false);
 
-            if (!BaseUtils.isNull(mUsersType)) {
-                mUserModel.loadUsers(mUsersType, mUser, mRepo, page, true);
+            if (!BaseUtils.isNull(mUserType)) {
+                mUserModel.loadUsers(mUserType, mUser, mRepo, page, true);
             }
 
             if (!BaseUtils.isNull(mSearchFilter)) {

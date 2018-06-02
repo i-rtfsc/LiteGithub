@@ -19,14 +19,14 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="4dp"
+    android:layout_marginBottom="@dimen/spacing_micro"
+    android:layout_marginLeft="@dimen/spacing_micro"
+    android:layout_marginRight="@dimen/spacing_small"
+    android:layout_marginTop="@dimen/spacing_micro"
     android:background="@color/gray_cc"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="6dp">
+    app:cardCornerRadius="@dimen/card_corner_radius">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -42,13 +42,13 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/icon_size_x_large"
+            android:layout_height="@dimen/icon_size_x_large"
             android:layout_gravity="center"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="@dimen/spacing_normal"
             android:gravity="center"
             app:civ_border_color="@color/ivory"
-            app:civ_border_width="1dp" />
+            app:civ_border_width="@dimen/divider_size" />
 
         <TextView
             android:id="@+id/name"

@@ -63,7 +63,7 @@ public class SettingsFragment extends BaseFragment {
 
     @Override
     public void initViews() {
-        boolean isCache = SpUtils.getInstant().getBoolean(Constant.THEME, true);
+        boolean isCache = SpUtils.getInstant().getBoolean(Constant.USE_CACHE, true);
         useCache.setCheck(isCache);
     }
 
@@ -74,9 +74,9 @@ public class SettingsFragment extends BaseFragment {
 
     @OnClick({R.id.use_cache})
     void listenerUseCache() {
-        boolean isCache = !SpUtils.getInstant().getBoolean(Constant.THEME, true);
+        boolean isCache = !SpUtils.getInstant().getBoolean(Constant.USE_CACHE, true);
         useCache.setCheck(isCache);
-        SpUtils.getInstant().put(Constant.THEME, isCache);
+        SpUtils.getInstant().put(Constant.USE_CACHE, isCache);
     }
 
     @OnClick({R.id.logout})

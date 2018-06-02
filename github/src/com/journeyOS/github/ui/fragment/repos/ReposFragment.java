@@ -31,6 +31,7 @@ import com.journeyOS.core.base.BaseListFragment;
 import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
+import com.journeyOS.github.type.RepoType;
 import com.journeyOS.github.ui.activity.search.SearchFilter;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryHolder;
@@ -56,17 +57,13 @@ public class ReposFragment extends BaseListFragment implements RouterListener {
         }
     };
 
-    public enum ReposType {
-        OWNED, STARRED
-    }
-
     static final String EXTRA_REPOS_TYPE = "reposType";
-    ReposType mReposType = null;
+    RepoType mRepoType = null;
 
-    public static Fragment newInstance(ReposType reposType) {
+    public static Fragment newInstance(RepoType repoType) {
         ReposFragment fragment = new ReposFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(EXTRA_REPOS_TYPE, reposType);
+        bundle.putSerializable(EXTRA_REPOS_TYPE, repoType);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -86,7 +83,7 @@ public class ReposFragment extends BaseListFragment implements RouterListener {
     public void initBeforeView() {
         super.initBeforeView();
         mContext = CoreManager.getContext();
-        mReposType = (ReposType) getArguments().get(EXTRA_REPOS_TYPE);
+        mRepoType = (RepoType) getArguments().get(EXTRA_REPOS_TYPE);
         mSearchFilter = getArguments().getParcelable(EXTRA_SEARCH_FILTER);
         initedMap.put(1, false);
     }
@@ -102,8 +99,8 @@ public class ReposFragment extends BaseListFragment implements RouterListener {
         mReposModel = ModelProvider.getModel(this, ReposModel.class);
 
         showLoading();
-        if (!BaseUtils.isNull(mReposType)) {
-            mReposModel.loadRepositories(mReposType, getCurPage());
+        if (!BaseUtils.isNull(mRepoType)) {
+            mReposModel.loadRepositories(mRepoType, getCurPage());
             mReposModel.getReposStatus().observe(this, reposStatusObserver);
         }
 
@@ -131,8 +128,8 @@ public class ReposFragment extends BaseListFragment implements RouterListener {
             showLoading();
             initedMap.put(page, false);
 
-            if (!BaseUtils.isNull(mReposType)) {
-                mReposModel.loadRepositories(mReposType, page);
+            if (!BaseUtils.isNull(mRepoType)) {
+                mReposModel.loadRepositories(mRepoType, page);
             }
 
             if (!BaseUtils.isNull(mSearchFilter)) {
@@ -187,7 +184,7 @@ public class ReposFragment extends BaseListFragment implements RouterListener {
     @Override
     public void onShowMessage(RouterMsssage message) {
         Messages msg = (Messages) message;
-        LogUtils.d(LogUtils.TAG, "postSearchEvent = "+msg.what + " , SearchFilter = "+msg.obj);
+        LogUtils.d(LogUtils.TAG, "postSearchEvent = " + msg.what + " , SearchFilter = " + msg.obj);
         switch (msg.what) {
             case Messages.MSG_SEARCHING:
                 initedMap.clear();
