@@ -14,4 +14,31 @@
   limitations under the License.
   -->
 
-<resources></resources>
+<resources>
+    <array name="theme_array">
+        <item>@string/light</item>
+        <item>@string/dark</item>
+    </array>
+
+    <string-array name="slidingDrawerTitles">
+        <item>@string/profile</item>
+        <item>@string/my_repos</item>
+        <item>@string/notifications</item>
+        <item>@string/issues</item>
+        <item>@string/search</item>
+        <item>@string/starred</item>
+        <item>@string/settings</item>
+        <item>@string/about</item>
+    </string-array>
+
+    <array name="slidingDrawerIcons">
+        <item>@drawable/svg_menu_user</item>
+        <item>@drawable/svg_menu_repos</item>
+        <item>@drawable/svg_menu_notification</item>
+        <item>@drawable/svg_menu_issue</item>
+        <item>@drawable/svg_menu_search</item>
+        <item>@drawable/svg_menu_starred</item>
+        <item>@drawable/svg_menu_settings</item>
+        <item>@drawable/svg_menu_about</item>
+    </array>
+</resources>

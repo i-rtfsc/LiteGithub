@@ -21,14 +21,14 @@ public class Constant {
     public static final String THEME = "theme";
     public static final String USE_CACHE = "use_cache";
     //menu key
-    public static final String MENU_PROFILE = "menu_profile";
-    public static final String MENU_REPOS = "menu_repos";
-    public static final String MENU_NOTIFICATION = "menu_notification";
-    public static final String MENU_ISSUE = "menu_issue";
-    public static final String MENU_SEARCH = "menu_search";
-    public static final String MENU_STARRED = "menu_starred";
-    public static final String MENU_SETTINGS = "menu_settings";
-    public static final String MENU_ABOUT = "menu_about";
+    public static final int MENU_PROFILE = 0;
+    public static final int MENU_REPOS = 1;
+    public static final int MENU_NOTIFICATION = 2;
+    public static final int MENU_ISSUE = 3;
+    public static final int MENU_SEARCH = 4;
+    public static final int MENU_STARRED = 5;
+    public static final int MENU_SETTINGS = 6;
+    public static final int MENU_ABOUT = 7;
 
     public static final String USER = "Solo";
     public static final String EMAIL = "anqi.huang@outlook.com";

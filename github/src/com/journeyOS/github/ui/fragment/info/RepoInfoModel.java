@@ -48,7 +48,7 @@ public class RepoInfoModel extends BaseViewModel {
 
     @Override
     protected void onCreate() {
-        mGithubService = AppHttpClient.getInstance(CoreManager.getAccessToken()).getService(GithubService.class);
+        mGithubService = AppHttpClient.getInstance(CoreManager.getAuthUser().accessToken).getService(GithubService.class);
     }
 
     protected void loadReadMe(final String readmeFileUrl) {

@@ -54,7 +54,7 @@ public class ReposFileModel extends BaseViewModel {
 
     @Override
     protected void onCreate() {
-        mGithubService = AppHttpClient.getInstance(CoreManager.getAccessToken()).getService(GithubService.class);
+        mGithubService = AppHttpClient.getInstance(CoreManager.getAuthUser().accessToken).getService(GithubService.class);
     }
 
     protected void loadFiles(@NonNull final String login, @NonNull final String name, @NonNull final String branch, @NonNull final String path, boolean isReload) {

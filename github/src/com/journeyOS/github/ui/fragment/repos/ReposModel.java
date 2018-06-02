@@ -59,7 +59,7 @@ public class ReposModel extends BaseViewModel {
 
     @Override
     protected void onCreate() {
-        mGithubService = AppHttpClient.getInstance(CoreManager.getAccessToken()).getService(GithubService.class);
+        mGithubService = AppHttpClient.getInstance(CoreManager.getAuthUser().accessToken).getService(GithubService.class);
     }
 
     protected void loadRepositories(final ReposFragment.ReposType reposType, final int page) {

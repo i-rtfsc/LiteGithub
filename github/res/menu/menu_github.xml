@@ -14,10 +14,11 @@
   limitations under the License.
   -->
 
-<resources>
-    <string name="no_cache_and_network">No cache and network available.</string>
-    <string name="dialog_ok">OK</string>
-    <string name="dialog_cancel">Cancel</string>
-    <string name="dialog_tip">Tip</string>
-    <string name="loading">loading...</string>
-</resources>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/svg_toolbar_search"
+        android:title="@string/search"
+        app:showAsAction="withText|always" />
+</menu>

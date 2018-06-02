@@ -177,12 +177,11 @@ public class RepoInfoFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.issues_lay:
-                ;
                 showShortToast(ToastType.INFO, mContext.getString(R.string.developing));
                 break;
             case R.id.stargazers_lay:
                 if (mRepositoryData.stargazersCount == 0) return;
-                ContainerActivity.showUser(mContext, UserFragment.UsersType.STARGAZERS, mRepositoryData.owner.login, mRepositoryData.name);
+                ContainerActivity.showUser(mContext, ContainerActivity.FragmentType.USER, UserFragment.UsersType.STARGAZERS, mRepositoryData.owner.login, mRepositoryData.name);
                 break;
             case R.id.froks_lay:
                 if (mRepositoryData.forksCount == 0) return;
@@ -190,7 +189,7 @@ public class RepoInfoFragment extends BaseFragment {
                 break;
             case R.id.watchers_lay:
                 if (mRepositoryData.subscribersCount == 0) return;
-                ContainerActivity.showUser(mContext, UserFragment.UsersType.WATCHERS, mRepositoryData.owner.login, mRepositoryData.name);
+                ContainerActivity.showUser(mContext, ContainerActivity.FragmentType.USER, UserFragment.UsersType.WATCHERS, mRepositoryData.owner.login, mRepositoryData.name);
                 break;
             case R.id.fork_info_text:
                 RepositoryActivity.show(getActivity(), mRepositoryData);

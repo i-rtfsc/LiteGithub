@@ -68,7 +68,7 @@ public class SplashActivity extends BaseActivity {
                 if (BaseUtils.isNull(authUser)) {
                     startActivityForResult(new Intent(mContext, LoginActivity.class), REQUEST_ACCESS_TOKEN);
                 } else {
-                    CoreManager.setAccessToken(authUser.accessToken);
+                    CoreManager.setAuthUser(authUser);
                     showMainPage();
                 }
             }
