@@ -121,4 +121,7 @@
     <string name="copy_url">Copy URL</string>
     <string name="copy_clone_url">Copy clone URL</string>
     <string name="no_share_clients">There are no share clients installed.</string>
+
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
 </resources>

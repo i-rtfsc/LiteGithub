@@ -119,4 +119,7 @@
     <string name="copy_url">复制链接</string>
     <string name="copy_clone_url">复制克隆链接</string>
     <string name="no_share_clients">未安装分享软件</string>
+
+    <string name="open">开放的</string>
+    <string name="closed">关闭的</string>
 </resources>

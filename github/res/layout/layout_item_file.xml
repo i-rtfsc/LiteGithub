@@ -36,7 +36,7 @@
             android:id="@+id/file_type"
             android:layout_width="@dimen/spacing_x_large"
             android:layout_height="@dimen/spacing_x_large"
-            android:layout_marginStart="@dimen/spacing_micro"
+            android:layout_marginStart="@dimen/spacing_mini"
             app:srcCompat="@drawable/svg_folder" />
 
         <TextView

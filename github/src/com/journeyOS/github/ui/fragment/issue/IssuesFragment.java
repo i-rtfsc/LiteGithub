@@ -14,67 +14,66 @@
  * limitations under the License.
  */
 
-package com.journeyOS.github.ui.fragment.repos;
+package com.journeyOS.github.ui.fragment.issue;
 
 import android.arch.lifecycle.Observer;
-import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.journeyOS.base.adapter.BaseViewHolder;
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.LogUtils;
-import com.journeyOS.core.CoreManager;
-import com.journeyOS.core.Messages;
 import com.journeyOS.core.base.BaseListFragment;
 import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
-import com.journeyOS.github.type.RepoType;
-import com.journeyOS.github.ui.activity.search.SearchFilter;
-import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
-import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryHolder;
-import com.journeyOS.literouter.RouterListener;
-import com.journeyOS.literouter.RouterMsssage;
+import com.journeyOS.github.entity.IssuesFilter;
+import com.journeyOS.github.type.IssueType;
+import com.journeyOS.github.ui.fragment.issue.adapter.IssuesData;
+import com.journeyOS.github.ui.fragment.issue.adapter.IssuesHolder;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ReposFragment extends BaseListFragment implements RouterListener {
-    static final String TAG = ReposFragment.class.getSimpleName();
+public class IssuesFragment extends BaseListFragment {
+    static final String TAG = IssuesFragment.class.getSimpleName();
 
-    Context mContext;
-    ReposModel mReposModel;
+    static final String EXTRA_ISSUES_FILTER = "issuesFilter";
+    static final String EXTRA_USER = "user";
+    static final String EXTRA_REPO = "repo";
+
+    IssuesFilter mIssuesFilter;
+    String mUserId;
+    String mRepoName;
+
+    IssuesModel mIssuesModel;
 
     Map<Integer, Object> initedMap = new HashMap<>();
 
-    final Observer<StatusDataResource> reposStatusObserver = new Observer<StatusDataResource>() {
+    final Observer<StatusDataResource> issuesStatusObserver = new Observer<StatusDataResource>() {
         @Override
         public void onChanged(@Nullable StatusDataResource statusDataResource) {
-            handleReposStatusObserver(statusDataResource);
+            handleIssuesStatusObserver(statusDataResource);
         }
     };
 
-    static final String EXTRA_REPOS_TYPE = "reposType";
-    RepoType mRepoType = null;
-
-    public static Fragment newInstance(RepoType repoType) {
-        ReposFragment fragment = new ReposFragment();
+    public static Fragment newInstanceForUser(@NonNull IssuesFilter issuesFilter) {
+        IssuesFragment fragment = new IssuesFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(EXTRA_REPOS_TYPE, repoType);
+        bundle.putParcelable(EXTRA_ISSUES_FILTER, issuesFilter);
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    static final String EXTRA_SEARCH_FILTER = "searchFilter";
-    SearchFilter mSearchFilter = null;
-
-    public static Fragment newInstanceForSearch(SearchFilter searchFilter) {
-        ReposFragment fragment = new ReposFragment();
+    public static Fragment newInstanceForRepo(@NonNull IssuesFilter issuesFilter, @NonNull String userId, @NonNull String repoName) {
+        IssuesFragment fragment = new IssuesFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(EXTRA_SEARCH_FILTER, searchFilter);
+        bundle.putParcelable(EXTRA_ISSUES_FILTER, issuesFilter);
+        bundle.putString(EXTRA_USER, userId);
+        bundle.putString(EXTRA_REPO, repoName);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -82,42 +81,41 @@ public class ReposFragment extends BaseListFragment implements RouterListener {
     @Override
     public void initBeforeView() {
         super.initBeforeView();
-        mContext = CoreManager.getContext();
-        mRepoType = (RepoType) getArguments().get(EXTRA_REPOS_TYPE);
-        mSearchFilter = getArguments().getParcelable(EXTRA_SEARCH_FILTER);
+        mIssuesFilter = getArguments().getParcelable(EXTRA_ISSUES_FILTER);
+        if (mIssuesFilter.issueType == IssueType.REPO) {
+            mUserId = getArguments().getString(EXTRA_USER);
+            mRepoName = getArguments().getString(EXTRA_REPO);
+        }
         initedMap.put(1, false);
     }
 
     @Override
     public void initViews() {
-
     }
 
     @Override
     protected void initDataObserver(Bundle savedInstanceState) {
         super.initDataObserver(savedInstanceState);
-        mReposModel = ModelProvider.getModel(this, ReposModel.class);
+        mIssuesModel = ModelProvider.getModel(this, IssuesModel.class);
 
         showLoading();
-        if (!BaseUtils.isNull(mRepoType)) {
-            mReposModel.loadRepositories(mRepoType, getCurPage());
-            mReposModel.getReposStatus().observe(this, reposStatusObserver);
-        }
-
-        if (!BaseUtils.isNull(mSearchFilter)) {
-            mReposModel.searchRepositories(mSearchFilter, getCurPage());
-            mReposModel.getSearchReposStatus().observe(this, reposStatusObserver);
+        if (mIssuesFilter.issueType == IssueType.REPO) {
+            mIssuesModel.loadRepoIssues(mIssuesFilter, mUserId, mRepoName, getCurPage(), false);
+            mIssuesModel.getRepoIssuesStatus().observe(this, issuesStatusObserver);
+        } else if (mIssuesFilter.issueType == IssueType.USER) {
+            mIssuesModel.loadUserIssues(mIssuesFilter, getCurPage(), false);
+            mIssuesModel.getUserIssuesStatus().observe(this, issuesStatusObserver);
         }
     }
 
     @Override
     public Class<? extends BaseViewHolder> attachViewHolder() {
-        return RepositoryHolder.class;
+        return IssuesHolder.class;
     }
 
     @Override
     public int attachViewHolderRes() {
-        return R.layout.layout_item_repository;
+        return R.layout.layout_item_issue;
     }
 
     @Override
@@ -128,12 +126,10 @@ public class ReposFragment extends BaseListFragment implements RouterListener {
             showLoading();
             initedMap.put(page, false);
 
-            if (!BaseUtils.isNull(mRepoType)) {
-                mReposModel.loadRepositories(mRepoType, page);
-            }
-
-            if (!BaseUtils.isNull(mSearchFilter)) {
-                mReposModel.searchRepositories(mSearchFilter, page);
+            if (mIssuesFilter.issueType == IssueType.REPO) {
+                mIssuesModel.loadRepoIssues(mIssuesFilter, mUserId, mRepoName, page, false);
+            } else if (mIssuesFilter.issueType == IssueType.USER) {
+                mIssuesModel.loadUserIssues(mIssuesFilter, page, false);
             }
         }
     }
@@ -147,7 +143,7 @@ public class ReposFragment extends BaseListFragment implements RouterListener {
         onLoadMore(1);
     }
 
-    void handleReposStatusObserver(StatusDataResource statusDataResource) {
+    void handleIssuesStatusObserver(StatusDataResource statusDataResource) {
         switch (statusDataResource.status) {
             case SUCCESS:
                 hideLoading();
@@ -157,9 +153,9 @@ public class ReposFragment extends BaseListFragment implements RouterListener {
                 if (!BaseUtils.isNull(initedByPage) && (!(Boolean) initedByPage)) {
                     initedMap.put(page, true);
                     if (page == 1) {
-                        initRepositories((List<RepositoryData>) statusDataResource.data);
+                        initIssues((List<IssuesData>) statusDataResource.data);
                     } else {
-                        updateRepositories((List<RepositoryData>) statusDataResource.data);
+                        updateIssues((List<IssuesData>) statusDataResource.data);
                     }
                 }
                 break;
@@ -170,30 +166,14 @@ public class ReposFragment extends BaseListFragment implements RouterListener {
         }
     }
 
-    void initRepositories(List<RepositoryData> repositories) {
+    void initIssues(List<IssuesData> issuesData) {
         LogUtils.d(TAG, "init adapter data");
-        mAdapter.setData(repositories);
+        mAdapter.setData(issuesData);
     }
 
-    void updateRepositories(List<RepositoryData> repositories) {
+    void updateIssues(List<IssuesData> issuesData) {
         LogUtils.d(TAG, "defore upate adapter data = " + mAdapter.getItemCount());
-        mAdapter.addData(repositories);
+        mAdapter.addData(issuesData);
         LogUtils.d(TAG, "after upate adapter data = " + mAdapter.getItemCount());
-    }
-
-    @Override
-    public void onShowMessage(RouterMsssage message) {
-        Messages msg = (Messages) message;
-        LogUtils.d(LogUtils.TAG, "postSearchEvent = " + msg.what + " , SearchFilter = " + msg.obj);
-        switch (msg.what) {
-            case Messages.MSG_SEARCHING:
-                initedMap.clear();
-                initedMap.put(1, false);
-                mAdapter.clear();
-                showLoading();
-                mSearchFilter = (SearchFilter) msg.obj;
-                mReposModel.searchRepositories(mSearchFilter, 1);
-                break;
-        }
     }
 }
