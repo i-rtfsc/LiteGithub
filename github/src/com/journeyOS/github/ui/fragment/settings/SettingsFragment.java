@@ -84,6 +84,11 @@ public class SettingsFragment extends BaseFragment {
         verifyLogout();
     }
 
+    @OnClick({R.id.image_engine})
+    void listenerImageEngine() {
+        showImageEngine();
+    }
+
     void showThemeChooser() {
         final String[] items = mContext.getResources().getStringArray(R.array.theme_array);
         int item = SpUtils.getInstant().getBoolean(Constant.THEME, true) ? 0 : 1;
@@ -131,5 +136,33 @@ public class SettingsFragment extends BaseFragment {
                 })
                 .create();
         dialog.show();
+    }
+
+    void showImageEngine() {
+        final String[] items = mContext.getResources().getStringArray(R.array.image_engine_array);
+        int item = SpUtils.getInstant().getString(Constant.IMAGE_ENGINE, Constant.IMAGE_ENGINE_GLIDE).equals(Constant.IMAGE_ENGINE_GLIDE) ? 0 : 1;
+
+        final AlertDialog dialog = new AlertDialog.Builder(mContext, R.style.CornersAlertDialog)
+                .setTitle(mContext.getString(R.string.image_engine))
+                .setSingleChoiceItems(items, item, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        if (which == 0) {
+                            SpUtils.getInstant().put(Constant.IMAGE_ENGINE, Constant.IMAGE_ENGINE_GLIDE);
+                        } else if (which == 1) {
+                            SpUtils.getInstant().put(Constant.IMAGE_ENGINE, Constant.IMAGE_ENGINE_PICASSO);
+                        }
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        dialog.show();
+
     }
 }

@@ -25,8 +25,8 @@ import com.journeyOS.base.adapter.BaseRecyclerAdapter;
 import com.journeyOS.base.adapter.BaseViewHolder;
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.core.CoreManager;
+import com.journeyOS.core.ImageEngine;
 import com.journeyOS.github.R;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -52,11 +52,7 @@ public class IssuesHolder extends BaseViewHolder<IssuesData> {
 
     @Override
     public void updateItem(IssuesData data, int position) {
-        Picasso.with(CoreManager.getContext())
-                .load(data.user.avatarUrl)
-                .placeholder(R.mipmap.user)
-                .into(userAvatar);
-
+        ImageEngine.load(CoreManager.getContext(), data.user.avatarUrl, userAvatar, R.mipmap.user);
         userName.setText(data.user.login);
         issueTitle.setText(data.title);
         commentNum.setText(String.valueOf(data.commentNum));

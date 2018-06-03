@@ -7,9 +7,9 @@ import android.widget.TextView;
 import com.journeyOS.base.adapter.BaseRecyclerAdapter;
 import com.journeyOS.base.adapter.BaseViewHolder;
 import com.journeyOS.core.CoreManager;
+import com.journeyOS.core.ImageEngine;
 import com.journeyOS.github.R;
 import com.journeyOS.github.ui.activity.viewer.RepositoryActivity;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,10 +45,7 @@ public class RepositoryHolder extends BaseViewHolder<RepositoryData> {
         tvForkNum.setText(String.valueOf(data.forksCount));
         tvOwnerName.setText(data.owner.login);
         ivLanguage.setText(data.language);
-        Picasso.with(CoreManager.getContext())
-                .load(data.owner.avatarUrl)
-                .placeholder(R.mipmap.user)
-                .into(ivUserAvatar);
+        ImageEngine.load(CoreManager.getContext(), data.owner.avatarUrl, ivUserAvatar, R.mipmap.user);
     }
 
     @Override

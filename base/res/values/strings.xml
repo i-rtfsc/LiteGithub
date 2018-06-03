@@ -124,4 +124,8 @@
 
     <string name="open">Open</string>
     <string name="closed">Closed</string>
+
+    <string name="image_engine">Image engine</string>
+    <string name="picasso">Picasso</string>
+    <string name="glide">Glide</string>
 </resources>

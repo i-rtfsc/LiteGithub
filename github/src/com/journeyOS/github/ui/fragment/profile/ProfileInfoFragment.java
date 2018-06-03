@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.core.CoreManager;
+import com.journeyOS.core.ImageEngine;
 import com.journeyOS.core.base.BaseFragment;
 import com.journeyOS.github.R;
 import com.journeyOS.github.entity.User;
@@ -31,9 +32,6 @@ import com.journeyOS.github.type.FragmentType;
 import com.journeyOS.github.type.RepoType;
 import com.journeyOS.github.type.UserType;
 import com.journeyOS.github.ui.activity.ContainerActivity;
-import com.journeyOS.github.ui.fragment.repos.ReposFragment;
-import com.journeyOS.github.ui.fragment.user.UserFragment;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -93,9 +91,7 @@ public class ProfileInfoFragment extends BaseFragment {
     }
 
     void initAllViews(User user) {
-        Picasso.with(getActivity())
-                .load(user.avatarUrl)
-                .into(avatar);
+        ImageEngine.load(CoreManager.getContext(), user.avatarUrl, avatar, R.mipmap.user);
         name.setText(BaseUtils.isBlank(user.name) ? user.login : user.name);
         joinedTime.setText(getString(R.string.joined_at).concat(" ")
                 .concat(BaseUtils.getDateStr(user.createdAt)));
