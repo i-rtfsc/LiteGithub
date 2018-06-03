@@ -25,9 +25,13 @@ import android.support.v7.widget.Toolbar;
 import com.journeyOS.base.utils.UIUtils;
 import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.github.R;
+import com.journeyOS.github.entity.IssuesFilter;
 import com.journeyOS.github.type.FragmentType;
+import com.journeyOS.github.type.IssueState;
+import com.journeyOS.github.type.IssueType;
 import com.journeyOS.github.type.RepoType;
 import com.journeyOS.github.type.UserType;
+import com.journeyOS.github.ui.fragment.issue.IssuesFragment;
 import com.journeyOS.github.ui.fragment.repos.ReposFragment;
 import com.journeyOS.github.ui.fragment.settings.SettingsFragment;
 import com.journeyOS.github.ui.fragment.user.UserFragment;
@@ -46,6 +50,8 @@ public class ContainerActivity extends BaseActivity {
     static final String EXTRA_USER_TYPE = "usersType";
     static final String EXTRA_USER = "user";
     static final String EXTRA_REPO = "repo";
+
+    static final String EXTRA_ISSUES_FILTER = "issuesFilter";
 
     public static void show(@NonNull Context context, @NonNull FragmentType fragmentType, @NonNull RepoType repoType) {
         Intent intent = new Intent(context, ContainerActivity.class);
@@ -67,6 +73,13 @@ public class ContainerActivity extends BaseActivity {
     public static void showSettings(@NonNull Context context, @NonNull FragmentType fragmentType) {
         Intent intent = new Intent(context, ContainerActivity.class);
         intent.putExtra(EXTRA_FRAGMENT_TYPE, fragmentType);
+        context.startActivity(intent);
+    }
+
+    public static void showForUser(@NonNull Context context, @NonNull FragmentType fragmentType, @NonNull IssuesFilter issuesFilter) {
+        Intent intent = new Intent(context, ContainerActivity.class);
+        intent.putExtra(EXTRA_FRAGMENT_TYPE, fragmentType);
+        intent.putExtra(EXTRA_ISSUES_FILTER, issuesFilter);
         context.startActivity(intent);
     }
 
@@ -109,6 +122,11 @@ public class ContainerActivity extends BaseActivity {
             case SETTINGS:
                 title = R.string.settings;
                 loadFragment(SettingsFragment.newInstance(this), title);
+                break;
+            case ISSUE:
+                title = R.string.issues;
+                IssuesFilter issuesFilter = (IssuesFilter) getIntent().getSerializableExtra(EXTRA_ISSUES_FILTER);
+                loadFragment(IssuesFragment.newInstanceForUser(issuesFilter), title);
                 break;
         }
     }

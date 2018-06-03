@@ -16,6 +16,6 @@
 
 package com.journeyOS.github.type;
 
-public enum FragmentType {
-    REPOS, USER, SETTINGS, ISSUE
+public enum IssueAuthorAssociation {
+    OWNER, CONTRIBUTOR, NONE
 }

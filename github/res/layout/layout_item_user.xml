@@ -19,10 +19,10 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/spacing_micro"
-    android:layout_marginLeft="@dimen/spacing_micro"
+    android:layout_marginBottom="@dimen/spacing_mini"
+    android:layout_marginLeft="@dimen/spacing_mini"
     android:layout_marginRight="@dimen/spacing_small"
-    android:layout_marginTop="@dimen/spacing_micro"
+    android:layout_marginTop="@dimen/spacing_mini"
     android:background="@color/gray_cc"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/white"
@@ -35,10 +35,10 @@
         android:background="?android:selectableItemBackground"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/spacing_micro"
+        android:paddingBottom="@dimen/spacing_mini"
         android:paddingEnd="@dimen/spacing_small"
         android:paddingStart="@dimen/spacing_small"
-        android:paddingTop="@dimen/spacing_micro">
+        android:paddingTop="@dimen/spacing_mini">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar"
@@ -54,7 +54,7 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_micro"
+            android:layout_marginStart="@dimen/spacing_mini"
             android:textColor="@color/text_primary_dark"
             android:textSize="@dimen/text_size_default" />
     </LinearLayout>

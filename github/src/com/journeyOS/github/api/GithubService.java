@@ -3,6 +3,7 @@ package com.journeyOS.github.api;
 import android.support.annotation.NonNull;
 
 import com.journeyOS.github.entity.FileModel;
+import com.journeyOS.github.entity.Issue;
 import com.journeyOS.github.entity.Repository;
 import com.journeyOS.github.entity.SearchResult;
 import com.journeyOS.github.entity.User;
@@ -159,5 +160,27 @@ public interface GithubService {
     Observable<Response<ResponseBody>> unwatchRepo(
             @Path("owner") String owner,
             @Path("repo") String repo
+    );
+
+    @NonNull @GET("search/issues")
+    @Headers("Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
+    Observable<Response<SearchResult<Issue>>> searchIssues(
+            @Header("forceNetWork") boolean forceNetWork,
+            @Query(value = "q", encoded = true) String query,
+            @Query("sort") String sort,
+            @Query("order") String order,
+            @Query("page") int page
+    );
+
+    @NonNull @GET("repos/{owner}/{repo}/issues")
+    @Headers("Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
+    Observable<Response<ArrayList<Issue>>> getRepoIssues(
+            @Header("forceNetWork") boolean forceNetWork,
+            @Path("owner") String owner,
+            @Path("repo") String repo,
+            @Query("state") String state,
+            @Query("sort") String sort,
+            @Query("direction") String direction,
+            @Query("page") int page
     );
 }

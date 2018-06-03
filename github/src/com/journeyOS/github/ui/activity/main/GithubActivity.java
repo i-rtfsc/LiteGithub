@@ -42,11 +42,17 @@ import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
 import com.journeyOS.github.SlidingDrawer;
+import com.journeyOS.github.entity.IssuesFilter;
 import com.journeyOS.github.entity.User;
+import com.journeyOS.github.type.FragmentType;
+import com.journeyOS.github.type.IssueState;
+import com.journeyOS.github.type.IssueType;
 import com.journeyOS.github.type.RepoType;
+import com.journeyOS.github.ui.activity.ContainerActivity;
 import com.journeyOS.github.ui.activity.profile.ProfileModel;
 import com.journeyOS.github.ui.activity.search.SearchActivity;
 import com.journeyOS.github.ui.adapter.MainPageAdapter;
+import com.journeyOS.github.ui.fragment.issue.IssuesFragment;
 import com.journeyOS.github.ui.fragment.profile.ProfileInfoFragment;
 import com.journeyOS.github.ui.fragment.repos.ReposFragment;
 import com.journeyOS.github.ui.fragment.settings.SettingsFragment;
@@ -201,6 +207,22 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
             case Constant.MENU_NOTIFICATION:
                 break;
             case Constant.MENU_ISSUE:
+                mToolbar.setTitle(R.string.issues);
+//                AuthUser authUserForIssue = CoreManager.getAuthUser();
+//                if (BaseUtils.isNull(authUserForIssue)) {
+//                    CoreManager.getImpl(IAuthUserProvider.class).getUserWorkHandler().post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            AuthUser authUser = CoreManager.getImpl(IAuthUserProvider.class).getAuthUser();
+//                            loadFragment(IssuesFragment.newInstanceForRepo(new IssuesFilter(IssueType.REPO, IssueState.OPEN), authUser.loginId, authUser.name));
+//                        }
+//                    });
+//                } else {
+//                    loadFragment(IssuesFragment.newInstanceForRepo(new IssuesFilter(IssueType.REPO, IssueState.OPEN), authUserForIssue.loginId, authUserForIssue.name));
+//                }
+
+//                ContainerActivity.showForUser(mContext, FragmentType.ISSUE, new IssuesFilter(IssueType.USER, IssueState.CLOSED));
+                setupIssueViewPager();
                 break;
             case Constant.MENU_SEARCH:
                 SearchActivity.show(mContext);
@@ -256,4 +278,27 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
         mViewPager.setCurrentItem(0);
     }
 
+    //issue
+    void setupIssueViewPager() {
+        mAdapter.clearAll();
+        mTabLayout.setVisibility(View.VISIBLE);
+        mViewPager.setVisibility(View.VISIBLE);
+        mFragmentContainer.setVisibility(View.GONE);
+
+        Pair<Fragment, Integer> openIssueFragmentPair = new Pair<>(IssuesFragment.newInstanceForUser(new IssuesFilter(IssueType.USER, IssueState.OPEN)), R.string.open);
+        mAdapter.addFrag(openIssueFragmentPair);
+
+        Pair<Fragment, Integer> closedIssueFragmentPair = new Pair<>(IssuesFragment.newInstanceForUser(new IssuesFilter(IssueType.USER, IssueState.CLOSED)), R.string.closed);
+        mAdapter.addFrag(closedIssueFragmentPair);
+
+        mViewPager.setAdapter(mAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+
+        for (int index = 0; index < mAdapter.getCount(); index++) {
+            mTabLayout.getTabAt(index).setCustomView(mAdapter.getTabView(index, mTabLayout));
+        }
+
+        mViewPager.setOffscreenPageLimit(mAdapter.getCount());
+        mViewPager.setCurrentItem(0);
+    }
 }

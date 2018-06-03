@@ -51,7 +51,7 @@ public class HttpCoreManager {
             @Override
             public void onSuccess(@NonNull HttpResponse<T> response) {
                 LogUtils.i(TAG, "get data ok:" + System.currentTimeMillis());
-                LogUtils.i(TAG, "data:" + response.body());
+                //LogUtils.i(TAG, "data:" + response.body());
                 if (response.isSuccessful()) {
                     if (readCacheFirst && response.isFromCache()
                             && NetWork.isAvailable(CoreManager.getContext())) {
