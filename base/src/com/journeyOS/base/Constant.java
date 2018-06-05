@@ -20,6 +20,12 @@ public class Constant {
     //SharedPreferences KEY
     public static final String THEME = "theme";
     public static final String USE_CACHE = "use_cache";
+    public static final String IMAGE_ENGINE = "image_engine";
+
+    //image engine type
+    public static final String IMAGE_ENGINE_PICASSO = "image_engine_picasso";
+    public static final String IMAGE_ENGINE_GLIDE = "image_engine_glide";
+
     //menu key
     public static final int MENU_PROFILE = 0;
     public static final int MENU_REPOS = 1;

@@ -33,8 +33,8 @@ import com.journeyOS.base.menu.DrawerAdapter;
 import com.journeyOS.base.menu.DrawerItem;
 import com.journeyOS.base.menu.SimpleItem;
 import com.journeyOS.core.CoreManager;
+import com.journeyOS.core.ImageEngine;
 import com.journeyOS.core.api.userprovider.AuthUser;
-import com.squareup.picasso.Picasso;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
@@ -96,10 +96,8 @@ public class SlidingDrawer implements DrawerAdapter.OnItemSelectedListener {
         AuthUser authUser = CoreManager.getAuthUser();
         ((TextView) mContext.findViewById(R.id.user)).setText(authUser.loginId);
         ((TextView) mContext.findViewById(R.id.email)).setText(authUser.email);
-        Picasso.with(CoreManager.getContext())
-                .load(authUser.avatar)
-                .placeholder(R.mipmap.user)
-                .into(((ImageView) mContext.findViewById(R.id.user_avatar)));
+
+        ImageEngine.load(CoreManager.getContext(), authUser.avatar, ((ImageView) mContext.findViewById(R.id.user_avatar)), R.mipmap.user);
 
         adapter.setSelected(Constant.MENU_REPOS);
     }

@@ -58,6 +58,7 @@ dependencies {
     api "com.github.kbiakov:CodeView-android:$gradle.codeview"
     api "com.yarolegovich:sliding-root-nav:$gradle.slidingrootnav"
     api "com.squareup.picasso:picasso:$gradle.picasso"
+    api "com.github.bumptech.glide:glide:$gradle.glide"
 
     implementation "me.zhanghai.android.materialprogressbar:library:$gradle.materialprogressbar"
 

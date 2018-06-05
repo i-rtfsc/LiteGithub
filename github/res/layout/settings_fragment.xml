@@ -43,6 +43,15 @@
         <View style="@style/bg_line" />
 
         <com.journeyOS.base.widget.SettingView
+            android:id="@+id/image_engine"
+            style="@style/mid_layout"
+            settings:settingIcon="@drawable/svg_image_engine"
+            settings:settingTitle="@string/image_engine"
+            settings:showRight="false" />
+
+        <View style="@style/bg_line" />
+
+        <com.journeyOS.base.widget.SettingView
             android:id="@+id/logout"
             style="@style/bottom_layout"
             settings:settingIcon="@drawable/svg_logout"

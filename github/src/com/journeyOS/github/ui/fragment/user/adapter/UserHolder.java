@@ -23,9 +23,8 @@ import com.facebook.stetho.common.LogUtil;
 import com.journeyOS.base.adapter.BaseRecyclerAdapter;
 import com.journeyOS.base.adapter.BaseViewHolder;
 import com.journeyOS.core.CoreManager;
+import com.journeyOS.core.ImageEngine;
 import com.journeyOS.github.R;
-import com.journeyOS.github.ui.activity.profile.ProfileActivity;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -48,10 +47,7 @@ public class UserHolder extends BaseViewHolder<UserData> {
     public void updateItem(UserData data, int position) {
         mUserData = data;
         name.setText(data.login);
-        Picasso.with(CoreManager.getContext())
-                .load(data.avatarUrl)
-                .placeholder(R.mipmap.user)
-                .into(avatar);
+        ImageEngine.load(CoreManager.getContext(), data.avatarUrl, avatar, R.mipmap.user);
     }
 
     @Override
