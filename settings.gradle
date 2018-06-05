@@ -55,4 +55,4 @@ def initVersion() {
 initLocalGradleEnvironment()
 initVersion()
 
-include ':literouter', ':literouter-annotation', ':literouter-compiler', ':litetask', ':base', ':core', ':github'
+include ':literouter', ':literouter-annotation', ':literouter-compiler', ':litetask', ':base', ':plugins', ':core', ':github'

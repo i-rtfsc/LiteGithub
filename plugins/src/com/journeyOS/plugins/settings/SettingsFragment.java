@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.journeyOS.github.ui.fragment.settings;
+package com.journeyOS.plugins.settings;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -26,21 +26,23 @@ import com.journeyOS.base.persistence.SpUtils;
 import com.journeyOS.base.widget.SettingSwitch;
 import com.journeyOS.base.widget.SettingView;
 import com.journeyOS.core.CoreManager;
+import com.journeyOS.core.api.splash.ISplashProvider;
 import com.journeyOS.core.api.userprovider.IAuthUserProvider;
 import com.journeyOS.core.base.BaseFragment;
-import com.journeyOS.github.R;
-import com.journeyOS.github.ui.activity.splash.SplashActivity;
+import com.journeyOS.plugins.R;
+import com.journeyOS.plugins.R2;
+
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class SettingsFragment extends BaseFragment {
 
-    @BindView(R.id.code_theme)
+    @BindView(R2.id.code_theme)
     SettingView codeTheme;
-    @BindView(R.id.use_cache)
+    @BindView(R2.id.use_cache)
     SettingSwitch useCache;
-    @BindView(R.id.logout)
+    @BindView(R2.id.logout)
     SettingView logout;
 
     static Activity mContext;
@@ -67,24 +69,24 @@ public class SettingsFragment extends BaseFragment {
         useCache.setCheck(isCache);
     }
 
-    @OnClick({R.id.code_theme})
+    @OnClick({R2.id.code_theme})
     void listenerCodeTheme() {
         showThemeChooser();
     }
 
-    @OnClick({R.id.use_cache})
+    @OnClick({R2.id.use_cache})
     void listenerUseCache() {
         boolean isCache = !SpUtils.getInstant().getBoolean(Constant.USE_CACHE, true);
         useCache.setCheck(isCache);
         SpUtils.getInstant().put(Constant.USE_CACHE, isCache);
     }
 
-    @OnClick({R.id.logout})
+    @OnClick({R2.id.logout})
     void listenerLogout() {
         verifyLogout();
     }
 
-    @OnClick({R.id.image_engine})
+    @OnClick({R2.id.image_engine})
     void listenerImageEngine() {
         showImageEngine();
     }
@@ -129,7 +131,7 @@ public class SettingsFragment extends BaseFragment {
                             @Override
                             public void run() {
                                 CoreManager.getImpl(IAuthUserProvider.class).deleteAll();
-                                SplashActivity.newInstance(mContext);
+                                CoreManager.getImpl(ISplashProvider.class).navigationSplashActivity(mContext);
                             }
                         });
                     }

@@ -42,16 +42,25 @@ import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
+import com.journeyOS.github.type.RepoType;
 import com.journeyOS.github.ui.adapter.MainPageAdapter;
 import com.journeyOS.github.ui.fragment.files.RepoFilesFragment;
 import com.journeyOS.github.ui.fragment.info.RepoInfoFragment;
+import com.journeyOS.github.ui.fragment.repos.ReposModel;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
 public class RepositoryActivity extends BaseActivity {
     static final String TAG = RepositoryActivity.class.getSimpleName();
     static final String EXTRA_REPOSITORY_DATA = "repositoryData";
+    static final String EXTRA_USER = "user";
+    static final String EXTRA_REPO = "repo";
+
     @BindView(R.id.toolbar_layout)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.toolbar)
@@ -69,6 +78,11 @@ public class RepositoryActivity extends BaseActivity {
     Application mContext;
     RepositoryData mRepositoryData;
     RepositoryModel mRepositoryModel;
+    ReposModel mReposModel;
+
+    String mUser;
+    String mRepo;
+    Map<Integer, Object> initedMap = new HashMap<>();
 
     final Observer<StatusDataResource> starredStatusStatusObserver = new Observer<StatusDataResource>() {
         @Override
@@ -90,6 +104,14 @@ public class RepositoryActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+    public static void show(@NonNull Context context, @NonNull String owner,
+                            @NonNull String repoName) {
+        Intent intent = new Intent(context, RepositoryActivity.class);
+        intent.putExtra(EXTRA_USER, owner);
+        intent.putExtra(EXTRA_REPO, repoName);
+        context.startActivity(intent);
+    }
+
     @Override
     public void initBeforeView() {
         super.initBeforeView();
@@ -104,6 +126,58 @@ public class RepositoryActivity extends BaseActivity {
     @Override
     public void initViews() {
         mRepositoryData = getIntent().getParcelableExtra(EXTRA_REPOSITORY_DATA);
+        if (!BaseUtils.isNull(mRepositoryData)) {
+            initView();
+        } else {
+            mUser = getIntent().getStringExtra(EXTRA_USER);
+            mRepo = getIntent().getStringExtra(EXTRA_REPO);
+            initedMap.put(1, false);
+        }
+    }
+
+    @Override
+    protected void initDataObserver(Bundle savedInstanceState) {
+        super.initDataObserver(savedInstanceState);
+        if (!BaseUtils.isNull(mRepositoryData)) {
+            initRepositoryData();
+        } else {
+            mReposModel = ModelProvider.getModel(this, ReposModel.class);
+            mReposModel.loadRepositories(RepoType.OWNED, 1);
+            mReposModel.getReposStatus().observe(this, new Observer<StatusDataResource>() {
+                @Override
+                public void onChanged(@Nullable StatusDataResource statusDataResource) {
+                    switch (statusDataResource.status) {
+                        case SUCCESS:
+                            int page = (Integer) statusDataResource.subData;
+                            Object initedByPage = initedMap.get(page);
+                            LogUtils.d(TAG, "(onChanged)current page = " + page + ", has been inited = " + initedByPage);
+                            if (!BaseUtils.isNull(initedByPage) && (!(Boolean) initedByPage)) {
+                                initedMap.put(page, true);
+                                if (page == 1) {
+                                    handleReposStatusObserver((List<RepositoryData>) statusDataResource.data);
+                                }
+                            }
+                            break;
+                        case ERROR:
+                            break;
+                    }
+                }
+            });
+        }
+    }
+
+    void handleReposStatusObserver(List<RepositoryData> repositoryDataList) {
+        for (RepositoryData repositoryData : repositoryDataList) {
+            LogUtils.d(TAG, "handleReposStatusObserver = "+repositoryData.toString());
+            if (repositoryData.fullName.equals(mUser+ "/"+mRepo)) {
+                mRepositoryData = repositoryData;
+                initView();
+                initRepositoryData();
+            }
+        }
+    }
+
+    void initView() {
         mCollapsingToolbarLayout.setTitleEnabled(false);
         mToolbar.setTitle(mRepositoryData.name);
         setSupportActionBar(mToolbar);
@@ -111,11 +185,7 @@ public class RepositoryActivity extends BaseActivity {
 
         setupViewPager(mRepositoryData);
     }
-
-    @Override
-    protected void initDataObserver(Bundle savedInstanceState) {
-        super.initDataObserver(savedInstanceState);
-
+    void initRepositoryData() {
         mRepositoryModel = ModelProvider.getModel(this, RepositoryModel.class);
 
         mRepositoryModel.checkStarred(mRepositoryData.owner.login, mRepositoryData.name);

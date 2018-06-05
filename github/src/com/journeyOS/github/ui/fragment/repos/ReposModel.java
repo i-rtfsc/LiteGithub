@@ -46,7 +46,7 @@ public class ReposModel extends BaseViewModel {
 
     MutableLiveData<StatusDataResource> mReposStatus = new MutableLiveData<>();
 
-    protected MutableLiveData<StatusDataResource> getReposStatus() {
+    public MutableLiveData<StatusDataResource> getReposStatus() {
         return mReposStatus;
     }
 
@@ -63,7 +63,7 @@ public class ReposModel extends BaseViewModel {
         mGithubService = AppHttpClient.getInstance(CoreManager.getAuthUser().accessToken).getService(GithubService.class);
     }
 
-    protected void loadRepositories(final RepoType repoType, final int page) {
+    public void loadRepositories(final RepoType repoType, final int page) {
         HttpObserver<ArrayList<Repository>> httpObserver = new HttpObserver<ArrayList<Repository>>() {
             @Override
             public void onSuccess(HttpResponse<ArrayList<Repository>> response) {

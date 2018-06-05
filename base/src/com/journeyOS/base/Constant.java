@@ -39,4 +39,5 @@ public class Constant {
     public static final String USER = "Solo";
     public static final String EMAIL = "anqi.huang@outlook.com";
     public static final String GIT_HUB_ID = "journeyOS";
+    public static final String LITE_GIT_HUB = "LiteGithub";
 }
