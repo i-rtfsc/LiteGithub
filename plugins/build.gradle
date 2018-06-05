@@ -22,6 +22,7 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
 }
 
 dependencies {
@@ -29,6 +30,5 @@ dependencies {
     implementation project(':core')
 
     annotationProcessor project(':literouter-compiler')
-    annotationProcessor "android.arch.persistence.room:compiler:$gradle.room_compiler"
     annotationProcessor "com.jakewharton:butterknife-compiler:$gradle.butterknife"
 }

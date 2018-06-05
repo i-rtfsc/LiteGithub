@@ -128,4 +128,11 @@
     <string name="image_engine">Image engine</string>
     <string name="picasso">Picasso</string>
     <string name="glide">Glide</string>
+    <string name="version">Version</string>
+    <string name="github">Github</string>
+    <string name="email">Email</string>
+    <string name="send_email">Send email</string>
+    <string name="open_in_market">Open in market</string>
+    <string name="no_email_clients">There are no email clients installed.</string>
+    <string name="no_market_clients">There are no market clients installed.</string>
 </resources>

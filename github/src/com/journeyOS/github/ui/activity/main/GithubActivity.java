@@ -35,6 +35,8 @@ import com.journeyOS.base.Constant;
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.UIUtils;
 import com.journeyOS.core.CoreManager;
+import com.journeyOS.core.api.plugins.IAboutProvider;
+import com.journeyOS.core.api.plugins.ISettingsProvider;
 import com.journeyOS.core.api.userprovider.AuthUser;
 import com.journeyOS.core.api.userprovider.IAuthUserProvider;
 import com.journeyOS.core.base.BaseActivity;
@@ -44,18 +46,15 @@ import com.journeyOS.github.R;
 import com.journeyOS.github.SlidingDrawer;
 import com.journeyOS.github.entity.IssuesFilter;
 import com.journeyOS.github.entity.User;
-import com.journeyOS.github.type.FragmentType;
 import com.journeyOS.github.type.IssueState;
 import com.journeyOS.github.type.IssueType;
 import com.journeyOS.github.type.RepoType;
-import com.journeyOS.github.ui.activity.ContainerActivity;
 import com.journeyOS.github.ui.activity.profile.ProfileModel;
 import com.journeyOS.github.ui.activity.search.SearchActivity;
 import com.journeyOS.github.ui.adapter.MainPageAdapter;
 import com.journeyOS.github.ui.fragment.issue.IssuesFragment;
 import com.journeyOS.github.ui.fragment.profile.ProfileInfoFragment;
 import com.journeyOS.github.ui.fragment.repos.ReposFragment;
-import com.journeyOS.github.ui.fragment.settings.SettingsFragment;
 
 import butterknife.BindView;
 
@@ -234,9 +233,11 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
                 break;
             case Constant.MENU_SETTINGS:
                 mToolbar.setTitle(R.string.settings);
-                loadFragment(SettingsFragment.newInstance(this));
+                loadFragment(CoreManager.getImpl(ISettingsProvider.class).provideSettingsFragment(this));
                 break;
             case Constant.MENU_ABOUT:
+                mToolbar.setTitle(R.string.about);
+                loadFragment(CoreManager.getImpl(IAboutProvider.class).provideAboutFragment(this));
                 break;
 
         }

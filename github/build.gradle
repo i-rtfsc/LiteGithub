@@ -80,6 +80,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation project(':core')
+    implementation project(':plugins')
     implementation "com.android.support:support-v4:$gradle.appcompat"
     implementation "com.android.support:appcompat-v7:$gradle.appcompat"
     implementation "com.unstoppable:submitbutton:$gradle.submitbutton"

@@ -23,17 +23,16 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 
 import com.journeyOS.base.utils.UIUtils;
+import com.journeyOS.core.CoreManager;
+import com.journeyOS.core.api.plugins.ISettingsProvider;
 import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.github.R;
 import com.journeyOS.github.entity.IssuesFilter;
 import com.journeyOS.github.type.FragmentType;
-import com.journeyOS.github.type.IssueState;
-import com.journeyOS.github.type.IssueType;
 import com.journeyOS.github.type.RepoType;
 import com.journeyOS.github.type.UserType;
 import com.journeyOS.github.ui.fragment.issue.IssuesFragment;
 import com.journeyOS.github.ui.fragment.repos.ReposFragment;
-import com.journeyOS.github.ui.fragment.settings.SettingsFragment;
 import com.journeyOS.github.ui.fragment.user.UserFragment;
 
 import butterknife.BindView;
@@ -121,7 +120,7 @@ public class ContainerActivity extends BaseActivity {
                 break;
             case SETTINGS:
                 title = R.string.settings;
-                loadFragment(SettingsFragment.newInstance(this), title);
+                loadFragment(CoreManager.getImpl(ISettingsProvider.class).provideSettingsFragment(this), title);
                 break;
             case ISSUE:
                 title = R.string.issues;
