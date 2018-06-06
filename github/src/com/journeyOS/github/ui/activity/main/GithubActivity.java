@@ -33,6 +33,7 @@ import android.widget.FrameLayout;
 
 import com.journeyOS.base.Constant;
 import com.journeyOS.base.utils.BaseUtils;
+import com.journeyOS.base.utils.ToastyUtils;
 import com.journeyOS.base.utils.UIUtils;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.api.plugins.IAboutProvider;
@@ -251,7 +252,7 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
                 if (!BaseUtils.isNull(user)) setupProfileViewPager(user);
                 break;
             case ERROR:
-                showShortToast(ToastType.ERROR, statusDataResource.message);
+                showToast(ToastyUtils.ToastType.ERROR, statusDataResource.message, false);
                 break;
         }
     }

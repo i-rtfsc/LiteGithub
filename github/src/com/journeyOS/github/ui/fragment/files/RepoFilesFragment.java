@@ -30,6 +30,7 @@ import android.view.KeyEvent;
 import com.journeyOS.base.adapter.BaseRecyclerAdapter;
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.LogUtils;
+import com.journeyOS.base.utils.ToastyUtils;
 import com.journeyOS.base.utils.ViewUtils;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.Messages;
@@ -153,7 +154,7 @@ public class RepoFilesFragment extends BaseFragment implements
                     mReposFileModel.loadFiles(mRepositoryData.owner.login, mRepositoryData.name, mRepositoryData.defaultBranch, curPath, false);
                 } else {
                     if (data.size == 0) {
-                        showShortToast(ToastType.WARNING, mContext.getString(R.string.sub_modules));
+                        showToast(ToastyUtils.ToastType.WARNING, R.string.sub_modules, false);
                     } else {
                         ViewerActivity.show(getActivity(), data);
                     }

@@ -28,13 +28,12 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.journeyOS.base.utils.ToastyUtils;
 import com.journeyOS.core.R;
 import com.journeyOS.literouter.Router;
 
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
 
 public abstract class BaseFragment extends Fragment implements BaseViewInit, IBaseView {
 
@@ -86,15 +85,15 @@ public abstract class BaseFragment extends Fragment implements BaseViewInit, IBa
 
     @Override
     public void dismissProgressDialog() {
-        if(mProgressDialog != null){
+        if (mProgressDialog != null) {
             mProgressDialog.dismiss();
-        }else{
+        } else {
             throw new NullPointerException("dismissProgressDialog: can't dismiss a null dialog, must show dialog first!");
         }
     }
 
     @Override
-    public ProgressDialog getProgressDialog(String content){
+    public ProgressDialog getProgressDialog(String content) {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(getActivity());
             mProgressDialog.setCancelable(false);
@@ -104,45 +103,13 @@ public abstract class BaseFragment extends Fragment implements BaseViewInit, IBa
     }
 
     @Override
-    public void showShortToast(ToastType toastType, String message) {
-        switch (toastType) {
-            case NORMAL:
-                Toasty.normal(getActivity(), message, Toast.LENGTH_SHORT).show();
-                break;
-            case INFO:
-                Toasty.info(getActivity(), message, Toast.LENGTH_SHORT).show();
-                break;
-            case WARNING:
-                Toasty.warning(getActivity(), message, Toast.LENGTH_SHORT).show();
-                break;
-            case ERROR:
-                Toasty.error(getActivity(), message, Toast.LENGTH_SHORT).show();
-                break;
-            case SUCCESS:
-                Toasty.success(getActivity(), message, Toast.LENGTH_SHORT).show();
-                break;
-        }
+    public void showToast(ToastyUtils.ToastType toastType, String message, boolean isLong) {
+        ToastyUtils.showToast(getActivity(), toastType, message, isLong);
     }
 
     @Override
-    public void showLongToast(ToastType toastType, String message) {
-        switch (toastType) {
-            case NORMAL:
-                Toasty.normal(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
-            case INFO:
-                Toasty.info(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
-            case WARNING:
-                Toasty.warning(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
-            case ERROR:
-                Toasty.error(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
-            case SUCCESS:
-                Toasty.success(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
-        }
+    public void showToast(ToastyUtils.ToastType toastType, int resourceId, boolean isLong) {
+        ToastyUtils.showToast(getActivity(), toastType, resourceId, isLong);
     }
 
     @Override

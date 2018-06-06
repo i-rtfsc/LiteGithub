@@ -31,10 +31,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.journeyOS.base.adapter.BaseRecyclerAdapter;
 import com.journeyOS.base.utils.LogUtils;
+import com.journeyOS.base.utils.ToastyUtils;
 import com.journeyOS.base.utils.ViewUtils;
 import com.journeyOS.core.BuildConfig;
 import com.journeyOS.core.R;
@@ -43,7 +43,6 @@ import com.journeyOS.literouter.Router;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
 
 import static android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 
@@ -167,45 +166,13 @@ public abstract class BaseListFragment extends Fragment implements BaseViewInit,
     }
 
     @Override
-    public void showShortToast(ToastType toastType, String message) {
-        switch (toastType) {
-            case NORMAL:
-                Toasty.normal(getActivity(), message, Toast.LENGTH_SHORT).show();
-                break;
-            case INFO:
-                Toasty.info(getActivity(), message, Toast.LENGTH_SHORT).show();
-                break;
-            case WARNING:
-                Toasty.warning(getActivity(), message, Toast.LENGTH_SHORT).show();
-                break;
-            case ERROR:
-                Toasty.error(getActivity(), message, Toast.LENGTH_SHORT).show();
-                break;
-            case SUCCESS:
-                Toasty.success(getActivity(), message, Toast.LENGTH_SHORT).show();
-                break;
-        }
+    public void showToast(ToastyUtils.ToastType toastType, String message, boolean isLong) {
+        ToastyUtils.showToast(getActivity(), toastType, message, isLong);
     }
 
     @Override
-    public void showLongToast(ToastType toastType, String message) {
-        switch (toastType) {
-            case NORMAL:
-                Toasty.normal(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
-            case INFO:
-                Toasty.info(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
-            case WARNING:
-                Toasty.warning(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
-            case ERROR:
-                Toasty.error(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
-            case SUCCESS:
-                Toasty.success(getActivity(), message, Toast.LENGTH_LONG).show();
-                break;
-        }
+    public void showToast(ToastyUtils.ToastType toastType, int resourceId, boolean isLong) {
+        ToastyUtils.showToast(getActivity(), toastType, resourceId, isLong);
     }
 
     @Override

@@ -29,6 +29,7 @@ import com.journeyOS.base.Constant;
 import com.journeyOS.base.persistence.SpUtils;
 import com.journeyOS.base.utils.GitHubHelper;
 import com.journeyOS.base.utils.MarkdownHelper;
+import com.journeyOS.base.utils.ToastyUtils;
 import com.journeyOS.core.base.BaseFragment;
 import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
@@ -120,7 +121,7 @@ public class ViewerFragment extends BaseFragment implements CodeWebView.ContentC
                 break;
             case ERROR:
                 hideLoading();
-                showShortToast(ToastType.ERROR, statusDataResource.message);
+                showToast(ToastyUtils.ToastType.ERROR, statusDataResource.message, false);
                 break;
         }
     }
