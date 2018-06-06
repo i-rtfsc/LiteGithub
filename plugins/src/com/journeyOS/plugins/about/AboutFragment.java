@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import com.journeyOS.base.Constant;
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.widget.SettingText;
+import com.journeyOS.base.widget.SettingView;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.Version;
 import com.journeyOS.core.api.repository.IRepositoryProvider;
@@ -19,11 +20,11 @@ import butterknife.OnClick;
 public class AboutFragment extends BaseFragment {
 
     @BindView(R2.id.version)
-    SettingText mVersion;
+    SettingView mVersion;
     @BindView(R2.id.email)
-    SettingText mEmail;
+    SettingView mEmail;
     @BindView(R2.id.github)
-    SettingText mGithub;
+    SettingView mGithub;
 
     static Activity mContext;
 
@@ -40,9 +41,9 @@ public class AboutFragment extends BaseFragment {
 
     @Override
     public void initViews() {
-        mVersion.setRightText(Version.getVersionName(mContext));
-        mEmail.setRightText(Constant.EMAIL);
-        mGithub.setRightText(Constant.GIT_HUB_ID);
+        mVersion.setSummary(Version.getVersionName(mContext));
+        mEmail.setSummary(Constant.EMAIL);
+        mGithub.setSummary(Constant.GIT_HUB_WEBSITE);
     }
 
     @OnClick({R2.id.version})

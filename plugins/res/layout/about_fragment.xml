@@ -24,30 +24,30 @@
 
     <LinearLayout style="@style/wrap_layout">
 
-        <com.journeyOS.base.widget.SettingText
+        <com.journeyOS.base.widget.SettingView
             android:id="@+id/version"
             style="@style/top_layout"
             app:settingIcon="@drawable/svg_version"
             app:settingTitle="@string/version"
-            app:settingTextColor="@color/text_secondary_dark" />
+            app:showSummary="true" />
 
         <View style="@style/bg_line" />
 
-        <com.journeyOS.base.widget.SettingText
+        <com.journeyOS.base.widget.SettingView
             android:id="@+id/email"
             style="@style/mid_layout"
             app:settingIcon="@drawable/svg_email"
             app:settingTitle="@string/email"
-            app:settingTextColor="@color/text_secondary_dark" />
+            app:showSummary="true" />
 
         <View style="@style/bg_line" />
 
-        <com.journeyOS.base.widget.SettingText
+        <com.journeyOS.base.widget.SettingView
             android:id="@+id/github"
             style="@style/bottom_layout"
             app:settingIcon="@drawable/svg_github"
             app:settingTitle="@string/github"
-            app:settingTextColor="@color/text_secondary_dark" />
+            app:showSummary="true" />
 
     </LinearLayout>
 

@@ -38,6 +38,7 @@
             style="@style/top_layout"
             android:theme="@style/CheckBox"
             settings:settingIcon="@drawable/svg_cache"
+            settings:settingSummary="@string/use_cache_desc"
             settings:settingTitle="@string/use_cache" />
 
         <View style="@style/bg_line" />
@@ -46,8 +47,7 @@
             android:id="@+id/image_engine"
             style="@style/mid_layout"
             settings:settingIcon="@drawable/svg_image_engine"
-            settings:settingTitle="@string/image_engine"
-            settings:showRight="false" />
+            settings:settingTitle="@string/image_engine" />
 
         <View style="@style/bg_line" />
 
@@ -55,8 +55,7 @@
             android:id="@+id/logout"
             style="@style/bottom_layout"
             settings:settingIcon="@drawable/svg_logout"
-            settings:settingTitle="@string/logout"
-            settings:showRight="false" />
+            settings:settingTitle="@string/logout" />
 
     </LinearLayout>
 

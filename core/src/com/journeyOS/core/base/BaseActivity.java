@@ -26,7 +26,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.journeyOS.base.utils.ActivityUtil;
 import com.journeyOS.base.utils.ToastyUtils;
@@ -36,7 +35,6 @@ import com.journeyOS.core.permission.IPermissionApi;
 import com.journeyOS.literouter.Router;
 
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
 
 public abstract class BaseActivity extends AppCompatActivity implements BaseViewInit, IBaseView {
 
@@ -184,11 +182,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         return getString(R.string.loading);
     }
 
-    protected void delayFinish(){
+    protected void delayFinish() {
         delayFinish(1000);
     }
 
-    protected void delayFinish(int mills){
+    protected void delayFinish(int mills) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
