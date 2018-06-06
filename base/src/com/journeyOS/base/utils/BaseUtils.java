@@ -78,29 +78,29 @@ public class BaseUtils {
         return b;
     }
 
-    public static String getDateStr(@NonNull Date date){
-        String regex ;
+    public static String getDateStr(@NonNull Date date) {
+        String regex;
         regex = "yyyy-MM-dd";
         SimpleDateFormat format = new SimpleDateFormat(regex);
         return format.format(date);
     }
 
-    public static String getNewsTimeStr(@NonNull Context context, @NonNull Date date){
+    public static String getNewsTimeStr(@NonNull Context context, @NonNull Date date) {
         long subTime = System.currentTimeMillis() - date.getTime();
         final double MILLIS_LIMIT = 1000.0f;
         final double SECONDS_LIMIT = 60 * MILLIS_LIMIT;
         final double MINUTES_LIMIT = 60 * SECONDS_LIMIT;
         final double HOURS_LIMIT = 24 * MINUTES_LIMIT;
         final double DAYS_LIMIT = 30 * HOURS_LIMIT;
-        if(subTime < MILLIS_LIMIT){
+        if (subTime < MILLIS_LIMIT) {
             return context.getString(R.string.just_now);
-        } else if(subTime < SECONDS_LIMIT){
+        } else if (subTime < SECONDS_LIMIT) {
             return Math.round(subTime / MILLIS_LIMIT) + " " + context.getString(R.string.seconds_ago);
-        } else if(subTime < MINUTES_LIMIT){
+        } else if (subTime < MINUTES_LIMIT) {
             return Math.round(subTime / SECONDS_LIMIT) + " " + context.getString(R.string.minutes_ago);
-        } else if(subTime < HOURS_LIMIT){
+        } else if (subTime < HOURS_LIMIT) {
             return Math.round(subTime / MINUTES_LIMIT) + " " + context.getString(R.string.hours_ago);
-        } else if(subTime < DAYS_LIMIT){
+        } else if (subTime < DAYS_LIMIT) {
             return Math.round(subTime / HOURS_LIMIT) + " " + context.getString(R.string.days_ago);
         } else
             return getDateStr(date);
@@ -126,33 +126,33 @@ public class BaseUtils {
         Toasty.success(context, context.getString(R.string.success_copied)).show();
     }
 
-    public static void openInBrowser(@NonNull Context context, @NonNull String url){
+    public static void openInBrowser(@NonNull Context context, @NonNull String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         context.startActivity(intent);
     }
 
-    public static void launchEmail(@NonNull Context context, @NonNull String email){
+    public static void launchEmail(@NonNull Context context, @NonNull String email) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc822");
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        try{
+        try {
             context.startActivity(Intent.createChooser(intent, context.getString(R.string.send_email))
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-        }catch (ActivityNotFoundException e){
+        } catch (ActivityNotFoundException e) {
             Toasty.warning(context, context.getString(R.string.no_email_clients)).show();
         }
     }
 
-    public static void openInMarket(@NonNull Context context){
+    public static void openInMarket(@NonNull Context context) {
         Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
-        Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        try{
+        try {
             context.startActivity(Intent.createChooser(intent, context.getString(R.string.open_in_market))
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-        }catch (ActivityNotFoundException e){
+        } catch (ActivityNotFoundException e) {
             Toasty.warning(context, context.getString(R.string.no_market_clients)).show();
         }
     }
@@ -162,9 +162,9 @@ public class BaseUtils {
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_TEXT, text);
         shareIntent.setType("text/plain");
-        try{
+        try {
             context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_to)));
-        }catch (ActivityNotFoundException e){
+        } catch (ActivityNotFoundException e) {
             Toasty.warning(context, context.getString(R.string.no_share_clients)).show();
         }
     }

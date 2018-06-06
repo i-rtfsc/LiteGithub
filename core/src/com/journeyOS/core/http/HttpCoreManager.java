@@ -65,7 +65,7 @@ public class HttpCoreManager {
 
             }
         };
-        boolean useCache = SpUtils.getInstant().getBoolean(Constant.THEME, true);
+        boolean useCache = SpUtils.getInstant().getBoolean(Constant.USE_CACHE, true);
         executeRxHttp(observableCreator.createObservable(!readCacheFirst || !useCache),
                 getHttpSubscriber(tempObserver));
         LogUtils.i(TAG, "get cache start:" + System.currentTimeMillis());

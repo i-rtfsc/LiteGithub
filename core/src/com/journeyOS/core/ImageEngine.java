@@ -20,6 +20,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.journeyOS.base.Constant;
 import com.journeyOS.base.persistence.SpUtils;
@@ -34,7 +35,14 @@ public final class ImageEngine {
     public static void load(Context context, String url, ImageView view, int defaultResId) {
         String engine = SpUtils.getInstant().getString(Constant.IMAGE_ENGINE, Constant.IMAGE_ENGINE_GLIDE);
         if (engine.equals(Constant.IMAGE_ENGINE_GLIDE)) {
-            Glide.with(context).load(url).apply(new RequestOptions().placeholder(defaultResId)).into(view);
+            RequestOptions options = new RequestOptions().placeholder(defaultResId);
+
+            boolean useCache = SpUtils.getInstant().getBoolean(Constant.USE_CACHE, true);
+            if (useCache) {
+                options.diskCacheStrategy(DiskCacheStrategy.ALL);
+            }
+
+            Glide.with(context).load(url).apply(options).into(view);
         } else if (engine.equals(Constant.IMAGE_ENGINE_PICASSO)) {
             Picasso.with(context).load(url).placeholder(defaultResId).into(view);
         }

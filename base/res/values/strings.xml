@@ -48,6 +48,7 @@
 
     <string name="code_theme">Code theme</string>
     <string name="use_cache">Use cache first</string>
+    <string name="use_cache_desc">Load cache first if cache available, then load from network</string>
     <string name="logout">Logout</string>
     <string name="logout_message">Do you really need to log out?</string>
 

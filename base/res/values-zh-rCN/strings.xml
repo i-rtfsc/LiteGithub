@@ -54,6 +54,7 @@
 
     <string name="code_theme">代码主题</string>
     <string name="use_cache">优先使用缓存</string>
+    <string name="use_cache_desc">如果缓存可用，先加载缓存，然后从网络加载</string>
     <string name="logout">退出账号</string>
     <string name="logout_message">确定真的退出吗?</string>
     <string name="light">浅色</string>

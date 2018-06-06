@@ -37,15 +37,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.journeyOS.base.R;
-import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.base.utils.UIUtils;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class SettingView extends RelativeLayout {
     protected static final int DEFAULT_COLOR = 0xff717171;
+    protected static final int DEFAULT_SUMMARY_COLOR = 0x80646464;
     private static final String TAG = SettingView.class.getSimpleName();
     private static final int IMAGE_ICON_ID = 1;
+    private static final int TITLE_ID = 2;
 
     private boolean isProgressing = false;
     private boolean isError = false;
@@ -67,6 +68,11 @@ public class SettingView extends RelativeLayout {
     private int mIconRes, mArrowRes;
     private int mErrorRes;
     private String mTitleText;
+
+    private TextView mSummary;
+    private String mSummaryText;
+    private int mSummaryTextColor;
+    private int mSummaryTextSize;
 
     private String mErrorDesc;
 
@@ -111,6 +117,11 @@ public class SettingView extends RelativeLayout {
                 mTitleTextColor = ta.getColor(R.styleable.SettingView_settingTitleTextColor, DEFAULT_COLOR);
                 mTitleTextSize = ta.getDimensionPixelSize(R.styleable.SettingView_settingTitleTextSize, 0);
 
+                mSummaryText = ta.getString(R.styleable.SettingView_settingSummary);
+                mSummaryTextColor = ta.getColor(R.styleable.SettingView_settingSummaryTextColor, DEFAULT_SUMMARY_COLOR);
+                mSummaryTextSize = ta.getDimensionPixelSize(R.styleable.SettingView_settingSummaryTextSize, 0);
+                Boolean isShowSummary = ta.getBoolean(R.styleable.SettingView_showSummary, false) || (mSummaryText != null);
+
                 mArrowRes = ta.getResourceId(R.styleable.SettingView_arrow, R.drawable.setting_view_arrow);
                 mArrowWidth = ta.getDimensionPixelSize(R.styleable.SettingView_arrowWidth, mArrowDefaultSize);
                 mArrowHeight = ta.getDimensionPixelSize(R.styleable.SettingView_arrowHeight, mArrowDefaultSize);
@@ -119,7 +130,8 @@ public class SettingView extends RelativeLayout {
 
                 Boolean isShow = ta.getBoolean(R.styleable.SettingView_showRight, true);
                 initIcon();
-                initTitle();
+                initTitle(isShowSummary);
+                initSummary(isShowSummary);
                 initRightLayout();
                 initRightView(isShow);
 
@@ -176,13 +188,14 @@ public class SettingView extends RelativeLayout {
     /**
      * 初始化标题，必须后执行于ICON被初始化
      */
-    private void initTitle() {
+    private void initTitle(boolean isShowSummary) {
         mTitle = new TextView(getContext());
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.RIGHT_OF, IMAGE_ICON_ID);
-        params.addRule(CENTER_VERTICAL, TRUE);
+        if (!isShowSummary) params.addRule(CENTER_VERTICAL, TRUE);
         mTitle.setLayoutParams(params);
+        mTitle.setId(TITLE_ID);
         mTitle.setText(mTitleText != null ? mTitleText : "");
         mTitle.setTextColor(mTitleTextColor);
         if (mTitleTextSize == 0) {
@@ -191,8 +204,27 @@ public class SettingView extends RelativeLayout {
             mTitleTextSize = px2dp(mTitleTextSize);
         }
         mTitle.setTextSize(mTitleTextSize);
-
         addView(mTitle);
+    }
+
+    private void initSummary(boolean isShowSummary) {
+        mSummary = new TextView(getContext());
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.RIGHT_OF, IMAGE_ICON_ID);
+        params.addRule(RelativeLayout.BELOW, TITLE_ID);
+        mSummary.setLayoutParams(params);
+        mSummary.setText(mSummaryText != null ? mSummaryText : "");
+        mSummary.setTextColor(mSummaryTextColor);
+        if (mSummaryTextSize == 0) {
+            mSummaryTextSize = 11;
+        } else {
+            mSummaryTextSize = px2dp(mSummaryTextSize);
+        }
+        mSummary.setTextSize(mSummaryTextSize);
+
+        addView(mSummary);
+        mSummary.setVisibility(isShowSummary ? VISIBLE : GONE);
     }
 
     /**
@@ -317,7 +349,6 @@ public class SettingView extends RelativeLayout {
     }
 
     public void setIcon(Drawable drawable) {
-        LogUtils.d("PluginsSettingsActivity", " icon = "+mIcon + "  Drawable = "+drawable);
         if (mIcon != null) {
 
             mIcon.setImageDrawable(drawable);
@@ -339,6 +370,18 @@ public class SettingView extends RelativeLayout {
     public void setTextColor(int color) {
         if (mTitle != null) {
             mTitle.setTextColor(color);
+        }
+    }
+
+    public void setSummary(String summary) {
+        if (mSummary != null) {
+            mSummary.setText(summary);
+        }
+    }
+
+    public void setSummaryColor(int color) {
+        if (mSummary != null) {
+            mSummary.setTextColor(color);
         }
     }
 
