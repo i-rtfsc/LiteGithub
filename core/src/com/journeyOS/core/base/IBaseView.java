@@ -19,11 +19,9 @@ package com.journeyOS.core.base;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 
-public interface IBaseView {
+import static com.journeyOS.base.utils.ToastyUtils.ToastType;
 
-    public enum ToastType {
-        NORMAL, INFO, WARNING, ERROR, SUCCESS
-    }
+public interface IBaseView {
 
     void showProgressDialog(String content);
 
@@ -31,12 +29,11 @@ public interface IBaseView {
 
     ProgressDialog getProgressDialog(String content);
 
-    void showShortToast(ToastType toastType, String message);
+    void showToast(ToastType toastType, String message, boolean isLong);
 
-    void showLongToast(ToastType toastType, String message);
+    void showToast(ToastType toastType, int resourceId, boolean isLong);
 
     void showTipDialog(String content);
 
-    void showConfirmDialog(String msn, String title, String confirmText
-            , DialogInterface.OnClickListener confirmListener);
+    void showConfirmDialog(String msn, String title, String confirmText, DialogInterface.OnClickListener confirmListener);
 }

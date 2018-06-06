@@ -33,6 +33,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.journeyOS.base.utils.BaseUtils;
+import com.journeyOS.base.utils.ToastyUtils;
 import com.journeyOS.base.utils.ViewUtils;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.base.BaseFragment;
@@ -46,7 +47,6 @@ import com.journeyOS.github.ui.activity.ContainerActivity;
 import com.journeyOS.github.ui.activity.profile.ProfileActivity;
 import com.journeyOS.github.ui.activity.viewer.RepositoryActivity;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
-import com.journeyOS.github.ui.fragment.user.UserFragment;
 import com.journeyOS.github.ui.widget.webview.CodeWebView;
 
 import java.io.IOException;
@@ -179,7 +179,7 @@ public class RepoInfoFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.issues_lay:
-                showShortToast(ToastType.INFO, mContext.getString(R.string.developing));
+                showToast(ToastyUtils.ToastType.INFO, R.string.developing, false);
                 break;
             case R.id.stargazers_lay:
                 if (mRepositoryData.stargazersCount == 0) return;
@@ -187,7 +187,7 @@ public class RepoInfoFragment extends BaseFragment {
                 break;
             case R.id.froks_lay:
                 if (mRepositoryData.forksCount == 0) return;
-                showShortToast(ToastType.INFO, mContext.getString(R.string.developing));
+                showToast(ToastyUtils.ToastType.INFO, R.string.developing, false);
                 break;
             case R.id.watchers_lay:
                 if (mRepositoryData.subscribersCount == 0) return;

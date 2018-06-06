@@ -37,6 +37,7 @@ import android.view.MenuItem;
 
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.LogUtils;
+import com.journeyOS.base.utils.ToastyUtils;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.core.base.StatusDataResource;
@@ -168,8 +169,8 @@ public class RepositoryActivity extends BaseActivity {
 
     void handleReposStatusObserver(List<RepositoryData> repositoryDataList) {
         for (RepositoryData repositoryData : repositoryDataList) {
-            LogUtils.d(TAG, "handleReposStatusObserver = "+repositoryData.toString());
-            if (repositoryData.fullName.equals(mUser+ "/"+mRepo)) {
+            LogUtils.d(TAG, "handleReposStatusObserver = " + repositoryData.toString());
+            if (repositoryData.fullName.equals(mUser + "/" + mRepo)) {
                 mRepositoryData = repositoryData;
                 initView();
                 initRepositoryData();
@@ -185,6 +186,7 @@ public class RepositoryActivity extends BaseActivity {
 
         setupViewPager(mRepositoryData);
     }
+
     void initRepositoryData() {
         mRepositoryModel = ModelProvider.getModel(this, RepositoryModel.class);
 
@@ -246,7 +248,7 @@ public class RepositoryActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(BaseUtils.isNull(mRepositoryData) && item.getItemId() != android.R.id.home){
+        if (BaseUtils.isNull(mRepositoryData) && item.getItemId() != android.R.id.home) {
             return super.onOptionsItemSelected(item);
         }
         switch (item.getItemId()) {
@@ -283,15 +285,15 @@ public class RepositoryActivity extends BaseActivity {
         switch (statusDataResource.status) {
             case SUCCESS:
                 isStarred = (boolean) statusDataResource.data;
-                LogUtils.d(TAG, "handle starred status, isStarred = "+isStarred);
+                LogUtils.d(TAG, "handle starred status, isStarred = " + isStarred);
                 invalidateOptionsMenu();
                 if (isStarredInited) {
                     isStarredInited = false;
-                    showShortToast(ToastType.SUCCESS, isStarred ? getString(R.string.starred) : getString(R.string.unstarred));
+                    showToast(ToastyUtils.ToastType.SUCCESS, isStarred ? R.string.starred : R.string.unstarred, false);
                 }
                 break;
             case ERROR:
-                showShortToast(ToastType.ERROR, statusDataResource.message);
+                showToast(ToastyUtils.ToastType.ERROR, statusDataResource.message, false);
                 break;
         }
     }
@@ -300,15 +302,15 @@ public class RepositoryActivity extends BaseActivity {
         switch (statusDataResource.status) {
             case SUCCESS:
                 isWatched = (boolean) statusDataResource.data;
-                LogUtils.d(TAG, "handle watch status, isWatched = "+isWatched);
+                LogUtils.d(TAG, "handle watch status, isWatched = " + isWatched);
                 invalidateOptionsMenu();
                 if (isWatchedInited) {
                     isWatchedInited = false;
-                    showShortToast(ToastType.SUCCESS, isWatched ? getString(R.string.watched) : getString(R.string.unwatched));
+                    showToast(ToastyUtils.ToastType.SUCCESS, isWatched ? R.string.watched : R.string.unwatched, false);
                 }
                 break;
             case ERROR:
-                showShortToast(ToastType.ERROR, statusDataResource.message);
+                showToast(ToastyUtils.ToastType.ERROR, statusDataResource.message, false);
                 break;
         }
     }

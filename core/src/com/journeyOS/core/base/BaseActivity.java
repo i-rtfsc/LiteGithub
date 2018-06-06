@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.journeyOS.base.utils.ActivityUtil;
+import com.journeyOS.base.utils.ToastyUtils;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.R;
 import com.journeyOS.core.permission.IPermissionApi;
@@ -128,45 +129,13 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     @Override
-    public void showShortToast(ToastType toastType, String message) {
-        switch (toastType) {
-            case NORMAL:
-                Toasty.normal(getApplication(), message, Toast.LENGTH_SHORT).show();
-            break;
-            case INFO:
-                Toasty.info(getApplication(), message, Toast.LENGTH_SHORT).show();
-                break;
-            case WARNING:
-                Toasty.warning(getApplication(), message, Toast.LENGTH_SHORT).show();
-                break;
-            case ERROR:
-                Toasty.error(getApplication(), message, Toast.LENGTH_SHORT).show();
-                break;
-            case SUCCESS:
-                Toasty.success(getApplication(), message, Toast.LENGTH_SHORT).show();
-                break;
-        }
+    public void showToast(ToastyUtils.ToastType toastType, String message, boolean isLong) {
+        ToastyUtils.showToast(getApplication(), toastType, message, isLong);
     }
 
     @Override
-    public void showLongToast(ToastType toastType, String message) {
-        switch (toastType) {
-            case NORMAL:
-                Toasty.normal(getApplication(), message, Toast.LENGTH_LONG).show();
-                break;
-            case INFO:
-                Toasty.info(getApplication(), message, Toast.LENGTH_LONG).show();
-                break;
-            case WARNING:
-                Toasty.warning(getApplication(), message, Toast.LENGTH_LONG).show();
-                break;
-            case ERROR:
-                Toasty.error(getApplication(), message, Toast.LENGTH_LONG).show();
-                break;
-            case SUCCESS:
-                Toasty.success(getApplication(), message, Toast.LENGTH_LONG).show();
-                break;
-        }
+    public void showToast(ToastyUtils.ToastType toastType, int resourceId, boolean isLong) {
+        ToastyUtils.showToast(getApplication(), toastType, resourceId, isLong);
     }
 
     @Override

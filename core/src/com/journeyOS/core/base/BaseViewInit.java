@@ -17,8 +17,6 @@
 package com.journeyOS.core.base;
 
 
-import android.os.Bundle;
-
 public interface BaseViewInit {
     int attachLayoutRes();
 

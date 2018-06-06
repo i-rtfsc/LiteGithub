@@ -25,6 +25,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 
 import com.journeyOS.base.utils.BaseUtils;
+import com.journeyOS.base.utils.ToastyUtils;
 import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
@@ -101,7 +102,7 @@ public class LoginActivity extends BaseActivity {
                 onLoginComplete();
                 break;
             case ERROR:
-                showShortToast(ToastType.ERROR, statusDataResource.message);
+                showToast(ToastyUtils.ToastType.ERROR, statusDataResource.message, false);
                 break;
         }
     }
@@ -151,7 +152,7 @@ public class LoginActivity extends BaseActivity {
             }
         }, 1000);
 
-        showShortToast(ToastType.ERROR, errorMsg);
+        showToast(ToastyUtils.ToastType.ERROR, errorMsg, false);
     }
 
     void onLoginComplete() {

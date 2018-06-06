@@ -32,6 +32,7 @@ import android.view.View;
 
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.LogUtils;
+import com.journeyOS.base.utils.ToastyUtils;
 import com.journeyOS.core.Messages;
 import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.github.R;
@@ -158,7 +159,7 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
     @Override
     public boolean onQueryTextSubmit(String query) {
         if (BaseUtils.isBlank(query)) {
-            showShortToast(ToastType.ERROR, getString(R.string.invalid_query));
+            showToast(ToastyUtils.ToastType.ERROR, R.string.invalid_query, false);
             return true;
         }
         isInputMode = false;
@@ -227,7 +228,7 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
     }
 
     void postSearchEvent(SearchFilter searchFilter) {
-        LogUtils.d(LogUtils.TAG, "postSearchEvent = "+searchFilter);
+        LogUtils.d(LogUtils.TAG, "postSearchEvent = " + searchFilter);
         Messages msg = new Messages();
         msg.what = Messages.MSG_SEARCHING;
         msg.obj = searchFilter;
