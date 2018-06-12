@@ -19,6 +19,12 @@ The following diagram shows all the modules in our recommended architecture and 
 [Download App](https://github.com/journeyOS/LiteGithub/tree/master/app_release/LiteGithub.apk)
 
 
+![image](https://github.com/journeyOS/LiteGithub/blob/master/resource/starred.png)
+![image](https://github.com/journeyOS/LiteGithub/blob/master/resource/my_repos.png)
+![image](https://github.com/journeyOS/LiteGithub/blob/master/resource/search.png)
+![image](https://github.com/journeyOS/LiteGithub/blob/master/resource/issues.png)
+![image](https://github.com/journeyOS/LiteGithub/blob/master/resource/settings.png)
+
 ## Docs
 [Guide](https://developer.android.com/topic/libraries/architecture/guide)
 [Lifecycle](https://developer.android.com/topic/libraries/architecture/lifecycle)
