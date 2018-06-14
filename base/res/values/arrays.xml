@@ -46,4 +46,22 @@
         <item>@string/glide</item>
         <item>@string/picasso</item>
     </array>
+
+    <array name="language">
+        <item>JavaScript</item>
+        <item>Python</item>
+        <item>Java</item>
+        <item>Go</item>
+        <item>Ruby</item>
+        <item>C++</item>
+        <item>PHP</item>
+        <item>C</item>
+        <item>Shell</item>
+        <item>Swift</item>
+        <item>Objective-C</item>
+        <item>Rust</item>
+        <item>Kotlin</item>
+        <item>Assembly</item>
+    </array>
+
 </resources>

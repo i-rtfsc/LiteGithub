@@ -117,6 +117,8 @@ public interface GithubService {
             @Query("page") int page
     );
 
+    //https://developer.github.com/v3/search/#search-repositories
+    //https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
     @NonNull
     @GET("search/repositories")
     Observable<Response<SearchResult<Repository>>> searchRepos(

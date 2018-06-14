@@ -17,6 +17,7 @@
 package com.journeyOS.github.ui.activity.search;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -24,12 +25,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.journeyOS.base.Constant;
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.base.utils.ToastyUtils;
@@ -47,10 +51,11 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class SearchActivity extends BaseActivity implements MenuItemCompat.OnActionExpandListener,
         SearchView.OnQueryTextListener {
-
+    static final String TAG = SearchActivity.class.getSimpleName();
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.tab_layout)
@@ -59,6 +64,11 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
     ViewPager mViewPager;
 
     MainPageAdapter mAdapter;
+
+    @BindView(R.id.language)
+    AppCompatImageView mChoiceLanguage;
+
+    String mQuery;
 
     public static void show(@NonNull Context context) {
         Intent intent = new Intent(context, SearchActivity.class);
@@ -164,6 +174,7 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
         }
         isInputMode = false;
         invalidateOptionsMenu();
+        mQuery = query;
         search(query);
         setSubTitle(mViewPager.getCurrentItem());
         return true;
@@ -183,7 +194,11 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
     }
 
     void setSubTitle(int page) {
-        mToolbar.setSubtitle(searchFilters.get(0).getQuery() + "/" + sortInfos[page]);
+        String title = searchFilters.get(0).getQuery();
+        if (title.contains(Constant.LANGUAGE_PREFIX)) {
+            title = title.substring(0, title.indexOf("+"));
+        }
+        mToolbar.setSubtitle(title + "/" + sortInfos[page]);
     }
 
     List<SearchFilter> getQueryFilters(@NonNull String query) {
@@ -225,6 +240,20 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
 
         mViewPager.setOffscreenPageLimit(mAdapter.getCount());
         mViewPager.setCurrentItem(0);
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mChoiceLanguage.setVisibility(tab.getPosition() == 0 ? View.VISIBLE : View.GONE);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
 
     void postSearchEvent(SearchFilter searchFilter) {
@@ -233,5 +262,30 @@ public class SearchActivity extends BaseActivity implements MenuItemCompat.OnAct
         msg.what = Messages.MSG_SEARCHING;
         msg.obj = searchFilter;
         Router.getDefault().post(msg);
+    }
+
+    @OnClick(R.id.language)
+    public void onLanguageClick() {
+        LogUtils.d(TAG, "on language click");
+        final String[] items = getResources().getStringArray(R.array.language);
+        final AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.search_language)
+                .setSingleChoiceItems(items, 2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
+                        String language = Constant.LANGUAGE_PREFIX + items[i];
+                        search(mQuery + language);
+                        dialogInterface.dismiss();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).create();
+
+        dialog.show();
     }
 }

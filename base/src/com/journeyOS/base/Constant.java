@@ -41,4 +41,9 @@ public class Constant {
     public static final String GIT_HUB_ID = "journeyOS";
     public static final String LITE_GIT_HUB = "LiteGithub";
     public static final String GIT_HUB_WEBSITE = "https://github.com/journeyOS/LiteGithub";
+
+
+    //language prefix
+    //https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
+    public static final String LANGUAGE_PREFIX = "+language:";
 }
