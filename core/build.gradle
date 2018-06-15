@@ -43,12 +43,9 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-
     api project(':base')
-    api project(':litetask')
-    api project(':literouter')
 
-    annotationProcessor project(':literouter-compiler')
+    annotationProcessor "com.journeyOS:literouter-compiler:$gradle.literouter_compiler"
     annotationProcessor "android.arch.persistence.room:compiler:$gradle.room_compiler"
     annotationProcessor "com.jakewharton:butterknife-compiler:$gradle.butterknife"
 

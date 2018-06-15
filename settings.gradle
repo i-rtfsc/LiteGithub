@@ -50,9 +50,13 @@ def initVersion() {
     gradle.ext.circleimageview = '2.2.0'
     gradle.ext.picasso = '2.5.2'
     gradle.ext.glide = '4.6.1'
+
+    gradle.ext.literouter_core = '1.1.0'
+    gradle.ext.literouter_compiler = '1.0.2'
+    gradle.ext.litetask = '1.0.1'
 }
 
 initLocalGradleEnvironment()
 initVersion()
 
-include ':literouter', ':literouter-annotation', ':literouter-compiler', ':litetask', ':base', ':plugins', ':core', ':github'
+include ':base', ':plugins', ':core', ':github'
