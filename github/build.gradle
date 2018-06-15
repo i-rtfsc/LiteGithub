@@ -90,7 +90,7 @@ dependencies {
     implementation "com.android.support:design:$gradle.design"
     implementation "de.hdodenhof:circleimageview:$gradle.circleimageview"
 
-    annotationProcessor project(':literouter-compiler')
+    annotationProcessor "com.journeyOS:literouter-compiler:$gradle.literouter_compiler"
     annotationProcessor "com.jakewharton:butterknife-compiler:$gradle.butterknife"
     annotationProcessor "android.arch.persistence.room:compiler:$gradle.room_compiler"
     annotationProcessor "android.arch.lifecycle:compiler:$gradle.lifecycle_compiler"

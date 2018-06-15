@@ -35,8 +35,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    api project(':litetask')
-    api project(':literouter')
+    api "com.journeyOS:litetask:$gradle.litetask"
+    api "com.journeyOS:literouter:$gradle.literouter_core"
 
     // api library , can be used in import module
     api "com.android.support:appcompat-v7:$gradle.supportVersion"
