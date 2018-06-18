@@ -17,5 +17,5 @@
 package com.journeyOS.github.type;
 
 public enum IssueState {
-    OPEN, CLOSED
+    open, closed
 }

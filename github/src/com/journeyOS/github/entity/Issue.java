@@ -20,6 +20,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.github.type.IssueAuthorAssociation;
 import com.journeyOS.github.type.IssueState;
 

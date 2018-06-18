@@ -55,4 +55,5 @@ public class ModelProvider {
 
         return ViewModelProviders.of(fragmentActivity).get(viewModel).attachLifecycleOwner(fragmentActivity);
     }
+
 }
