@@ -27,6 +27,7 @@ import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.ImageEngine;
 import com.journeyOS.github.R;
+import com.journeyOS.github.ui.activity.issue.IssueDetailActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -46,12 +47,15 @@ public class IssuesHolder extends BaseViewHolder<IssuesData> {
     @BindView(R.id.repo_full_name)
     TextView repoFullName;
 
+    IssuesData mIssuesData;
+
     public IssuesHolder(View itemView, BaseRecyclerAdapter baseRecyclerAdapter) {
         super(itemView, baseRecyclerAdapter);
     }
 
     @Override
     public void updateItem(IssuesData data, int position) {
+        mIssuesData = data;
         ImageEngine.load(CoreManager.getContext(), data.user.avatarUrl, userAvatar, R.mipmap.user);
         userName.setText(data.user.login);
         issueTitle.setText(data.title);
@@ -72,5 +76,6 @@ public class IssuesHolder extends BaseViewHolder<IssuesData> {
     @OnClick({R.id.cardView})
     void onIssueItemClick() {
         LogUtil.d(TAG, "issue item has been click");
+        IssueDetailActivity.show(CoreManager.getContext(), mIssuesData);
     }
 }

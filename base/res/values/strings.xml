@@ -137,4 +137,5 @@
     <string name="no_email_clients">There are no email clients installed.</string>
     <string name="no_market_clients">There are no market clients installed.</string>
     <string name="search_language">Search language</string>
+    <string name="comments">Comments</string>
 </resources>

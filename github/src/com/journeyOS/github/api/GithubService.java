@@ -24,7 +24,8 @@ import rx.Observable;
 
 public interface GithubService {
 
-    @NonNull @GET("user")
+    @NonNull
+    @GET("user")
     Observable<Response<User>> getAuthUser(
             @Header("forceNetWork") boolean forceNetWork
     );
@@ -128,43 +129,50 @@ public interface GithubService {
             @Query("page") int page
     );
 
-    @NonNull @GET("user/starred/{owner}/{repo}")
+    @NonNull
+    @GET("user/starred/{owner}/{repo}")
     Observable<Response<ResponseBody>> checkRepoStarred(
             @Path("owner") String owner,
             @Path("repo") String repo
     );
 
-    @NonNull @PUT("user/starred/{owner}/{repo}")
+    @NonNull
+    @PUT("user/starred/{owner}/{repo}")
     Observable<Response<ResponseBody>> starRepo(
             @Path("owner") String owner,
             @Path("repo") String repo
     );
 
-    @NonNull @DELETE("user/starred/{owner}/{repo}")
+    @NonNull
+    @DELETE("user/starred/{owner}/{repo}")
     Observable<Response<ResponseBody>> unstarRepo(
             @Path("owner") String owner,
             @Path("repo") String repo
     );
 
-    @NonNull @GET("user/subscriptions/{owner}/{repo}")
+    @NonNull
+    @GET("user/subscriptions/{owner}/{repo}")
     Observable<Response<ResponseBody>> checkRepoWatched(
             @Path("owner") String owner,
             @Path("repo") String repo
     );
 
-    @NonNull @PUT("user/subscriptions/{owner}/{repo}")
+    @NonNull
+    @PUT("user/subscriptions/{owner}/{repo}")
     Observable<Response<ResponseBody>> watchRepo(
             @Path("owner") String owner,
             @Path("repo") String repo
     );
 
-    @NonNull @DELETE("user/subscriptions/{owner}/{repo}")
+    @NonNull
+    @DELETE("user/subscriptions/{owner}/{repo}")
     Observable<Response<ResponseBody>> unwatchRepo(
             @Path("owner") String owner,
             @Path("repo") String repo
     );
 
-    @NonNull @GET("search/issues")
+    @NonNull
+    @GET("search/issues")
     @Headers("Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
     Observable<Response<SearchResult<Issue>>> searchIssues(
             @Header("forceNetWork") boolean forceNetWork,
@@ -174,7 +182,8 @@ public interface GithubService {
             @Query("page") int page
     );
 
-    @NonNull @GET("repos/{owner}/{repo}/issues")
+    @NonNull
+    @GET("repos/{owner}/{repo}/issues")
     @Headers("Accept: application/vnd.github.html,application/vnd.github.VERSION.raw")
     Observable<Response<ArrayList<Issue>>> getRepoIssues(
             @Header("forceNetWork") boolean forceNetWork,
@@ -185,4 +194,5 @@ public interface GithubService {
             @Query("direction") String direction,
             @Query("page") int page
     );
+
 }

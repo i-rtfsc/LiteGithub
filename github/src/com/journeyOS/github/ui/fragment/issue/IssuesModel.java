@@ -20,6 +20,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.Nullable;
 
 import com.journeyOS.base.utils.BaseUtils;
+import com.journeyOS.base.utils.IssueUtils;
 import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.base.StatusDataResource;
@@ -163,9 +164,11 @@ public class IssuesModel extends BaseViewModel {
             issuesData.commentNum = issue.commentNum;
             issuesData.user = issue.user;
             issuesData.createdAt = issue.createdAt;
+            issuesData.state = issue.state;
             issuesData.isUserIssues = isUserIssues;
-            issuesData.repoFullName = (!BaseUtils.isBlank(issue.repoUrl) && issue.repoUrl.contains("repos/")) ?
-                    issue.repoUrl.substring(issue.repoUrl.lastIndexOf("repos/") + 6) : null;
+            issuesData.repoFullName = IssueUtils.getRepoFullName(issue.repoUrl);
+            issuesData.repoName = IssueUtils.getRepoName(issue.repoUrl);;
+            issuesData.repoAuthorName = IssueUtils.getRepoAuthorName(issue.repoUrl);;
             issuesDataArrayList.add(issuesData);
             if (DEBUG)
                 LogUtils.d(TAG, "convert from issue, source data = " + issue.toString());

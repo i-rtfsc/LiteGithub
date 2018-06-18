@@ -16,13 +16,17 @@
 
 package com.journeyOS.github.ui.fragment.issue.adapter;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.journeyOS.base.adapter.BaseAdapterData;
 import com.journeyOS.github.R;
 import com.journeyOS.github.entity.User;
+import com.journeyOS.github.type.IssueState;
 
 import java.util.Date;
 
-public class IssuesData implements BaseAdapterData {
+public class IssuesData implements BaseAdapterData, Parcelable {
 
     public int number;
 
@@ -37,6 +41,12 @@ public class IssuesData implements BaseAdapterData {
     public boolean isUserIssues;
 
     public String repoFullName;
+
+    public String repoName;
+
+    public String repoAuthorName;
+
+    public IssueState state;
 
     @Override
     public int getContentViewId() {
@@ -53,6 +63,58 @@ public class IssuesData implements BaseAdapterData {
                 ", createdAt=" + createdAt +
                 ", isUserIssues=" + isUserIssues +
                 ", repoFullName='" + repoFullName + '\'' +
+                ", repoName='" + repoName + '\'' +
+                ", repoAuthorName='" + repoAuthorName + '\'' +
+                ", state=" + state +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.number);
+        dest.writeString(this.title);
+        dest.writeInt(this.commentNum);
+        dest.writeParcelable(this.user, flags);
+        dest.writeLong(this.createdAt != null ? this.createdAt.getTime() : -1);
+        dest.writeByte(this.isUserIssues ? (byte) 1 : (byte) 0);
+        dest.writeString(this.repoFullName);
+        dest.writeString(this.repoName);
+        dest.writeString(this.repoAuthorName);
+        dest.writeInt(this.state == null ? -1 : this.state.ordinal());
+    }
+
+    public IssuesData() {
+    }
+
+    protected IssuesData(Parcel in) {
+        this.number = in.readInt();
+        this.title = in.readString();
+        this.commentNum = in.readInt();
+        this.user = in.readParcelable(User.class.getClassLoader());
+        long tmpCreatedAt = in.readLong();
+        this.createdAt = tmpCreatedAt == -1 ? null : new Date(tmpCreatedAt);
+        this.isUserIssues = in.readByte() != 0;
+        this.repoFullName = in.readString();
+        this.repoName = in.readString();
+        this.repoAuthorName = in.readString();
+        int tmpState = in.readInt();
+        this.state = tmpState == -1 ? null : IssueState.values()[tmpState];
+    }
+
+    public static final Creator<IssuesData> CREATOR = new Creator<IssuesData>() {
+        @Override
+        public IssuesData createFromParcel(Parcel source) {
+            return new IssuesData(source);
+        }
+
+        @Override
+        public IssuesData[] newArray(int size) {
+            return new IssuesData[size];
+        }
+    };
 }

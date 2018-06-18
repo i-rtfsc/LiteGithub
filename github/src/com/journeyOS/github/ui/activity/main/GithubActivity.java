@@ -287,10 +287,10 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
         mViewPager.setVisibility(View.VISIBLE);
         mFragmentContainer.setVisibility(View.GONE);
 
-        Pair<Fragment, Integer> openIssueFragmentPair = new Pair<>(IssuesFragment.newInstanceForUser(new IssuesFilter(IssueType.USER, IssueState.OPEN)), R.string.open);
+        Pair<Fragment, Integer> openIssueFragmentPair = new Pair<>(IssuesFragment.newInstanceForUser(new IssuesFilter(IssueType.USER, IssueState.open)), R.string.open);
         mAdapter.addFrag(openIssueFragmentPair);
 
-        Pair<Fragment, Integer> closedIssueFragmentPair = new Pair<>(IssuesFragment.newInstanceForUser(new IssuesFilter(IssueType.USER, IssueState.CLOSED)), R.string.closed);
+        Pair<Fragment, Integer> closedIssueFragmentPair = new Pair<>(IssuesFragment.newInstanceForUser(new IssuesFilter(IssueType.USER, IssueState.closed)), R.string.closed);
         mAdapter.addFrag(closedIssueFragmentPair);
 
         mViewPager.setAdapter(mAdapter);
