@@ -19,7 +19,7 @@ package com.journeyOS.github.ui.activity.issue;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,15 +30,13 @@ import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.github.R;
 import com.journeyOS.github.type.IssueState;
 import com.journeyOS.github.ui.fragment.issue.adapter.IssuesData;
+import com.journeyOS.github.ui.fragment.issue.detail.IssueDetailsFragment;
 
 import butterknife.BindView;
 
 public class IssueDetailActivity extends BaseActivity {
-
     static final String TAG = IssueDetailActivity.class.getSimpleName();
 
-    @BindView(R.id.toolbar_layout)
-    CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.user_avatar)
@@ -51,7 +49,6 @@ public class IssueDetailActivity extends BaseActivity {
     TextView issueStateText;
 
     Context mContext;
-
 
     static final String EXTRA_ISSUES_DATA = "issuesData";
     IssuesData mIssuesData;
@@ -75,7 +72,6 @@ public class IssueDetailActivity extends BaseActivity {
 
     @Override
     public void initViews() {
-        mCollapsingToolbarLayout.setTitleEnabled(false);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -99,6 +95,14 @@ public class IssueDetailActivity extends BaseActivity {
             issueStateImg.setImageResource(R.drawable.svg_issues_closed);
             issueStateText.setText(getString(R.string.closed).concat("    ").concat(commentStr));
         }
+
+        loadFragment(IssueDetailsFragment.newInstance(issuesData));
     }
 
+    void loadFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
 }

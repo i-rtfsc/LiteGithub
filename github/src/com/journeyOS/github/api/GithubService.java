@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.journeyOS.github.entity.FileModel;
 import com.journeyOS.github.entity.Issue;
+import com.journeyOS.github.entity.IssueEvent;
 import com.journeyOS.github.entity.Repository;
 import com.journeyOS.github.entity.SearchResult;
 import com.journeyOS.github.entity.User;
@@ -192,6 +193,18 @@ public interface GithubService {
             @Query("state") String state,
             @Query("sort") String sort,
             @Query("direction") String direction,
+            @Query("page") int page
+    );
+
+    @NonNull
+    @GET("repos/{owner}/{repo}/issues/{issueNumber}/timeline?per_page=60")
+    @Headers("Accept: application/vnd.github.mockingbird-preview,application/vnd.github.html," +
+            " application/vnd.github.VERSION.raw,application/vnd.github.squirrel-girl-preview")
+    Observable<Response<ArrayList<IssueEvent>>> getIssueTimeline(
+            @Header("forceNetWork") boolean forceNetWork,
+            @Path("owner") String owner,
+            @Path("repo") String repo,
+            @Path("issueNumber") int issueNumber,
             @Query("page") int page
     );
 

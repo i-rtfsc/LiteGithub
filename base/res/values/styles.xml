@@ -58,6 +58,7 @@
         <item name="titleTextColor">@android:color/white</item>
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="actionMenuTextAppearance">@style/ToolbarMenuTextSize</item>
+        <item name="android:background">?attr/colorPrimary</item>
     </style>
     <!-- toolbar弹出菜单样式 -->
     <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat">
