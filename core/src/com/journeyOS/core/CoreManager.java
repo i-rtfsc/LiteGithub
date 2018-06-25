@@ -19,7 +19,6 @@ package com.journeyOS.core;
 
 import android.app.Application;
 
-import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.core.api.ICoreApi;
 import com.journeyOS.core.api.userprovider.AuthUser;
 import com.journeyOS.core.config.AppConfig;
@@ -40,8 +39,6 @@ public class CoreManager {
     }
 
     public static void setAuthUser(AuthUser authUser) {
-        LogUtils.d(LogUtils.TAG, " setAuthUser = "+authUser);
-        LogUtils.d(LogUtils.TAG, " setAuthUser accessToken = "+authUser.accessToken);
         mAuthUser = authUser;
     }
 

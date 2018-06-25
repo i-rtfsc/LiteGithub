@@ -43,6 +43,7 @@
     <dimen name="spacing_x_huge">72dp</dimen>
     <dimen name="spacing_xx_huge">88dp</dimen>
     <dimen name="spacing_xxx_huge">96dp</dimen>
+    <dimen name="spacing_xxxx_huge">120dp</dimen>
 
     <dimen name="icon_size_micro">12dp</dimen>
     <dimen name="icon_size_small">16dp</dimen>

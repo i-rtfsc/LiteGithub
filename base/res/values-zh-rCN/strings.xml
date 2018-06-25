@@ -136,4 +136,20 @@
     <string name="no_market_clients">未安装应用市场客户端</string>
     <string name="search_language">查询语言</string>
     <string name="comments">评论</string>
+
+    <string name="issue_close">关闭了这个问题</string>
+    <string name="issue_reopened">重开了这个问题</string>
+    <string name="issue_modified">编辑了这个问题</string>
+    <string name="issue_added_to_milestone">把这个问题添加到里程碑 %s</string>
+    <string name="issue_removed_from_milestone">把这个问题从里程碑 %s 中移除</string>
+    <string name="issue_locked_conversation">锁定了这个会话，只有版本库合作者可以评论</string>
+    <string name="issue_unlocked_conversation">解锁了这个会话</string>
+    <string name="issue_delete_comment">删除了一条评论</string>
+    <string name="issue_referenced">引用了这个问题在 %s</string>
+    <string name="issue_assigned">分配这个问题给 %s</string>
+    <string name="issue_unassigned">取消问题分配</string>
+    <string name="issue_add_label">添加标签 %s</string>
+    <string name="issue_remove_label">移除标签 %s</string>
+    <string name="no_description">没有详细描述</string>
+
 </resources>
