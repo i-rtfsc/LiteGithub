@@ -19,7 +19,6 @@ package com.journeyOS.github.ui.fragment.user.adapter;
 import android.view.View;
 import android.widget.TextView;
 
-import com.facebook.stetho.common.LogUtil;
 import com.journeyOS.base.adapter.BaseRecyclerAdapter;
 import com.journeyOS.base.adapter.BaseViewHolder;
 import com.journeyOS.core.CoreManager;
@@ -27,7 +26,6 @@ import com.journeyOS.core.ImageEngine;
 import com.journeyOS.github.R;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserHolder extends BaseViewHolder<UserData> {
@@ -37,15 +35,12 @@ public class UserHolder extends BaseViewHolder<UserData> {
     @BindView(R.id.name)
     TextView name;
 
-    UserData mUserData;
-
     public UserHolder(View itemView, BaseRecyclerAdapter baseRecyclerAdapter) {
         super(itemView, baseRecyclerAdapter);
     }
 
     @Override
     public void updateItem(UserData data, int position) {
-        mUserData = data;
         name.setText(data.login);
         ImageEngine.load(CoreManager.getContext(), data.avatarUrl, avatar, R.mipmap.user);
     }
@@ -55,9 +50,4 @@ public class UserHolder extends BaseViewHolder<UserData> {
         return R.layout.layout_item_user;
     }
 
-    @OnClick({R.id.cardView})
-    void onUserItemClick() {
-        LogUtil.d(TAG, "user item has been click");
-        //ProfileActivity.show(CoreManager.getContext(), mUserData.login);
-    }
 }

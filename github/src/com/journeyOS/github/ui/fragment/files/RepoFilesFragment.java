@@ -27,13 +27,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 
+import com.journeyOS.base.adapter.BaseAdapterData;
 import com.journeyOS.base.adapter.BaseRecyclerAdapter;
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.base.utils.ToastyUtils;
 import com.journeyOS.base.utils.ViewUtils;
 import com.journeyOS.core.CoreManager;
-import com.journeyOS.core.Messages;
 import com.journeyOS.core.base.BaseFragment;
 import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
@@ -43,16 +43,15 @@ import com.journeyOS.github.ui.activity.viewer.ViewerActivity;
 import com.journeyOS.github.ui.fragment.files.adapter.ReposFileData;
 import com.journeyOS.github.ui.fragment.files.adapter.ReposFileHolder;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
-import com.journeyOS.literouter.RouterListener;
-import com.journeyOS.literouter.RouterMsssage;
 
 import java.util.List;
 
 import butterknife.BindView;
 
 public class RepoFilesFragment extends BaseFragment implements
-        SwipeRefreshLayout.OnRefreshListener, RouterListener,
-        RepositoryActivity.IFragmentKeyListener {
+        SwipeRefreshLayout.OnRefreshListener,
+        RepositoryActivity.IFragmentKeyListener,
+        BaseRecyclerAdapter.HolderClickListener {
 
     static final String TAG = RepoFilesFragment.class.getSimpleName();
 
@@ -133,35 +132,13 @@ public class RepoFilesFragment extends BaseFragment implements
         mReposFilesAdapter = new BaseRecyclerAdapter(mContext);
         mReposFilesAdapter.setData(reposFileData);
         mReposFilesAdapter.registerHolder(ReposFileHolder.class, R.layout.layout_item_file);
+        mReposFilesAdapter.setOnHolderClickListener(this);
         mReposFilesRecyclerView.setAdapter(mReposFilesAdapter);
     }
 
     @Override
     public void onRefresh() {
         mReposFileModel.loadFiles(mRepositoryData.owner.login, mRepositoryData.name, mRepositoryData.defaultBranch, curPath, false);
-    }
-
-    @Override
-    public void onShowMessage(RouterMsssage message) {
-        Messages msg = (Messages) message;
-        switch (msg.what) {
-            case Messages.MSG_FILE_ITEM_CILCKED:
-                ReposFileData data = (ReposFileData) msg.obj;
-                LogUtils.d(TAG, "is this file is folder = " + data.isDir);
-                if (data.isDir) {
-                    showLoading();
-                    curPath = data.path;
-                    mReposFileModel.loadFiles(mRepositoryData.owner.login, mRepositoryData.name, mRepositoryData.defaultBranch, curPath, false);
-                } else {
-                    if (data.size == 0) {
-                        showToast(ToastyUtils.ToastType.WARNING, R.string.sub_modules, false);
-                    } else {
-                        ViewerActivity.show(getActivity(), data);
-                    }
-                }
-                break;
-        }
-
     }
 
     void showLoading() {
@@ -183,5 +160,22 @@ public class RepoFilesFragment extends BaseFragment implements
             }
         }
         return false;
+    }
+
+    @Override
+    public void onHolderClicked(int position, BaseAdapterData data) {
+        ReposFileData reposFileData = (ReposFileData) data;
+        LogUtils.d(TAG, "is this file is folder = " + reposFileData.isDir);
+        if (reposFileData.isDir) {
+            showLoading();
+            curPath = reposFileData.path;
+            mReposFileModel.loadFiles(mRepositoryData.owner.login, mRepositoryData.name, mRepositoryData.defaultBranch, curPath, false);
+        } else {
+            if (reposFileData.size == 0) {
+                showToast(ToastyUtils.ToastType.WARNING, R.string.sub_modules, false);
+            } else {
+                ViewerActivity.show(getActivity(), reposFileData);
+            }
+        }
     }
 }

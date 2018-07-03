@@ -22,15 +22,20 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import com.facebook.stetho.common.LogUtil;
+import com.journeyOS.base.adapter.BaseAdapterData;
+import com.journeyOS.base.adapter.BaseRecyclerAdapter;
 import com.journeyOS.base.adapter.BaseViewHolder;
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.LogUtils;
+import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.Messages;
 import com.journeyOS.core.base.BaseListFragment;
 import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
 import com.journeyOS.github.type.UserType;
+import com.journeyOS.github.ui.activity.profile.ProfileActivity;
 import com.journeyOS.github.ui.activity.search.SearchFilter;
 import com.journeyOS.github.ui.fragment.user.adapter.UserData;
 import com.journeyOS.github.ui.fragment.user.adapter.UserHolder;
@@ -41,7 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserFragment extends BaseListFragment implements RouterListener {
+public class UserFragment extends BaseListFragment implements RouterListener, BaseRecyclerAdapter.HolderClickListener {
     static final String TAG = UserFragment.class.getSimpleName();
 
     static final String EXTRA_USER_TYPE = "usersType";
@@ -180,6 +185,7 @@ public class UserFragment extends BaseListFragment implements RouterListener {
     void initUsers(List<UserData> userData) {
         LogUtils.d(TAG, "init adapter data");
         mAdapter.setData(userData);
+        mAdapter.setOnHolderClickListener(this);
     }
 
     void updateUsers(List<UserData> userData) {
@@ -204,5 +210,11 @@ public class UserFragment extends BaseListFragment implements RouterListener {
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onHolderClicked(int position, BaseAdapterData data) {
+        LogUtil.d(TAG, "user item has been click");
+        ProfileActivity.show(CoreManager.getContext(), ((UserData) data).login);
     }
 }

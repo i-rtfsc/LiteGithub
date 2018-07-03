@@ -99,7 +99,7 @@ public class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
+    public void onBindViewHolder(BaseViewHolder holder, final int position) {
         if (BaseUtils.isEmpty(mData) || BaseUtils.isNull(mData.get(position))) {
             return;
         }
@@ -109,6 +109,13 @@ public class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
 
         holder.updateItem(mData.get(position), position);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onHolderClicked(position, mData.get(position));
+            }
+        });
     }
 
     @Override

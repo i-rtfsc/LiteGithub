@@ -23,12 +23,9 @@ import android.widget.TextView;
 import com.journeyOS.base.adapter.BaseRecyclerAdapter;
 import com.journeyOS.base.adapter.BaseViewHolder;
 import com.journeyOS.base.utils.BaseUtils;
-import com.journeyOS.core.Messages;
 import com.journeyOS.github.R;
-import com.journeyOS.literouter.Router;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 public class ReposFileHolder extends BaseViewHolder<ReposFileData> {
 
@@ -39,15 +36,12 @@ public class ReposFileHolder extends BaseViewHolder<ReposFileData> {
     @BindView(R.id.file_size)
     TextView fileSize;
 
-    ReposFileData mReposFileData;
-
     public ReposFileHolder(View itemView, BaseRecyclerAdapter baseRecyclerAdapter) {
         super(itemView, baseRecyclerAdapter);
     }
 
     @Override
     public void updateItem(ReposFileData data, int position) {
-        mReposFileData = data;
         fileName.setText(data.name);
         if (data.isFile) {
             if (data.size == 0) {
@@ -65,13 +59,5 @@ public class ReposFileHolder extends BaseViewHolder<ReposFileData> {
     @Override
     public int getContentViewId() {
         return R.layout.layout_item_file;
-    }
-
-    @OnClick(R.id.repos_files_item)
-    public void onReposFilesItemClick() {
-        Messages msg = new Messages();
-        msg.what = Messages.MSG_FILE_ITEM_CILCKED;
-        msg.obj = mReposFileData;
-        Router.getDefault().post(msg);
     }
 }
