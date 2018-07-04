@@ -19,7 +19,6 @@ package com.journeyOS.github.ui.fragment.issue;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.Nullable;
 
-import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.IssueUtils;
 import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.core.CoreManager;
@@ -32,7 +31,7 @@ import com.journeyOS.core.viewmodel.BaseViewModel;
 import com.journeyOS.github.BuildConfig;
 import com.journeyOS.github.api.GithubService;
 import com.journeyOS.github.entity.Issue;
-import com.journeyOS.github.entity.IssuesFilter;
+import com.journeyOS.github.entity.filter.IssuesFilter;
 import com.journeyOS.github.entity.SearchResult;
 import com.journeyOS.github.ui.fragment.issue.adapter.IssuesData;
 

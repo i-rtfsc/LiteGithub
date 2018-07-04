@@ -33,7 +33,7 @@ import com.journeyOS.core.base.BaseListFragment;
 import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
-import com.journeyOS.github.entity.IssuesFilter;
+import com.journeyOS.github.entity.filter.IssuesFilter;
 import com.journeyOS.github.type.IssueType;
 import com.journeyOS.github.ui.activity.issue.IssueDetailActivity;
 import com.journeyOS.github.ui.fragment.issue.adapter.IssuesData;

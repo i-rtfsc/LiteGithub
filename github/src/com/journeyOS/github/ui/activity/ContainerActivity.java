@@ -27,7 +27,7 @@ import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.api.plugins.ISettingsProvider;
 import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.github.R;
-import com.journeyOS.github.entity.IssuesFilter;
+import com.journeyOS.github.entity.filter.IssuesFilter;
 import com.journeyOS.github.type.FragmentType;
 import com.journeyOS.github.type.RepoType;
 import com.journeyOS.github.type.UserType;
@@ -52,10 +52,13 @@ public class ContainerActivity extends BaseActivity {
 
     static final String EXTRA_ISSUES_FILTER = "issuesFilter";
 
-    public static void show(@NonNull Context context, @NonNull FragmentType fragmentType, @NonNull RepoType repoType) {
+    public static void show(@NonNull Context context, @NonNull FragmentType fragmentType, @NonNull RepoType repoType, @NonNull String user,
+                            @NonNull String repo) {
         Intent intent = new Intent(context, ContainerActivity.class);
         intent.putExtra(EXTRA_FRAGMENT_TYPE, fragmentType);
         intent.putExtra(EXTRA_REPOS_TYPE, repoType);
+        intent.putExtra(EXTRA_USER, user);
+        intent.putExtra(EXTRA_REPO, repo);
         context.startActivity(intent);
     }
 
@@ -92,11 +95,13 @@ public class ContainerActivity extends BaseActivity {
         UIUtils.setStatusBarColor(this, this.getResources().getColor(R.color.colorPrimary));
         int title = -1;
         FragmentType fragmentType = (FragmentType) getIntent().getSerializableExtra(EXTRA_FRAGMENT_TYPE);
+        String user = null;
+        String repo = null;
         switch (fragmentType) {
             case USER:
                 UserType userType = (UserType) getIntent().getSerializableExtra(EXTRA_USER_TYPE);
-                String user = getIntent().getStringExtra(EXTRA_USER);
-                String repo = getIntent().getStringExtra(EXTRA_REPO);
+                user = getIntent().getStringExtra(EXTRA_USER);
+                repo = getIntent().getStringExtra(EXTRA_REPO);
 
                 if (userType == UserType.FOLLOWERS) {
                     title = R.string.followers;
@@ -111,12 +116,16 @@ public class ContainerActivity extends BaseActivity {
                 break;
             case REPOS:
                 RepoType repoType = (RepoType) getIntent().getSerializableExtra(EXTRA_REPOS_TYPE);
+                user = getIntent().getStringExtra(EXTRA_USER);
+                repo = getIntent().getStringExtra(EXTRA_REPO);
                 if (repoType == RepoType.OWNED) {
                     title = R.string.my_repos;
                 } else if (repoType == RepoType.STARRED) {
                     title = R.string.starred;
+                } else if (repoType == RepoType.PUBLIC) {
+                    title = R.string.my_repos;
                 }
-                loadFragment(ReposFragment.newInstance(repoType), title);
+                loadFragment(ReposFragment.newInstance(repoType, user, repo), title);
                 break;
             case SETTINGS:
                 title = R.string.settings;

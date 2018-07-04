@@ -143,7 +143,7 @@ public class RepositoryActivity extends BaseActivity {
             initRepositoryData();
         } else {
             mReposModel = ModelProvider.getModel(this, ReposModel.class);
-            mReposModel.loadRepositories(RepoType.OWNED, 1);
+            mReposModel.loadRepositories(RepoType.OWNED, BaseUtils.isNull(mUser) ? "" : mUser, 1);
             mReposModel.getReposStatus().observe(this, new Observer<StatusDataResource>() {
                 @Override
                 public void onChanged(@Nullable StatusDataResource statusDataResource) {

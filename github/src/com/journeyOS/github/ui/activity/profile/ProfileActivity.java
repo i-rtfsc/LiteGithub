@@ -20,7 +20,6 @@ import android.app.Application;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -87,11 +86,12 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     public void initViews() {
+        mLogin = getIntent().getStringExtra(EXTRA_LOGIN);
+
         mCollapsingToolbarLayout.setTitleEnabled(false);
-        mToolbar.setTitle(R.string.profile);
+        mToolbar.setTitle(mLogin);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mLogin = getIntent().getStringExtra(EXTRA_LOGIN);
     }
 
     @Override
@@ -122,7 +122,7 @@ public class ProfileActivity extends BaseActivity {
         Pair<Fragment, Integer> profileInfoFragmentPair = new Pair<>(ProfileInfoFragment.newInstance(user), R.string.info);
         mAdapter.addFrag(profileInfoFragmentPair);
 
-        Pair<Fragment, Integer> fileFragmentPair = new Pair<>(ReposFragment.newInstance(RepoType.STARRED), R.string.starred);
+        Pair<Fragment, Integer> fileFragmentPair = new Pair<>(ReposFragment.newInstance(RepoType.STARRED, user.login, user.name), R.string.starred);
         mAdapter.addFrag(fileFragmentPair);
 
         mViewPager.setAdapter(mAdapter);

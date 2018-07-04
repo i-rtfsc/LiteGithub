@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.journeyOS.github.entity;
+package com.journeyOS.github.entity.filter;
 
 import android.os.Parcel;
 import android.os.Parcelable;

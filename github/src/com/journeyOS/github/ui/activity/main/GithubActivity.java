@@ -45,7 +45,7 @@ import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
 import com.journeyOS.github.SlidingDrawer;
-import com.journeyOS.github.entity.IssuesFilter;
+import com.journeyOS.github.entity.filter.IssuesFilter;
 import com.journeyOS.github.entity.User;
 import com.journeyOS.github.type.IssueState;
 import com.journeyOS.github.type.IssueType;
@@ -201,7 +201,7 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
                 break;
             case Constant.MENU_REPOS:
                 mToolbar.setTitle(R.string.my_repos);
-                loadFragment(ReposFragment.newInstance(RepoType.OWNED));
+                loadFragment(ReposFragment.newInstance(RepoType.OWNED, null, null));
 //                ContainerActivity.show(mContext, RepoType.OWNED);
                 break;
             case Constant.MENU_NOTIFICATION:
@@ -229,7 +229,7 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
                 break;
             case Constant.MENU_STARRED:
                 mToolbar.setTitle(R.string.starred);
-                loadFragment(ReposFragment.newInstance(RepoType.STARRED));
+                loadFragment(ReposFragment.newInstance(RepoType.STARRED, null, null));
 //                ContainerActivity.show(mContext, RepoType.STARRED);
                 break;
             case Constant.MENU_SETTINGS:
@@ -266,7 +266,7 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
         Pair<Fragment, Integer> profileInfoFragmentPair = new Pair<>(ProfileInfoFragment.newInstance(user), R.string.info);
         mAdapter.addFrag(profileInfoFragmentPair);
 
-        Pair<Fragment, Integer> fileFragmentPair = new Pair<>(ReposFragment.newInstance(RepoType.STARRED), R.string.starred);
+        Pair<Fragment, Integer> fileFragmentPair = new Pair<>(ReposFragment.newInstance(RepoType.STARRED, user.login, user.name), R.string.starred);
         mAdapter.addFrag(fileFragmentPair);
 
         mViewPager.setAdapter(mAdapter);
