@@ -6,6 +6,7 @@ import android.util.Log;
 import com.journeyOS.base.network.NetWork;
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.FileUtil;
+import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.config.GithubConfig;
 
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.CacheControl;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -78,15 +80,17 @@ public class AppHttpClient {
             Request request = chain.request();
 
             //add access token
-            String url = request.url().toString();
             if (!BaseUtils.isNull(token)) {
+                HttpUrl url = request.url().newBuilder()
+//                        .addQueryParameter("uniqueLoginId", CoreManager.getAuthUser().loginId)
+                        .build();
                 String auth = token.startsWith("Basic") ? token : "token " + token;
                 request = request.newBuilder()
                         .addHeader("Authorization", auth)
                         .url(url)
                         .build();
+                LogUtils.d(TAG, "url = "+url);
             }
-            Log.d(TAG, request.url().toString());
 
             //第二次请求，强制使用网络请求
             String forceNetWork = request.header("forceNetWork");

@@ -16,6 +16,6 @@
 
 package com.journeyOS.github.type;
 
-public enum RepoType {
-    OWNED, PUBLIC, STARRED
+public enum ReposType {
+    All, Owner, Public, Private, Member
 }

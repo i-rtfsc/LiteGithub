@@ -17,6 +17,7 @@
 package com.journeyOS.github.ui.fragment.repos;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.journeyOS.base.utils.LogUtils;
@@ -31,6 +32,7 @@ import com.journeyOS.github.BuildConfig;
 import com.journeyOS.github.api.GithubService;
 import com.journeyOS.github.entity.Repository;
 import com.journeyOS.github.entity.SearchResult;
+import com.journeyOS.github.entity.filter.ReposFilter;
 import com.journeyOS.github.type.RepoType;
 import com.journeyOS.github.ui.activity.search.SearchFilter;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
@@ -63,7 +65,8 @@ public class ReposModel extends BaseViewModel {
         mGithubService = AppHttpClient.getInstance(CoreManager.getAuthUser().accessToken).getService(GithubService.class);
     }
 
-    public void loadRepositories(final RepoType repoType, final int page) {
+    public void loadRepositories(final RepoType repoType, @NonNull final String user, final int page) {
+        LogUtils.d(TAG, "loadRepositories(ReposFragment) called with: repoType = [" + repoType + "], user = [" + user + "], page = [" + page + "]");
         HttpObserver<ArrayList<Repository>> httpObserver = new HttpObserver<ArrayList<Repository>>() {
             @Override
             public void onSuccess(HttpResponse<ArrayList<Repository>> response) {
@@ -87,18 +90,25 @@ public class ReposModel extends BaseViewModel {
                 Observable<Response<ArrayList<Repository>>> responseObservable = null;
                 switch (repoType) {
                     case OWNED:
-                        responseObservable = mGithubService.getUserRepos(forceNetWork, "", page);
+                        responseObservable = mGithubService.getUserRepos(forceNetWork, page,
+                                ReposFilter.DEFAULT.type, ReposFilter.DEFAULT.sort, ReposFilter.DEFAULT.direction);
+                        break;
+                    case PUBLIC:
+                        responseObservable = mGithubService.getUserPublicRepos(forceNetWork, user, page,
+                                ReposFilter.DEFAULT.type, ReposFilter.DEFAULT.sort, ReposFilter.DEFAULT.direction);
                         break;
                     case STARRED:
-                        responseObservable = mGithubService.getUserStarred(forceNetWork, "", page);
+                        responseObservable = mGithubService.getUserStarred(forceNetWork, user, page,
+                                ReposFilter.DEFAULT.sort, ReposFilter.DEFAULT.direction);
                         break;
                     default:
-                        responseObservable = mGithubService.getUserRepos(forceNetWork, "", page);
+                        responseObservable = mGithubService.getUserRepos(forceNetWork, page,
+                                ReposFilter.DEFAULT.type, ReposFilter.DEFAULT.sort, ReposFilter.DEFAULT.direction);
                         break;
                 }
                 return responseObservable;
             }
-        }, httpObserver, true);
+        }, httpObserver, false);
     }
 
     protected void searchRepositories(final SearchFilter searchFilter, final int page) {

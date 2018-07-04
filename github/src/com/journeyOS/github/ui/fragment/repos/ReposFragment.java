@@ -61,12 +61,18 @@ public class ReposFragment extends BaseListFragment implements RouterListener, B
     };
 
     static final String EXTRA_REPOS_TYPE = "reposType";
+    static final String EXTRA_USER = "user";
+    static final String EXTRA_REPO = "repo";
     RepoType mRepoType = null;
+    String mUser;
+    String mRepo;
 
-    public static Fragment newInstance(RepoType repoType) {
+    public static Fragment newInstance(RepoType repoType, String user, String repo) {
         ReposFragment fragment = new ReposFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(EXTRA_REPOS_TYPE, repoType);
+        bundle.putString(EXTRA_USER, user);
+        bundle.putString(EXTRA_REPO, repo);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -87,6 +93,10 @@ public class ReposFragment extends BaseListFragment implements RouterListener, B
         super.initBeforeView();
         mContext = CoreManager.getContext();
         mRepoType = (RepoType) getArguments().get(EXTRA_REPOS_TYPE);
+        mUser = getArguments().getString(EXTRA_USER);
+        mRepo = getArguments().getString(EXTRA_REPO);
+        LogUtils.d(TAG, "get extra user = "+mUser);
+        LogUtils.d(TAG, "get extra repo = "+mRepo);
         mSearchFilter = getArguments().getParcelable(EXTRA_SEARCH_FILTER);
         initedMap.put(1, false);
     }
@@ -103,7 +113,7 @@ public class ReposFragment extends BaseListFragment implements RouterListener, B
 
         showLoading();
         if (!BaseUtils.isNull(mRepoType)) {
-            mReposModel.loadRepositories(mRepoType, getCurPage());
+            mReposModel.loadRepositories(mRepoType, BaseUtils.isNull(mUser) ? "" : mUser, getCurPage());
             mReposModel.getReposStatus().observe(this, reposStatusObserver);
         }
 
@@ -132,7 +142,7 @@ public class ReposFragment extends BaseListFragment implements RouterListener, B
             initedMap.put(page, false);
 
             if (!BaseUtils.isNull(mRepoType)) {
-                mReposModel.loadRepositories(mRepoType, page);
+                mReposModel.loadRepositories(mRepoType, BaseUtils.isNull(mUser) ? "" : mUser, page);
             }
 
             if (!BaseUtils.isNull(mSearchFilter)) {

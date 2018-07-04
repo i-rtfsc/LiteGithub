@@ -37,18 +37,35 @@ public interface GithubService {
             @Path("user") String user
     );
 
-    @GET("user{user}/repos")
+    @NonNull
+    @GET("user/repos")
     Observable<retrofit2.Response<ArrayList<Repository>>> getUserRepos(
             @Header("forceNetWork") boolean forceNetWork,
-            @Path("user") String user,
-            @Query("page") int page
+            @Query("page") int page,
+            @Query("type") String type,
+            @Query("sort") String sort,
+            @Query("direction") String direction
     );
 
-    @GET("user{user}/starred")
+    @NonNull
+    @GET("users/{user}/repos")
+    Observable<retrofit2.Response<ArrayList<Repository>>> getUserPublicRepos(
+            @Header("forceNetWork") boolean forceNetWork,
+            @Path("user") @NonNull String user,
+            @Query("page") int page,
+            @Query("type") String type,
+            @Query("sort") String sort,
+            @Query("direction") String direction
+    );
+
+    @NonNull
+    @GET("users/{user}/starred")
     Observable<Response<ArrayList<Repository>>> getUserStarred(
             @Header("forceNetWork") boolean forceNetWork,
-            @Path("user") String user,
-            @Query("page") int page
+            @Path("user") @NonNull String user,
+            @Query("page") int page,
+            @Query("sort") String sort,
+            @Query("direction") String direction
     );
 
     @NonNull

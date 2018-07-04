@@ -61,7 +61,7 @@ public abstract class BaseListFragment extends Fragment implements BaseViewInit,
     private int curPage = 1;
     private final int DEFAULT_PAGE_SIZE = 30;
     private boolean isLoading = false;
-    private boolean canLoadMore = false;
+    private boolean canLoadMore = true;
 
     @Override
     public void onAttach(Context context) {

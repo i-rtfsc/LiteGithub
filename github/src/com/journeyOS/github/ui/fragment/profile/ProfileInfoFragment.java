@@ -120,7 +120,7 @@ public class ProfileInfoFragment extends BaseFragment {
                 ContainerActivity.showUser(mContext, FragmentType.USER, UserType.FOLLOWING, mUser.login, mUser.name);
                 break;
             case R.id.repos_lay:
-                ContainerActivity.show(mContext, FragmentType.REPOS, RepoType.OWNED);
+                ContainerActivity.show(mContext, FragmentType.REPOS, RepoType.PUBLIC, mUser.login, mUser.name);
                 break;
             case R.id.gists_lay:
                 break;
