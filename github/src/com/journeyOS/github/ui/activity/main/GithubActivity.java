@@ -45,8 +45,8 @@ import com.journeyOS.core.base.StatusDataResource;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
 import com.journeyOS.github.SlidingDrawer;
-import com.journeyOS.github.entity.filter.IssuesFilter;
 import com.journeyOS.github.entity.User;
+import com.journeyOS.github.entity.filter.IssuesFilter;
 import com.journeyOS.github.type.IssueState;
 import com.journeyOS.github.type.IssueType;
 import com.journeyOS.github.type.RepoType;
@@ -229,7 +229,7 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
                 break;
             case Constant.MENU_STARRED:
                 mToolbar.setTitle(R.string.starred);
-                loadFragment(ReposFragment.newInstance(RepoType.STARRED, null, null));
+                loadFragment(ReposFragment.newInstance(RepoType.STARRED, CoreManager.getAuthUser().loginId, null));
 //                ContainerActivity.show(mContext, RepoType.STARRED);
                 break;
             case Constant.MENU_SETTINGS:
