@@ -22,6 +22,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import com.journeyOS.base.adapter.BaseAdapterData;
+import com.journeyOS.base.adapter.BaseRecyclerAdapter;
 import com.journeyOS.base.adapter.BaseViewHolder;
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.LogUtils;
@@ -33,6 +35,7 @@ import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
 import com.journeyOS.github.type.RepoType;
 import com.journeyOS.github.ui.activity.search.SearchFilter;
+import com.journeyOS.github.ui.activity.viewer.RepositoryActivity;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryData;
 import com.journeyOS.github.ui.fragment.repos.adapter.RepositoryHolder;
 import com.journeyOS.literouter.RouterListener;
@@ -42,7 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ReposFragment extends BaseListFragment implements RouterListener {
+public class ReposFragment extends BaseListFragment implements RouterListener, BaseRecyclerAdapter.HolderClickListener {
     static final String TAG = ReposFragment.class.getSimpleName();
 
     Context mContext;
@@ -173,6 +176,7 @@ public class ReposFragment extends BaseListFragment implements RouterListener {
     void initRepositories(List<RepositoryData> repositories) {
         LogUtils.d(TAG, "init adapter data");
         mAdapter.setData(repositories);
+        mAdapter.setOnHolderClickListener(this);
     }
 
     void updateRepositories(List<RepositoryData> repositories) {
@@ -195,5 +199,10 @@ public class ReposFragment extends BaseListFragment implements RouterListener {
                 mReposModel.searchRepositories(mSearchFilter, 1);
                 break;
         }
+    }
+
+    @Override
+    public void onHolderClicked(int position, BaseAdapterData data) {
+        RepositoryActivity.show(CoreManager.getContext(), (RepositoryData)data);
     }
 }
