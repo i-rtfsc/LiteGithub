@@ -24,6 +24,7 @@ import com.journeyOS.base.network.NetWork;
 import com.journeyOS.base.persistence.SpUtils;
 import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.core.CoreManager;
+import com.journeyOS.core.api.thread.ICoreExecutorsApi;
 
 import retrofit2.Response;
 import rx.Observable;
@@ -72,16 +73,21 @@ public class HttpCoreManager {
     }
 
     public static <T, R extends Response<T>> void executeRxHttp(
-            @NonNull Observable<R> observable, @Nullable HttpSubscriber<T> subscriber) {
-        if (subscriber != null) {
-            observable.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(subscriber);
-        } else {
-            observable.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new HttpSubscriber<T>());
-        }
+            @NonNull final Observable<R> observable, @Nullable final HttpSubscriber<T> subscriber) {
+        CoreManager.getImpl(ICoreExecutorsApi.class).networkIOThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                if (subscriber != null) {
+                    observable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(subscriber);
+                } else {
+                    observable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new HttpSubscriber<T>());
+                }
+            }
+        });
     }
 
     public interface IObservableCreator<T, R extends Response<T>> {

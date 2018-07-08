@@ -27,6 +27,7 @@ import com.journeyOS.base.widget.SettingSwitch;
 import com.journeyOS.base.widget.SettingView;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.api.splash.ISplashProvider;
+import com.journeyOS.core.api.thread.ICoreExecutorsApi;
 import com.journeyOS.core.api.userprovider.IAuthUserProvider;
 import com.journeyOS.core.base.BaseFragment;
 import com.journeyOS.plugins.R;
@@ -127,7 +128,7 @@ public class SettingsFragment extends BaseFragment {
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        CoreManager.getImpl(IAuthUserProvider.class).getUserWorkHandler().post(new Runnable() {
+                        CoreManager.getImpl(ICoreExecutorsApi.class).diskIOThread().execute(new Runnable() {
                             @Override
                             public void run() {
                                 CoreManager.getImpl(IAuthUserProvider.class).deleteAll();

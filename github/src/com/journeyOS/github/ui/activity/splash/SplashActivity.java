@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.core.CoreManager;
+import com.journeyOS.core.api.thread.ICoreExecutorsApi;
 import com.journeyOS.core.api.userprovider.AuthUser;
 import com.journeyOS.core.api.userprovider.IAuthUserProvider;
 import com.journeyOS.core.base.BaseActivity;
@@ -60,16 +61,21 @@ public class SplashActivity extends BaseActivity {
     protected void initDataObserver(Bundle savedInstanceState) {
         super.initDataObserver(savedInstanceState);
 
-        CoreManager.getImpl(IAuthUserProvider.class).getUserWorkHandler().post(new Runnable() {
+        CoreManager.getImpl(ICoreExecutorsApi.class).diskIOThread().execute(new Runnable() {
             @Override
             public void run() {
-                AuthUser authUser = CoreManager.getImpl(IAuthUserProvider.class).getAuthUser();
+                final AuthUser authUser = CoreManager.getImpl(IAuthUserProvider.class).getAuthUser();
                 LogUtils.d(TAG, "user has been login = " + !BaseUtils.isNull(authUser));
                 if (BaseUtils.isNull(authUser)) {
                     startActivityForResult(new Intent(mContext, LoginActivity.class), REQUEST_ACCESS_TOKEN);
                 } else {
-                    CoreManager.setAuthUser(authUser);
-                    showMainPage();
+                    CoreManager.getImpl(ICoreExecutorsApi.class).mainThread().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            CoreManager.setAuthUser(authUser);
+                            showMainPage();
+                        }
+                    });
                 }
             }
         });

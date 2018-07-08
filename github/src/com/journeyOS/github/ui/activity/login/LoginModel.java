@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.core.CoreManager;
+import com.journeyOS.core.api.thread.ICoreExecutorsApi;
 import com.journeyOS.core.api.userprovider.AuthUser;
 import com.journeyOS.core.api.userprovider.IAuthUserProvider;
 import com.journeyOS.core.base.StatusDataResource;
@@ -119,7 +120,7 @@ public class LoginModel extends BaseViewModel {
     }
 
     void saveAuthUser(final BasicToken basicToken, final User user) {
-        CoreManager.getImpl(IAuthUserProvider.class).getUserWorkHandler().post(new Runnable() {
+        CoreManager.getImpl(ICoreExecutorsApi.class).diskIOThread().execute(new Runnable() {
             @Override
             public void run() {
                 AuthUser authUser = new AuthUser();
