@@ -19,6 +19,7 @@ package com.journeyOS.github.ui.activity.main;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.journeyOS.core.CoreManager;
+import com.journeyOS.core.api.thread.ICoreExecutorsApi;
 import com.journeyOS.core.api.userprovider.AuthUser;
 import com.journeyOS.core.api.userprovider.IAuthUserProvider;
 import com.journeyOS.core.viewmodel.BaseViewModel;
@@ -37,7 +38,7 @@ public class GithubModel extends BaseViewModel {
     }
 
     protected void searchAuthUser() {
-        CoreManager.getImpl(IAuthUserProvider.class).getUserWorkHandler().post(new Runnable() {
+        CoreManager.getImpl(ICoreExecutorsApi.class).diskIOThread().execute(new Runnable() {
             @Override
             public void run() {
                 AuthUser authUser = CoreManager.getImpl(IAuthUserProvider.class).getAuthUser();

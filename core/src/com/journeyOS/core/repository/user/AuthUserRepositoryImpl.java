@@ -16,13 +16,10 @@
 
 package com.journeyOS.core.repository.user;
 
-import android.os.Handler;
-
 import com.journeyOS.core.api.userprovider.AuthUser;
 import com.journeyOS.core.api.userprovider.IAuthUserProvider;
 import com.journeyOS.core.repository.DBHelper;
 import com.journeyOS.literouter.annotation.ARouterInject;
-import com.journeyOS.litetask.TaskScheduler;
 
 import java.util.List;
 
@@ -30,18 +27,10 @@ import java.util.List;
 public class AuthUserRepositoryImpl implements IAuthUserProvider {
     private static final String TAG = AuthUserRepositoryImpl.class.getSimpleName();
     private AuthUserDatabase mAuthUserDatabase;
-    private Handler mAuthUserHandler;
 
     @Override
     public void onCreate() {
         mAuthUserDatabase = DBHelper.provider(AuthUserDatabase.class, "user.db");
-        mAuthUserHandler = TaskScheduler.provideHandler(TAG);
-    }
-
-
-    @Override
-    public Handler getUserWorkHandler() {
-        return mAuthUserHandler;
     }
 
     @Override

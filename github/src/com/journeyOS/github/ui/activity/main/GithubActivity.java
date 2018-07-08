@@ -38,6 +38,7 @@ import com.journeyOS.base.utils.UIUtils;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.api.plugins.IAboutProvider;
 import com.journeyOS.core.api.plugins.ISettingsProvider;
+import com.journeyOS.core.api.thread.ICoreExecutorsApi;
 import com.journeyOS.core.api.userprovider.AuthUser;
 import com.journeyOS.core.api.userprovider.IAuthUserProvider;
 import com.journeyOS.core.base.BaseActivity;
@@ -187,7 +188,7 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
                 mToolbar.setTitle(R.string.profile);
                 AuthUser authUser = CoreManager.getAuthUser();
                 if (BaseUtils.isNull(authUser)) {
-                    CoreManager.getImpl(IAuthUserProvider.class).getUserWorkHandler().post(new Runnable() {
+                    CoreManager.getImpl(ICoreExecutorsApi.class).diskIOThread().execute(new Runnable() {
                         @Override
                         public void run() {
                             AuthUser authUser = CoreManager.getImpl(IAuthUserProvider.class).getAuthUser();

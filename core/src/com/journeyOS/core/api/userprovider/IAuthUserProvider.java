@@ -16,15 +16,11 @@
 
 package com.journeyOS.core.api.userprovider;
 
-import android.os.Handler;
-
 import com.journeyOS.core.api.ICoreApi;
 
 import java.util.List;
 
 public interface IAuthUserProvider extends ICoreApi {
-
-    Handler getUserWorkHandler();
 
     List<AuthUser> getAuthUsers();
 
