@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion gradle.compileSdkVersion
@@ -34,6 +35,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api "org.jetbrains.kotlin:kotlin-stdlib:$gradle.kotlin_version"
 
     api "com.journeyOS:litetask:$gradle.litetask"
     api "com.journeyOS:literouter:$gradle.literouter_core"
