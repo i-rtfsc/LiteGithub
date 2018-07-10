@@ -18,6 +18,7 @@ package com.journeyOS.core.thread
 
 import android.os.Handler
 import android.os.Looper
+import java.lang.Runnable
 
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -29,6 +30,7 @@ import java.util.concurrent.Executors
  * Grouping tasks like this avoids the effects of task starvation (e.g. disk reads don't wait behind
  * webservice requests).
  */
+@Deprecated("use TaskScheduler")
 open class CoreExecutors(
         private val diskIO: Executor,
         private val networkIO: Executor,

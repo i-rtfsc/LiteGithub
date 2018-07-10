@@ -69,7 +69,7 @@ public class SplashActivity extends BaseActivity {
                 if (BaseUtils.isNull(authUser)) {
                     startActivityForResult(new Intent(mContext, LoginActivity.class), REQUEST_ACCESS_TOKEN);
                 } else {
-                    CoreManager.getImpl(ICoreExecutorsApi.class).mainThread().execute(new Runnable() {
+                    CoreManager.getImpl(ICoreExecutorsApi.class).mainThread().post(new Runnable() {
                         @Override
                         public void run() {
                             CoreManager.setAuthUser(authUser);

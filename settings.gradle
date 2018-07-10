@@ -51,7 +51,7 @@ def initVersion() {
 
     gradle.ext.literouter_core = '1.1.0'
     gradle.ext.literouter_compiler = '1.0.2'
-    gradle.ext.litetask = '1.0.1'
+    gradle.ext.litetask = '1.0.5'
 }
 
 initLocalGradleEnvironment()
