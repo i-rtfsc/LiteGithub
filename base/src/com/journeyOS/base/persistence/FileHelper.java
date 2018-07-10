@@ -12,13 +12,17 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */package com.journeyOS.base.persistence;
+ */
+package com.journeyOS.base.persistence;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 
 import com.journeyOS.base.utils.JsonHelper;
-import com.journeyOS.litetask.TaskScheduler;
+import com.journeyOS.litetask.BackgroundWork;
+import com.journeyOS.litetask.Completion;
+import com.journeyOS.litetask.LiteTasks;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -33,7 +37,7 @@ import java.io.InputStreamReader;
  * Helper class to do operations on regular files/directories.
  */
 public class FileHelper {
-
+    private static final String TAG = FileHelper.class.getSimpleName();
     private static String mAppName;
 
     public static void init(String appName) {
@@ -95,24 +99,36 @@ public class FileHelper {
     /**
      * @param fileId The fileId to write to Disk.
      */
-    public static void writeToFile(String fileId, final Object fileObj) {
+    public static void writeToFile(Context context, String fileId, final Object fileObj) {
         if (fileObj == null) {
             return;
         }
         final File file = buildFile(fileId);
         if (exists(file)) {
-            TaskScheduler.execute(new Runnable() {
+            LiteTasks.executeInBackground(context, new BackgroundWork<Boolean>() {
                 @Override
-                public void run() {
+                public Boolean doInBackground() {
                     try {
                         String content = fileObj.getClass().equals(String.class)
                                 ? fileObj.toString() : JsonHelper.toJson(fileObj);
                         FileWriter writer = new FileWriter(file);
                         writer.write(content);
                         writer.close();
+                        return true;
                     } catch (IOException e) {
                         e.printStackTrace();
+                        return false;
                     }
+                }
+            }, new Completion<Boolean>() {
+                @Override
+                public void onSuccess(Context context, Boolean result) {
+                    Log.d(TAG, "write to disk success");
+                }
+
+                @Override
+                public void onError(Context context, Exception e) {
+                    Log.w(TAG, "write to disk error");
                 }
             });
         }
@@ -166,16 +182,27 @@ public class FileHelper {
      *
      * @param directory The directory which its content will be deleted.
      */
-    public static void clearDirectory(final File directory) {
-        TaskScheduler.execute(new Runnable() {
+    public static void clearDirectory(Context context, final File directory) {
+        LiteTasks.executeInBackground(context, new BackgroundWork<Boolean>() {
             @Override
-            public void run() {
+            public Boolean doInBackground() {
                 boolean result = false;
                 if (directory.exists()) {
                     for (File file : directory.listFiles()) {
                         result = file.delete();
                     }
                 }
+                return result;
+            }
+        }, new Completion<Boolean>() {
+            @Override
+            public void onSuccess(Context context, Boolean result) {
+                Log.d(TAG, "clear directory success");
+            }
+
+            @Override
+            public void onError(Context context, Exception e) {
+                Log.w(TAG, "clear directory error");
             }
         });
     }
