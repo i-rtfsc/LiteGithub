@@ -16,9 +16,10 @@ The following diagram shows all the modules in our recommended architecture and 
 ## Lite Github(github client)
 &#160; &#160; &#160; &#160;A Android project(github client) demonstrating the use of Retrofit and MVVM to interact with web services.
 
-[Download App](https://github.com/journeyOS/LiteGithub/blob/master/resource/download_barcode.png)
+## Download App
+![image](https://github.com/journeyOS/LiteGithub/blob/master/resource/download_barcode.png)
 
-
+## APP UI
 ![image](https://github.com/journeyOS/LiteGithub/blob/master/resource/starred.png)
 ![image](https://github.com/journeyOS/LiteGithub/blob/master/resource/my_repos.png)
 ![image](https://github.com/journeyOS/LiteGithub/blob/master/resource/search.png)
