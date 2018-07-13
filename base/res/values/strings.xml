@@ -153,4 +153,8 @@
     <string name="issue_add_label">add the label %s</string>
     <string name="issue_remove_label">remove the label %s</string>
     <string name="no_description">No description provided.</string>
+    <string name="unread">Unread</string>
+    <string name="participating">Participant</string>
+    <string name="all">All</string>
+    <string name="no_notifications_tip">No new notifications.</string>
 </resources>
