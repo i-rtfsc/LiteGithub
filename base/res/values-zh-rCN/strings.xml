@@ -151,5 +151,8 @@
     <string name="issue_add_label">添加标签 %s</string>
     <string name="issue_remove_label">移除标签 %s</string>
     <string name="no_description">没有详细描述</string>
-
+    <string name="unread">未读</string>
+    <string name="participating">参与</string>
+    <string name="all">全部</string>
+    <string name="no_notifications_tip">没有新通知了</string>
 </resources>

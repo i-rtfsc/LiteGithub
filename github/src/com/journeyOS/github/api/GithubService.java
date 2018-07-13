@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.journeyOS.github.entity.FileModel;
 import com.journeyOS.github.entity.Issue;
 import com.journeyOS.github.entity.IssueEvent;
+import com.journeyOS.github.entity.Notification;
 import com.journeyOS.github.entity.Repository;
 import com.journeyOS.github.entity.SearchResult;
 import com.journeyOS.github.entity.User;
@@ -225,4 +226,11 @@ public interface GithubService {
             @Query("page") int page
     );
 
+    @NonNull
+    @GET("notifications")
+    Observable<Response<ArrayList<Notification>>> getNotifications(
+            @Header("forceNetWork") boolean forceNetWork,
+            @Query("all") boolean all,
+            @Query("participating") boolean participating
+    );
 }

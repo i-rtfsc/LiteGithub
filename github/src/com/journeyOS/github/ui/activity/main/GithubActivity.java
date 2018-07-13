@@ -50,11 +50,13 @@ import com.journeyOS.github.entity.User;
 import com.journeyOS.github.entity.filter.IssuesFilter;
 import com.journeyOS.github.type.IssueState;
 import com.journeyOS.github.type.IssueType;
+import com.journeyOS.github.type.NotificationType;
 import com.journeyOS.github.type.RepoType;
 import com.journeyOS.github.ui.activity.profile.ProfileModel;
 import com.journeyOS.github.ui.activity.search.SearchActivity;
 import com.journeyOS.github.ui.adapter.MainPageAdapter;
 import com.journeyOS.github.ui.fragment.issue.IssuesFragment;
+import com.journeyOS.github.ui.fragment.notification.NotificationsFragment;
 import com.journeyOS.github.ui.fragment.profile.ProfileInfoFragment;
 import com.journeyOS.github.ui.fragment.repos.ReposFragment;
 
@@ -206,6 +208,8 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
 //                ContainerActivity.show(mContext, RepoType.OWNED);
                 break;
             case Constant.MENU_NOTIFICATION:
+                mToolbar.setTitle(R.string.notifications);
+                setupNotificatinViewPager();
                 break;
             case Constant.MENU_ISSUE:
                 mToolbar.setTitle(R.string.issues);
@@ -293,6 +297,34 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
 
         Pair<Fragment, Integer> closedIssueFragmentPair = new Pair<>(IssuesFragment.newInstanceForUser(new IssuesFilter(IssueType.USER, IssueState.closed)), R.string.closed);
         mAdapter.addFrag(closedIssueFragmentPair);
+
+        mViewPager.setAdapter(mAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+
+        for (int index = 0; index < mAdapter.getCount(); index++) {
+            mTabLayout.getTabAt(index).setCustomView(mAdapter.getTabView(index, mTabLayout));
+        }
+
+        mViewPager.setOffscreenPageLimit(mAdapter.getCount());
+        mViewPager.setCurrentItem(0);
+    }
+
+    //notificatin
+    void setupNotificatinViewPager() {
+        mAdapter.clearAll();
+        mTabLayout.setVisibility(View.VISIBLE);
+        mViewPager.setVisibility(View.VISIBLE);
+        mFragmentContainer.setVisibility(View.GONE);
+
+        Pair<Fragment, Integer> allFragmentPair = new Pair<>(NotificationsFragment.newInstance(NotificationType.All), R.string.all);
+        mAdapter.addFrag(allFragmentPair);
+
+        Pair<Fragment, Integer> unReadFragmentPair = new Pair<>(NotificationsFragment.newInstance(NotificationType.Unread), R.string.unread);
+        mAdapter.addFrag(unReadFragmentPair);
+
+        Pair<Fragment, Integer> participatingFragmentPair = new Pair<>(NotificationsFragment.newInstance(NotificationType.Participating), R.string.participating);
+        mAdapter.addFrag(participatingFragmentPair);
+
 
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
