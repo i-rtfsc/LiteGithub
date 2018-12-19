@@ -60,26 +60,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void initDataObserver(Bundle savedInstanceState) {
         super.initDataObserver(savedInstanceState);
-
-        CoreManager.getImpl(ICoreExecutorsApi.class).diskIOThread().execute(new Runnable() {
-            @Override
-            public void run() {
-                final AuthUser authUser = CoreManager.getImpl(IAuthUserProvider.class).getAuthUser();
-                LogUtils.d(TAG, "user has been login = " + !BaseUtils.isNull(authUser));
-                if (BaseUtils.isNull(authUser)) {
-                    startActivityForResult(new Intent(mContext, LoginActivity.class), REQUEST_ACCESS_TOKEN);
-                } else {
-                    CoreManager.getImpl(ICoreExecutorsApi.class).mainThread().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            CoreManager.setAuthUser(authUser);
-                            showMainPage();
-                        }
-                    });
-                }
-            }
-        });
-
+        showMainPage();
     }
 
     @Override
@@ -98,7 +79,25 @@ public class SplashActivity extends BaseActivity {
     }
 
     void showMainPage() {
-        delayFinish();
-        startActivity(new Intent(mContext, GithubActivity.class));
+        CoreManager.getImpl(ICoreExecutorsApi.class).diskIOThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                final AuthUser authUser = CoreManager.getImpl(IAuthUserProvider.class).getAuthUser();
+                LogUtils.d(TAG, "user has been login = " + !BaseUtils.isNull(authUser));
+                if (BaseUtils.isNull(authUser)) {
+                    startActivityForResult(new Intent(mContext, LoginActivity.class), REQUEST_ACCESS_TOKEN);
+                } else {
+                    CoreManager.getImpl(ICoreExecutorsApi.class).mainThread().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            CoreManager.setAuthUser(authUser);
+                            delayFinish();
+                            startActivity(new Intent(mContext, GithubActivity.class));
+                        }
+                    });
+                }
+            }
+        });
     }
+
 }
