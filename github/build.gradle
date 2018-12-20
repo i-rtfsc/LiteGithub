@@ -27,18 +27,18 @@ android {
 
     signingConfigs {
         release {
-            File strFile = new File("../keystore/platform.keystore")
+            File strFile = new File("../keystore/litegithub.keystore")
             storeFile file(strFile)
-            keyAlias 'platform'
-            keyPassword 'android'
-            storePassword 'android'
+            keyAlias 'journeyOS'
+            keyPassword 'litegithub'
+            storePassword 'qazwsxedc'
         }
         debug {
-            File strFile = new File("../keystore/platform.keystore")
+            File strFile = new File("../keystore/litegithub.keystore")
             storeFile file(strFile)
-            keyAlias 'platform'
-            keyPassword 'android'
-            storePassword 'android'
+            keyAlias 'journeyOS'
+            keyPassword 'litegithub'
+            storePassword 'qazwsxedc'
         }
     }
 
