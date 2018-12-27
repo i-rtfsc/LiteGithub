@@ -1,5 +1,6 @@
 package com.journeyOS.github.ui.fragment.repos.adapter;
 
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import com.journeyOS.core.ImageEngine;
 import com.journeyOS.github.R;
 
 import butterknife.BindView;
+import co.revely.gradient.RevelyGradient;
 
 public class RepositoryHolder extends BaseViewHolder<RepositoryData> {
 
@@ -29,8 +31,17 @@ public class RepositoryHolder extends BaseViewHolder<RepositoryData> {
     @BindView(R.id.tv_language)
     TextView ivLanguage;
 
+    private int[] descriptionColors = new int[]{
+            getContext().getResources().getColor(R.color.fuchsia),
+            getContext().getResources().getColor(R.color.violet)
+    };
+
     public RepositoryHolder(View itemView, BaseRecyclerAdapter baseRecyclerAdapter) {
         super(itemView, baseRecyclerAdapter);
+        RevelyGradient
+                .radial(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150f, getContext().getResources().getDisplayMetrics()))
+                .colors(descriptionColors)
+                .on(tvRepoDescription);
     }
 
     @Override

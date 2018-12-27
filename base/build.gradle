@@ -62,6 +62,8 @@ dependencies {
     api "com.yarolegovich:sliding-root-nav:$gradle.slidingrootnav"
     api "com.squareup.picasso:picasso:$gradle.picasso"
     api "com.github.bumptech.glide:glide:$gradle.glide"
+    api "com.android.support.constraint:constraint-layout:$gradle.constraint_layout"
+    api "co.revely:gradient:$gradle.gradient"
 
     implementation "me.zhanghai.android.materialprogressbar:library:$gradle.materialprogressbar"
 

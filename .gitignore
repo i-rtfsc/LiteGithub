@@ -11,6 +11,7 @@ gen/
 gradle/
 gradlew.bat
 gradlew
+app_release
 
 # ignore gradle build paths.
 .gradle/
