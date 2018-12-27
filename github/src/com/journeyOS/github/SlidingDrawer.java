@@ -25,6 +25,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,7 +46,7 @@ public class SlidingDrawer implements DrawerAdapter.OnItemSelectedListener {
     private Activity mContext;
     private String[] screenTitles;
     private Drawable[] screenIcons;
-
+    private DrawerAdapter adapter;
     private SlidingRootNav slidingRootNav;
 
     private volatile static SlidingDrawer mSlidingDrawer;
@@ -77,7 +78,7 @@ public class SlidingDrawer implements DrawerAdapter.OnItemSelectedListener {
         screenIcons = loadScreenIcons();
         screenTitles = loadScreenTitles();
 
-        DrawerAdapter adapter = new DrawerAdapter(Arrays.asList(
+        adapter = new DrawerAdapter(Arrays.asList(
                 createItemFor(Constant.MENU_PROFILE).setChecked(true),
                 createItemFor(Constant.MENU_REPOS),
                 createItemFor(Constant.MENU_NOTIFICATION),
@@ -140,6 +141,14 @@ public class SlidingDrawer implements DrawerAdapter.OnItemSelectedListener {
         }, 60l);
     }
 
+    public View getView(int postion) {
+        return adapter.getView(postion);
+    }
+
+    public void openMenu() {
+        slidingRootNav.openMenu(true);
+    }
+
     private OnItemSelectedListener listener;
 
     public void setListener(OnItemSelectedListener listener) {
@@ -149,5 +158,4 @@ public class SlidingDrawer implements DrawerAdapter.OnItemSelectedListener {
     public interface OnItemSelectedListener {
         void onItemSelected(int position);
     }
-
 }

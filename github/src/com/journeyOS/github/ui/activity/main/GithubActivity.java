@@ -16,8 +16,9 @@
 
 package com.journeyOS.github.ui.activity.main;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
-import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -29,10 +30,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.journeyOS.base.Constant;
+import com.journeyOS.base.guide.LiteGuide;
+import com.journeyOS.base.guide.OnGuideClickListener;
+import com.journeyOS.base.persistence.SpUtils;
 import com.journeyOS.base.utils.BaseUtils;
+import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.base.utils.ToastyUtils;
 import com.journeyOS.base.utils.UIUtils;
 import com.journeyOS.core.CoreManager;
@@ -79,7 +85,9 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
     MainPageAdapter mAdapter;
 
     GithubModel mGithubModel;
-    Context mContext;
+    Activity mContext;
+
+    LiteGuide mLiteGuide = null;
 
     Bundle mBundle;
     final Observer<AuthUser> authUserStatusObserver = new Observer<AuthUser>() {
@@ -101,7 +109,7 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
     @Override
     public void initBeforeView() {
         super.initBeforeView();
-        mContext = CoreManager.getContext();
+        mContext = this;
     }
 
     @Override
@@ -116,7 +124,6 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
         setSupportActionBar(mToolbar);
         mAdapter = new MainPageAdapter(this, getSupportFragmentManager());
     }
-
 
     @Override
     protected void initDataObserver(Bundle savedInstanceState) {
@@ -185,6 +192,8 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
     }
 
     void handleItemSelected(int position) {
+        //init guide after sliding drawer init
+        initGuideView();
         switch (position) {
             case Constant.MENU_PROFILE:
                 mToolbar.setTitle(R.string.profile);
@@ -335,5 +344,102 @@ public class GithubActivity extends BaseActivity implements SlidingDrawer.OnItem
 
         mViewPager.setOffscreenPageLimit(mAdapter.getCount());
         mViewPager.setCurrentItem(0);
+    }
+
+    void initGuideView() {
+        boolean inited = SpUtils.getInstant().getBoolean(Constant.GUIDE_INITED, false);
+        if (inited) {
+            return;
+        }
+
+        if (mLiteGuide == null) {
+            mLiteGuide = new LiteGuide(this);
+            mLiteGuide.addNextTarget(mToolbar,
+                    mContext.getResources().getString(R.string.guide_menu_open),
+                    20, 10);
+
+            mLiteGuide.addNextTarget(SlidingDrawer.getInstance(this).getView(0),
+                    mContext.getResources().getString(R.string.guide_profile),
+                    350, -20);
+
+            mLiteGuide.addNextTarget(SlidingDrawer.getInstance(this).getView(1),
+                    mContext.getResources().getString(R.string.guide_my_repos),
+                    350, -20);
+
+            mLiteGuide.addNextTarget(SlidingDrawer.getInstance(this).getView(2),
+                    mContext.getResources().getString(R.string.guide_notifications),
+                    350, -20, 350, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            mLiteGuide.addNextTarget(SlidingDrawer.getInstance(this).getView(3),
+                    mContext.getResources().getString(R.string.guide_issue),
+                    350, -300, 400, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            mLiteGuide.addNextTarget(SlidingDrawer.getInstance(this).getView(4),
+                    mContext.getResources().getString(R.string.guide_search),
+                    350, -300, 400, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            mLiteGuide.addNextTarget(SlidingDrawer.getInstance(this).getView(5),
+                    mContext.getResources().getString(R.string.guide_starred),
+                    350, -300, 400, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            mLiteGuide.addNextTarget(
+                    //new RectF(50, 105, 850, 435),
+                    SlidingDrawer.getInstance(this).getView(7),
+                    mContext.getResources().getString(R.string.guide_done_tip),
+                    280, 20, 500, ViewGroup.LayoutParams.WRAP_CONTENT
+                    , "", mContext.getResources().getString(R.string.guide_done));
+
+            mLiteGuide.prepare();
+
+            mLiteGuide.setMaskMoveDuration(500);
+            mLiteGuide.setExpandDuration(500);
+            mLiteGuide.setMaskRefreshTime(30);
+            mLiteGuide.setMaskColor(Color.argb(99, 200, 100, 99));
+
+            mLiteGuide.setOnGuiderListener(new GuideObserver());
+            mLiteGuide.startGuide();
+        }
+    }
+
+    class GuideObserver implements OnGuideClickListener {
+        @Override
+        public void onMask() {
+            LogUtils.d(TAG, "user click mask view.");
+        }
+
+        @Override
+        public void onNext(int nextStep) {
+            LogUtils.d(TAG, "user click next step" + nextStep);
+        }
+
+        @Override
+        public void onJump() {
+            LogUtils.d(TAG, "user jump guide");
+            SpUtils.getInstant().put(Constant.GUIDE_INITED, true);
+        }
+
+        @Override
+        public void onGuideStart() {
+            LogUtils.d(TAG, "guide start");
+        }
+
+        @Override
+        public void onGuideNext(int nextStep) {
+            LogUtils.d(TAG, "user click guide next " + nextStep);
+            if (nextStep == 1) {
+                SlidingDrawer.getInstance(mContext).openMenu();
+            }
+        }
+
+        @Override
+        public void onGuideFinished() {
+            LogUtils.d(TAG, "guide finished");
+            SpUtils.getInstant().put(Constant.GUIDE_INITED, true);
+        }
+
+        @Override
+        public void onTarget(int index) {
+            handleItemSelected(index - 1);
+        }
     }
 }

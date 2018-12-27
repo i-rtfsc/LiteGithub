@@ -27,6 +27,7 @@ import java.util.Map;
 
 public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder> {
 
+    private Map<Integer, View> views = new HashMap<>();
     private List<DrawerItem> items;
     private Map<Class<? extends DrawerItem>, Integer> viewTypes;
     private SparseArray<DrawerItem> holderFactories;
@@ -52,6 +53,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
     @SuppressWarnings("unchecked")
     public void onBindViewHolder(ViewHolder holder, int position) {
         items.get(position).bindViewHolder(holder);
+        views.put(position, holder.itemView);
     }
 
     @Override
@@ -95,6 +97,15 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
         if (listener != null) {
             listener.onItemSelected(position);
         }
+    }
+
+    public View getView(int position) {
+        if (views != null) {
+            View view = (View) views.get(position);
+            return view;
+        }
+
+        return null;
     }
 
     public void setListener(OnItemSelectedListener listener) {

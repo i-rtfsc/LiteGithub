@@ -40,6 +40,7 @@ def initVersion() {
     gradle.ext.materialprogressbar = '1.4.2'
     gradle.ext.slidingrootnav = '1.1.0'
 
+    gradle.ext.constraint_layout = '1.0.2'
     gradle.ext.appcompat = '25.1.1'
     gradle.ext.submitbutton = '1.1.2'
     gradle.ext.cardview = '25.1.1'
@@ -48,6 +49,7 @@ def initVersion() {
     gradle.ext.circleimageview = '2.2.0'
     gradle.ext.picasso = '2.5.2'
     gradle.ext.glide = '4.6.1'
+    gradle.ext.gradient = '1.0.1'
 
     gradle.ext.literouter_core = '1.1.0'
     gradle.ext.literouter_compiler = '1.0.2'

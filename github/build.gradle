@@ -65,11 +65,10 @@ android {
         }
     }
 
-    def OUT_PATH = rootProject.getRootDir().getAbsolutePath() + '/app_release/LiteGithub.apk'
     applicationVariants.all { variant ->
         if (variant.buildType.name == 'release') {
-            variant.outputs.each { output ->
-                output.outputFileName = file(OUT_PATH)
+            variant.outputs.all {
+                outputFileName = new File("./../../../../../app_release/", "LiteGithub.apk")
             }
         }
     }
@@ -89,6 +88,8 @@ dependencies {
     implementation "com.android.support:support-annotations:$gradle.supportVersion"
     implementation "com.android.support:design:$gradle.design"
     implementation "de.hdodenhof:circleimageview:$gradle.circleimageview"
+
+//    implementation 'com.yanzhikaijky:LiteGuide:0.9.2'
 
     annotationProcessor "com.journeyOS:literouter-compiler:$gradle.literouter_compiler"
     annotationProcessor "com.jakewharton:butterknife-compiler:$gradle.butterknife"

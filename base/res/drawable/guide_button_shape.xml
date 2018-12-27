@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   Copyright (c) 2018 anqi.huang@outlook.com
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +15,9 @@
   limitations under the License.
   -->
 
-<resources>
-    <string name="success_copied">已复制</string>
-</resources>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/icon_unselected" />
+    <corners android:radius="5dp" />
+
+</shape>

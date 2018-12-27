@@ -157,4 +157,17 @@
     <string name="participating">Participant</string>
     <string name="all">All</string>
     <string name="no_notifications_tip">No new notifications.</string>
+
+    <string name="text_next">Next</string>
+    <string name="text_jump">Exit</string>
+    <string name="guide_menu_open">点击此处打开抽屉</string>
+    <string name="guide_menu_close">关闭抽屉</string>
+    <string name="guide_profile">显示个人信息</string>
+    <string name="guide_my_repos">显示个人所有的版本库</string>
+    <string name="guide_notifications">跟当前账号有关的通知消息</string>
+    <string name="guide_issue">跟当前账号有关的问题</string>
+    <string name="guide_starred">当前账号星标的版本库</string>
+    <string name="guide_search">可以搜索工程或者开发者</string>
+    <string name="guide_done_tip">现在您已对该应用有所了解了，请开始使用吧。</string>
+    <string name="guide_done">完成</string>
 </resources>

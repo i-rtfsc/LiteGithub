@@ -21,6 +21,7 @@ public class Constant {
     public static final String THEME = "theme";
     public static final String USE_CACHE = "use_cache";
     public static final String IMAGE_ENGINE = "image_engine";
+    public static final String GUIDE_INITED = "guide_inited";
 
     //image engine type
     public static final String IMAGE_ENGINE_PICASSO = "image_engine_picasso";
