@@ -17,7 +17,7 @@
 package com.journeyOS.core.http;
 
 import android.app.AlertDialog;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.journeyOS.base.utils.BaseUtils;
 

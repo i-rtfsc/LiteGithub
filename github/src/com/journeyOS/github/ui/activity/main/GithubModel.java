@@ -16,7 +16,7 @@
 
 package com.journeyOS.github.ui.activity.main;
 
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.api.thread.ICoreExecutorsApi;

@@ -16,8 +16,8 @@
 
 package com.journeyOS.core.api.userprovider;
 
-import android.arch.persistence.room.Entity;
-import android.support.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.annotation.NonNull;
 
 @Entity(tableName = "authUser", primaryKeys = {"accessToken"})
 public class AuthUser {

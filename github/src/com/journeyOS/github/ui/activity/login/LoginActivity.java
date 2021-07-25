@@ -16,43 +16,38 @@
 
 package com.journeyOS.github.ui.activity.login;
 
-import android.arch.lifecycle.Observer;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
 
-import com.journeyOS.base.utils.BaseUtils;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+
+import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.base.utils.ToastyUtils;
 import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.core.base.StatusDataResource;
+import com.journeyOS.core.config.GithubConfig;
 import com.journeyOS.core.viewmodel.ModelProvider;
 import com.journeyOS.github.R;
 import com.journeyOS.github.entity.BasicToken;
-import com.unstoppable.submitbuttonview.SubmitButton;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity {
 
-    @BindView(R.id.user_name_et)
-    TextInputEditText userNameEt;
-    @BindView(R.id.user_name_layout)
-    TextInputLayout userNameLayout;
-    @BindView(R.id.password_et)
-    TextInputEditText passwordEt;
-    @BindView(R.id.password_layout)
-    TextInputLayout passwordLayout;
-    @BindView(R.id.login_bn)
-    SubmitButton loginBn;
-
-    String userName;
-    String password;
+    @BindView(R.id.github_login_btn)
+    Button loginBn;
 
     LoginModel mLoginModel;
+
+    Dialog githubdialog;
 
     final Observer<StatusDataResource> loginStatusObserver = new Observer<StatusDataResource>() {
         @Override
@@ -85,6 +80,7 @@ public class LoginActivity extends BaseActivity {
         mLoginModel.getUserStatus().observe(this, userStatusObserver);
     }
 
+
     void handleLoginStatusObserver(StatusDataResource statusDataResource) {
         switch (statusDataResource.status) {
             case SUCCESS:
@@ -107,51 +103,31 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.login_bn)
+    @OnClick(R.id.github_login_btn)
     public void onLoginClick() {
-        if (loginCheck()) {
-            loginBn.setEnabled(false);
-            mLoginModel.login(userName, password);
-        } else {
-            loginBn.reset();
-        }
+        openWebView(this);
     }
 
-    boolean loginCheck() {
-        boolean valid = true;
-        userName = userNameEt.getText().toString();
-        password = passwordEt.getText().toString();
-        if (BaseUtils.isBlank(userName)) {
-            valid = false;
-            userNameLayout.setError(getString(R.string.user_name_warning));
-        } else {
-            userNameLayout.setErrorEnabled(false);
-        }
-        if (BaseUtils.isBlank(password)) {
-            valid = false;
-            passwordLayout.setError(getString(R.string.password_warning));
-        } else {
-            passwordLayout.setErrorEnabled(false);
-        }
-        return valid;
+    protected void openWebView(Context context) {
+        String authUrl = mLoginModel.getAuthUrl();
+        LogUtils.d(LoginModel.TAG, "open webview, auth url = [" + authUrl + "]");
+        githubdialog = new Dialog(context);
+        WebView webView = new WebView(context);
+        webView.setVerticalScrollBarEnabled(true);
+        webView.setHorizontalScrollBarEnabled(true);
+        webView.setWebViewClient(new GithubWebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl(authUrl);
+        githubdialog.setContentView(webView);
+        githubdialog.show();
     }
 
 
     void onGetTokenSuccess(BasicToken basicToken) {
-        loginBn.doResult(true);
         mLoginModel.getUserInfo(basicToken);
     }
 
     void onGetTokenError(String errorMsg) {
-        loginBn.doResult(false);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                loginBn.reset();
-                loginBn.setEnabled(true);
-            }
-        }, 1000);
-
         showToast(ToastyUtils.ToastType.ERROR, errorMsg, false);
     }
 
@@ -159,5 +135,24 @@ public class LoginActivity extends BaseActivity {
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    class GithubWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            String url = request.getUrl().toString();
+            LogUtils.d(LoginModel.TAG, "should override url loading, url = [" + url + "]");
+            if (url.startsWith(GithubConfig.REDIRECT_URL)) {
+                mLoginModel.handleUrl(url);
+
+                if (url.contains("code=")) {
+                    githubdialog.dismiss();
+                }
+
+                return true;
+            }
+
+            return false;
+        }
     }
 }

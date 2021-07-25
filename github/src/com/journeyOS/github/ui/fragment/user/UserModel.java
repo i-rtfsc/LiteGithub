@@ -16,8 +16,8 @@
 
 package com.journeyOS.github.ui.fragment.user;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
+import androidx.annotation.Nullable;
 
 import com.journeyOS.base.utils.LogUtils;
 import com.journeyOS.core.CoreManager;

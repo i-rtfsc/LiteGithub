@@ -17,7 +17,7 @@
 package com.journeyOS.core.permission;
 
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.journeyOS.core.api.ICoreApi;
 import com.journeyOS.core.base.BaseActivity;

@@ -16,7 +16,7 @@
 
 package com.journeyOS.base.utils;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.webkit.MimeTypeMap;
 
 public class MarkdownHelper {

@@ -26,7 +26,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.os.Build;
-import android.support.annotation.ColorInt;
+import androidx.annotation.ColorInt;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;

@@ -18,9 +18,9 @@ package com.journeyOS.github.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.widget.Toolbar;
 
 import com.journeyOS.base.utils.UIUtils;
 import com.journeyOS.core.CoreManager;
@@ -59,6 +59,7 @@ public class ContainerActivity extends BaseActivity {
         intent.putExtra(EXTRA_REPOS_TYPE, repoType);
         intent.putExtra(EXTRA_USER, user);
         intent.putExtra(EXTRA_REPO, repo);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
@@ -69,12 +70,14 @@ public class ContainerActivity extends BaseActivity {
         intent.putExtra(EXTRA_USER_TYPE, userType);
         intent.putExtra(EXTRA_USER, user);
         intent.putExtra(EXTRA_REPO, repo);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
     public static void showSettings(@NonNull Context context, @NonNull FragmentType fragmentType) {
         Intent intent = new Intent(context, ContainerActivity.class);
         intent.putExtra(EXTRA_FRAGMENT_TYPE, fragmentType);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
@@ -82,6 +85,7 @@ public class ContainerActivity extends BaseActivity {
         Intent intent = new Intent(context, ContainerActivity.class);
         intent.putExtra(EXTRA_FRAGMENT_TYPE, fragmentType);
         intent.putExtra(EXTRA_ISSUES_FILTER, issuesFilter);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 

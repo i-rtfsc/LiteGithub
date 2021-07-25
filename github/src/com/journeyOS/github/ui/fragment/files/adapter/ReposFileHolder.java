@@ -16,7 +16,7 @@
 
 package com.journeyOS.github.ui.fragment.files.adapter;
 
-import android.support.v7.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatImageView;
 import android.view.View;
 import android.widget.TextView;
 

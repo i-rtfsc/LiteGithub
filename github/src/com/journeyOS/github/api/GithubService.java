@@ -1,6 +1,6 @@
 package com.journeyOS.github.api;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.journeyOS.github.entity.FileModel;
 import com.journeyOS.github.entity.Issue;

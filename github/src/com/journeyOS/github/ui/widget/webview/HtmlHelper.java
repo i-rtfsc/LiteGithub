@@ -16,8 +16,8 @@
 
 package com.journeyOS.github.ui.widget.webview;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.GitHubHelper;

@@ -16,8 +16,10 @@
 
 package com.journeyOS.github.ui.activity.login;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
+import android.net.Uri;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.LogUtils;
@@ -26,6 +28,7 @@ import com.journeyOS.core.api.thread.ICoreExecutorsApi;
 import com.journeyOS.core.api.userprovider.AuthUser;
 import com.journeyOS.core.api.userprovider.IAuthUserProvider;
 import com.journeyOS.core.base.StatusDataResource;
+import com.journeyOS.core.config.GithubConfig;
 import com.journeyOS.core.http.AppHttpClient;
 import com.journeyOS.core.http.AuthRequestModel;
 import com.journeyOS.core.http.HttpCoreManager;
@@ -36,9 +39,11 @@ import com.journeyOS.core.viewmodel.BaseViewModel;
 import com.journeyOS.github.api.GithubService;
 import com.journeyOS.github.api.LoginService;
 import com.journeyOS.github.entity.BasicToken;
+import com.journeyOS.github.entity.OauthToken;
 import com.journeyOS.github.entity.User;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Credentials;
 import retrofit2.Response;
@@ -63,6 +68,7 @@ public class LoginModel extends BaseViewModel {
     protected void onCreate() {
     }
 
+    @Deprecated
     protected void login(String userName, String password) {
         AuthRequestModel authRequestModel = AuthRequestModel.generate();
         String token = Credentials.basic(userName, password);
@@ -93,6 +99,59 @@ public class LoginModel extends BaseViewModel {
         HttpCoreManager.executeRxHttp(observable, subscriber);
     }
 
+    protected String getAuthUrl() {
+        long randomState = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
+        String authUrl = GithubConfig.AUTHURL +
+                "?client_id=" + GithubConfig.CLIENT_ID +
+                "&scope=" + GithubConfig.SCOPE +
+                "&redirect_uri=" + GithubConfig.REDIRECT_URL +
+                "&state=" + randomState;
+        return authUrl;
+    }
+
+    protected void handleUrl(String url) {
+        Uri uri = Uri.parse(url);
+        if (uri != null) {
+            String code = uri.getQueryParameter("code");
+            String state = uri.getQueryParameter("state");
+            getAccessToken(code, state);
+        }
+    }
+
+    protected void getAccessToken(String code, String state) {
+        LogUtils.d(TAG, "get access token, code = [" + code + "], state = [" + state + "]");
+        Observable<Response<OauthToken>> observable = AppHttpClient.getInstance(GithubConfig.GITHUB_BASE_URL, null).getService(LoginService.class).getAccessToken(
+                GithubConfig.CLIENT_ID,
+                GithubConfig.CLIENT_SECRET,
+                code, state
+        );
+
+        HttpProgressSubscriber<OauthToken, Response<OauthToken>> subscriber = new HttpProgressSubscriber<>(null,
+                new HttpObserver<OauthToken>() {
+                    @Override
+                    public void onError(@NonNull Throwable error) {
+                        mLoginStatus.postValue(StatusDataResource.error(error.getMessage()));
+                        LogUtils.d(TAG, "login error = " + error);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull HttpResponse<OauthToken> response) {
+                        OauthToken token = response.body();
+                        if (token != null) {
+                            LogUtils.d(TAG, "login success");
+                            mLoginStatus.postValue(StatusDataResource.success(BasicToken.generateFromOauthToken(token)));
+                        } else {
+                            LogUtils.d(TAG, "login success, but token was null, error message = " + response.getOriResponse().message());
+                            mLoginStatus.postValue(StatusDataResource.error(response.getOriResponse().message()));
+                        }
+
+                    }
+                }
+        );
+
+        HttpCoreManager.executeRxHttp(observable, subscriber);
+
+    }
 
     protected void getUserInfo(final BasicToken basicToken) {
         HttpObserver<User> httpObserver = new HttpObserver<User>() {
@@ -135,7 +194,6 @@ public class LoginModel extends BaseViewModel {
                 authUser.name = user.name;
                 authUser.email = user.email;
                 authUser.avatar = user.avatarUrl;
-                // LogUtils.d(TAG, "save auth user = " + authUser.toString());
                 CoreManager.getImpl(IAuthUserProvider.class).insertOrUpdateAuthUser(authUser);
             }
         });

@@ -1,14 +1,19 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 
+def thirdParty = rootProject.ext.thirdParty
+
 android {
-    compileSdkVersion gradle.compileSdkVersion
+
+    def androidSdk = rootProject.ext.androidSdk
+//    buildToolsVersion androidSdk.toolVersion
+    compileSdkVersion androidSdk.compileVersion
 
     defaultConfig {
-        minSdkVersion gradle.minSdkVersion
-        targetSdkVersion gradle.targetVersion
-        versionCode gradle.versionCode
-        versionName gradle.versionName
+        minSdkVersion androidSdk.minVersion
+        targetSdkVersion androidSdk.targetVersion
+        versionCode rootProject.ext.verCode
+        versionName rootProject.ext.verName
 
         vectorDrawables.useSupportLibrary = true
     }
@@ -23,12 +28,23 @@ android {
         }
     }
 
+    lintOptions {
+        // lint检查不报错
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':core')
 
-    annotationProcessor "com.journeyOS:literouter-compiler:$gradle.literouter_compiler"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$gradle.butterknife"
+    annotationProcessor "com.github.journeyOS:LiteRouter-compiler:$thirdParty.literouter_compiler"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$thirdParty.butterknife"
 }

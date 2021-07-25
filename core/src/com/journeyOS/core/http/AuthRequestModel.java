@@ -23,6 +23,7 @@ import com.journeyOS.core.config.GithubConfig;
 import java.util.Arrays;
 import java.util.List;
 
+@Deprecated
 public class AuthRequestModel {
     public List<String> scopes;
     public String note;
@@ -36,8 +37,8 @@ public class AuthRequestModel {
         AuthRequestModel model = new AuthRequestModel();
         model.scopes = Arrays.asList("user", "repo", "gist", "notifications");
         model.note = AppConfig.APPLICATION_ID;
-        model.clientId = GithubConfig.OPENHUB_CLIENT_ID;
-        model.clientSecret = GithubConfig.OPENHUB_CLIENT_SECRET;
+        model.clientId = GithubConfig.CLIENT_ID;
+        model.clientSecret = GithubConfig.CLIENT_SECRET;
         model.noteUrl = GithubConfig.REDIRECT_URL;
         return model;
     }

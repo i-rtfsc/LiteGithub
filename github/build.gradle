@@ -1,28 +1,35 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.antfortune.freeline'
+apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'kotlin-android'
+
+def thirdParty = rootProject.ext.thirdParty
 
 android {
-    compileSdkVersion gradle.compileSdkVersion
+    def androidSdk = rootProject.ext.androidSdk
+    compileSdkVersion androidSdk.compileVersion
 
     defaultConfig {
         applicationId "com.journeyOS.github"
-        minSdkVersion gradle.minSdkVersion
-        targetSdkVersion gradle.targetVersion
-        versionCode gradle.versionCode
-        versionName gradle.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion androidSdk.minVersion
+        targetSdkVersion androidSdk.targetVersion
+        versionCode rootProject.ext.verCode
+        versionName rootProject.ext.verName
 
         ndk {
             abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
-            }
-        }
-
         vectorDrawables.useSupportLibrary = true
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            main.java.srcDirs = ['src']
+            jniLibs.srcDirs = ['libs']
+        }
     }
 
     signingConfigs {
@@ -55,15 +62,17 @@ android {
         }
     }
 
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            res.srcDirs = ['res']
-            assets.srcDirs = ['assets']
-            main.java.srcDirs = ['src']
-            jniLibs.srcDirs = ['libs']
-        }
+    lintOptions {
+        // lint检查不报错
+        abortOnError false
+        checkReleaseBuilds false
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 
     applicationVariants.all { variant ->
         if (variant.buildType.name == 'release') {
@@ -80,21 +89,15 @@ dependencies {
 
     implementation project(':core')
     implementation project(':plugins')
-    implementation "com.android.support:support-v4:$gradle.appcompat"
-    implementation "com.android.support:appcompat-v7:$gradle.appcompat"
-    implementation "com.unstoppable:submitbutton:$gradle.submitbutton"
-    implementation "com.android.support:cardview-v7:$gradle.cardview"
-    implementation "com.android.support:recyclerview-v7:$gradle.supportVersion"
-    implementation "com.android.support:support-annotations:$gradle.supportVersion"
-    implementation "com.android.support:design:$gradle.design"
-    implementation "de.hdodenhof:circleimageview:$gradle.circleimageview"
 
-//    implementation 'com.yanzhikaijky:LiteGuide:0.9.2'
+    implementation "com.unstoppable:submitbutton:$thirdParty.submitbutton"
+    implementation "de.hdodenhof:circleimageview:$thirdParty.circleimageview"
 
-    annotationProcessor "com.journeyOS:literouter-compiler:$gradle.literouter_compiler"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$gradle.butterknife"
-    annotationProcessor "android.arch.persistence.room:compiler:$gradle.room_compiler"
-    annotationProcessor "android.arch.lifecycle:compiler:$gradle.lifecycle_compiler"
+    annotationProcessor "com.github.journeyOS:LiteRouter-compiler:$thirdParty.literouter_compiler"
+    annotationProcessor "androidx.room:room-compiler:$thirdParty.room_compiler"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$thirdParty.lifecycle_compiler"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$thirdParty.butterknife"
 }
+
 
 defaultTasks 'clean', 'assembleRelease'

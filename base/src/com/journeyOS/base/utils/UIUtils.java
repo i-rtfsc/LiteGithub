@@ -18,7 +18,7 @@ package com.journeyOS.base.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
+import androidx.core.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;

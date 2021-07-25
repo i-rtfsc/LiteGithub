@@ -18,6 +18,7 @@ package com.journeyOS.github.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +37,17 @@ public class BasicToken {
     public Date updatedAt;
 
     public List<String> scopes;
+
+    public BasicToken() {
+
+    }
+
+    public static BasicToken generateFromOauthToken(OauthToken oauthToken) {
+        BasicToken basicToken = new BasicToken();
+        basicToken.token = oauthToken.accessToken;
+        basicToken.scopes = Arrays.asList(oauthToken.scope.split(","));
+        return basicToken;
+    }
 
     @Override
     public String toString() {

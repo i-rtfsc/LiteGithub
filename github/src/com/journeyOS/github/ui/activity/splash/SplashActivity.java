@@ -19,7 +19,8 @@ package com.journeyOS.github.ui.activity.splash;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.journeyOS.base.utils.BaseUtils;
 import com.journeyOS.base.utils.LogUtils;
@@ -39,6 +40,7 @@ public class SplashActivity extends BaseActivity {
 
     public static void newInstance(@NonNull Context context) {
         Intent intent = new Intent(context, SplashActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 

@@ -18,8 +18,8 @@ package com.journeyOS.github.ui.activity.viewer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 
 import com.journeyOS.core.base.BaseActivity;
 import com.journeyOS.core.base.BaseFragment;
@@ -38,6 +38,7 @@ public class ViewerActivity extends BaseActivity {
     public static void show(@NonNull Context context, @NonNull ReposFileData reposFileData) {
         Intent intent = new Intent(context, ViewerActivity.class);
         intent.putExtra(EXTRA_REPOS_FILE_DATA, reposFileData);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 

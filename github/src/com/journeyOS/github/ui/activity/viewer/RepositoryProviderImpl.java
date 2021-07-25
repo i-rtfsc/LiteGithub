@@ -1,7 +1,7 @@
 package com.journeyOS.github.ui.activity.viewer;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.journeyOS.core.api.repository.IRepositoryProvider;
 import com.journeyOS.literouter.annotation.ARouterInject;

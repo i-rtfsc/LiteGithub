@@ -14,7 +14,7 @@
   limitations under the License.
   -->
 
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
@@ -74,7 +74,7 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/text_size_small" />
 
-                <android.support.v7.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/language_color"
                     android:layout_width="@dimen/icon_size_small"
                     android:layout_height="@dimen/icon_size_small"
@@ -106,7 +106,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/icon_size_small"
                         android:layout_height="@dimen/icon_size_small"
                         android:tint="@color/text_secondary_dark"
@@ -128,7 +128,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/icon_size_small"
                         android:layout_height="@dimen/icon_size_small"
                         android:tint="@color/text_secondary_dark"
@@ -151,7 +151,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/icon_size_small"
                         android:layout_height="@dimen/icon_size_small"
                         android:tint="@color/text_secondary_dark"
@@ -176,7 +176,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/icon_size_small"
                         android:layout_height="@dimen/icon_size_small"
                         android:tint="@color/text_secondary_dark"
@@ -200,7 +200,7 @@
                     android:orientation="horizontal"
                     android:visibility="gone">
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/icon_size_small"
                         android:layout_height="@dimen/icon_size_small"
                         android:tint="?android:textColorSecondary"
@@ -222,4 +222,4 @@
     </LinearLayout>
 
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

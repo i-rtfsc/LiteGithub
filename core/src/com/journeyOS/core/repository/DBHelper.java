@@ -16,9 +16,9 @@
 
 package com.journeyOS.core.repository;
 
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
-import android.support.annotation.MainThread;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.annotation.MainThread;
 
 import com.journeyOS.core.CoreManager;
 

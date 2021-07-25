@@ -1,7 +1,6 @@
 package com.journeyOS.core.http;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
+import androidx.annotation.NonNull;
 
 import com.journeyOS.base.network.NetWork;
 import com.journeyOS.base.utils.BaseUtils;
@@ -11,9 +10,17 @@ import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.config.GithubConfig;
 
 import java.io.IOException;
+import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Cache;
 import okhttp3.CacheControl;
@@ -25,6 +32,7 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class AppHttpClient {
     private final static String TAG = AppHttpClient.class.getSimpleName();
@@ -35,7 +43,8 @@ public class AppHttpClient {
     private Map<String, Object> serviceByType = new HashMap<>();
     private Retrofit mRetrofit;
 
-    private AppHttpClient(String token) {
+
+    private AppHttpClient(String baseUrl, String token) {
         Cache cache = new Cache(FileUtil.getHttpImageCacheDir(CoreManager.getContext()),
                 MAX_CACHE_SIZE);
 
@@ -45,16 +54,22 @@ public class AppHttpClient {
                 .addNetworkInterceptor(new NetworkBaseInterceptor())
                 .cache(cache)
                 .build();
+
         mRetrofit = new Retrofit.Builder()
-                .baseUrl(GithubConfig.GITHUB_API_BASE_URL)
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
+//                .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(client)
                 .build();
     }
 
     public static AppHttpClient getInstance(String token) {
-        return new AppHttpClient(token);
+        return new AppHttpClient(GithubConfig.GITHUB_API_BASE_URL, token);
+    }
+
+    public static AppHttpClient getInstance(String baseUrl, String token) {
+        return new AppHttpClient(baseUrl, token);
     }
 
     public synchronized <T> T getService(Class<T> apiInterface) {
@@ -89,7 +104,7 @@ public class AppHttpClient {
                         .addHeader("Authorization", auth)
                         .url(url)
                         .build();
-                LogUtils.d(TAG, "url = "+url);
+                LogUtils.d(TAG, "url = " + url);
             }
 
             //第二次请求，强制使用网络请求

@@ -1,15 +1,26 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.jakewharton.butterknife'
+
+//def androidSdk = rootProject.ext.androidSdk
+def thirdParty = rootProject.ext.thirdParty
 
 android {
-    compileSdkVersion gradle.compileSdkVersion
+
+    def androidSdk = rootProject.ext.androidSdk
+//    buildToolsVersion androidSdk.toolVersion
+    compileSdkVersion androidSdk.compileVersion
 
     defaultConfig {
-        minSdkVersion gradle.minSdkVersion
-        targetSdkVersion gradle.targetVersion
-        versionCode 1
-        versionName "1.0"
+//        minSdkVersion gradle.minSdkVersion
+//        targetSdkVersion gradle.targetVersion
+//        versionCode 1
+//        versionName "1.0"
+        minSdkVersion androidSdk.minVersion
+        targetSdkVersion androidSdk.targetVersion
+        versionCode rootProject.ext.verCode
+        versionName rootProject.ext.verName
 
         vectorDrawables.useSupportLibrary = true
     }
@@ -31,45 +42,73 @@ android {
         }
     }
 
+    lintOptions {
+        // lint检查不报错
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    api "org.jetbrains.kotlin:kotlin-stdlib:$gradle.kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib:$thirdParty.kotlin_version"
 
-    api "com.journeyOS:litetask:$gradle.litetask"
-    api "com.journeyOS:literouter:$gradle.literouter_core"
+    api "com.journeyOS:litetask:$thirdParty.litetask"
+    api "com.github.journeyOS:LiteRouter:$thirdParty.literouter_core"
 
     // api library , can be used in import module
-    api "com.android.support:appcompat-v7:$gradle.supportVersion"
-    api "com.android.support:design:$gradle.supportVersion"
-    api("com.jakewharton:butterknife:$gradle.butterknife")
-    api "com.facebook.stetho:stetho:$gradle.stetho"
-    api "com.squareup.retrofit2:retrofit:$gradle.retrofit2"
-    api "com.squareup.retrofit2:converter-gson:$gradle.retrofit2"
-    api "com.squareup.retrofit2:adapter-rxjava:$gradle.retrofit2"
-    api "com.tencent.bugly:crashreport_upgrade:$gradle.bugly_crashreport_upgrade"
+    api "androidx.appcompat:appcompat:$thirdParty.appcompat"
+    api "com.google.android.material:material:$thirdParty.material"
+    api "androidx.constraintlayout:constraintlayout:$thirdParty.constraintlayout"
+    api "androidx.swiperefreshlayout:swiperefreshlayout:$thirdParty.swiperefreshlayout"
+    api "androidx.legacy:legacy-support-v4:$thirdParty.legacy"
+    api "androidx.cardview:cardview:$thirdParty.cardview"
+    api "androidx.recyclerview:recyclerview:$thirdParty.recyclerview"
+    api "androidx.annotation:annotation:$thirdParty.annotation"
+
     // ViewModel and LiveData
-    api "android.arch.lifecycle:extensions:$gradle.lifecycle_extensions"
+    api "androidx.lifecycle:lifecycle-extensions:$thirdParty.lifecycle"
     // Room
-    api "android.arch.persistence.room:runtime:$gradle.room_runtime"
+    api "androidx.room:room-runtime:$thirdParty.room"
 
-    api "io.reactivex:rxjava:$gradle.rxjava"
-    api "io.reactivex:rxandroid:$gradle.rxandroid"
-    api "com.github.GrenderG:Toasty:$gradle.toasty"
-    api "com.github.kbiakov:CodeView-android:$gradle.codeview"
-    api "com.yarolegovich:sliding-root-nav:$gradle.slidingrootnav"
-    api "com.squareup.picasso:picasso:$gradle.picasso"
-    api "com.github.bumptech.glide:glide:$gradle.glide"
-    api "com.android.support.constraint:constraint-layout:$gradle.constraint_layout"
-    api "co.revely:gradient:$gradle.gradient"
+    api "com.jakewharton:butterknife:$thirdParty.butterknife"
 
-    implementation "me.zhanghai.android.materialprogressbar:library:$gradle.materialprogressbar"
+    api "com.facebook.stetho:stetho:$thirdParty.stetho"
+    api "com.squareup.retrofit2:retrofit:$thirdParty.retrofit2"
+    api "com.squareup.retrofit2:converter-gson:$thirdParty.retrofit2"
+    api "com.squareup.retrofit2:adapter-rxjava:$thirdParty.retrofit2"
+    api("com.squareup.retrofit2:converter-scalars:$thirdParty.retrofit2_converter_scalars") {
+        exclude module: 'retrofit'
+    }
+    api("com.squareup.retrofit2:converter-moshi:$thirdParty.retrofit2_converter_moshi") {
+        exclude module: 'retrofit'
+    }
+    api("com.squareup.okhttp3:logging-interceptor:$thirdParty.retrofit2_logging_interceptor") {
+        exclude module: 'okhttp'
+    }
+    api "com.tencent.bugly:crashreport_upgrade:$thirdParty.bugly_crashreport_upgrade"
 
-    debugApi "com.squareup.leakcanary:leakcanary-android:$gradle.leakcanary"
-    releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$gradle.leakcanary"
+
+    api "io.reactivex:rxjava:$thirdParty.rxjava"
+    api "io.reactivex:rxandroid:$thirdParty.rxandroid"
+    api "com.github.GrenderG:Toasty:$thirdParty.toasty"
+    api "com.github.kbiakov:CodeView-android:$thirdParty.codeview"
+    api "com.yarolegovich:sliding-root-nav:$thirdParty.slidingrootnav"
+    api "com.squareup.picasso:picasso:$thirdParty.picasso"
+    api "com.github.bumptech.glide:glide:$thirdParty.glide"
+    api "co.revely:gradient:$thirdParty.gradient"
+
+    implementation "me.zhanghai.android.materialprogressbar:library:$thirdParty.materialprogressbar"
+
+    debugApi "com.squareup.leakcanary:leakcanary-android:$thirdParty.leakcanary"
+    releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$thirdParty.leakcanary"
 
     // implementation library , can only be used in current module ,using JsonHelper
-    implementation "com.google.code.gson:gson:$gradle.gson"
+    implementation "com.google.code.gson:gson:$thirdParty.gson"
 }

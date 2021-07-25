@@ -17,8 +17,8 @@
 package com.journeyOS.base.guide;
 
 import android.content.Context;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.LayoutRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -16,7 +16,7 @@
 
 package com.journeyOS.core.http;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import retrofit2.Response;
 

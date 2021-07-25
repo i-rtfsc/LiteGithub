@@ -16,7 +16,7 @@
 
 package com.journeyOS.github.api;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.journeyOS.core.http.AuthRequestModel;
 import com.journeyOS.github.entity.BasicToken;
@@ -31,11 +31,14 @@ import rx.Observable;
 
 public interface LoginService {
 
+    @Deprecated
     @POST("authorizations")
     @Headers("Accept: application/json")
     Observable<Response<BasicToken>> authorizations(
             @NonNull @Body AuthRequestModel authRequestModel
     );
+
+
 
     @POST("login/oauth/access_token")
     @Headers("Accept: application/json")
@@ -45,4 +48,5 @@ public interface LoginService {
             @Query("code") String code,
             @Query("state") String state
     );
+
 }

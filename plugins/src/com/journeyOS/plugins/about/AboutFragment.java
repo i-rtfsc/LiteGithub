@@ -1,11 +1,10 @@
 package com.journeyOS.plugins.about;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.journeyOS.base.Constant;
 import com.journeyOS.base.utils.BaseUtils;
-import com.journeyOS.base.widget.SettingText;
 import com.journeyOS.base.widget.SettingView;
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.Version;

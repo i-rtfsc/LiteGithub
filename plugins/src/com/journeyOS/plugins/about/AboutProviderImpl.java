@@ -1,7 +1,7 @@
 package com.journeyOS.plugins.about;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.journeyOS.core.api.plugins.IAboutProvider;
 import com.journeyOS.literouter.annotation.ARouterInject;

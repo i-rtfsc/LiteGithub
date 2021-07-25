@@ -16,12 +16,13 @@
 
 package com.journeyOS.core.repository.user;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
 
 import com.journeyOS.core.api.userprovider.AuthUser;
 
-@Database(entities = {AuthUser.class}, version = 1)
+@Database(entities = {AuthUser.class}, version = 1,
+        exportSchema = false)
 public abstract class AuthUserDatabase extends RoomDatabase {
     public abstract AuthUserDao authUserDao();
 }

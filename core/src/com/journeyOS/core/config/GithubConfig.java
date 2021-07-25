@@ -21,9 +21,14 @@ public class GithubConfig {
 
     public final static String GITHUB_API_BASE_URL = "https://api.github.com/";
 
-    public final static String OPENHUB_CLIENT_ID = "158ef7122eced7b94bc4";
 
-    public final static String OPENHUB_CLIENT_SECRET = "b9229791e32f9ebf37009834210a1213bec39b3d";
+    public final static String CLIENT_ID = "b342a8d326819dd174f2";
+
+    public final static String CLIENT_SECRET = "4788e04c4d0fab030edab1c8432649af6c77c505";
 
     public final static String REDIRECT_URL = "https://github.com/journeyOS/LiteGithub/CallBack";
+
+    public final static String AUTHURL = GITHUB_BASE_URL + "login/oauth/authorize";
+    public final static String TOKENURL = GITHUB_BASE_URL + "login/oauth/access_token";
+    public final static String SCOPE = "user,repo,gist,notifications";
 }

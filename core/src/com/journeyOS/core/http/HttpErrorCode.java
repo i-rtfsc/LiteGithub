@@ -16,7 +16,7 @@
 
 package com.journeyOS.core.http;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import com.journeyOS.core.CoreManager;
 import com.journeyOS.core.R;
